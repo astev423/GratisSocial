@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 const prisma = new PrismaClient()
 
 // This makes a new account entirely from info provided from clerk authentication
-export async function POST(request: Request) {
+export async function POST() {
   const { userId } = await auth()
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })

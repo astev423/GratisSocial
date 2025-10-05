@@ -4,33 +4,24 @@ import { NextResponse } from "next/server"
 
 const prisma = new PrismaClient()
 
-export async function PUT(request: Request){
+export async function PUT(request: Request) {
   const { userId } = await auth()
-  if(userId == null){
-    return NextResponse.json({error: "User not found"}, {status: 404})
+  if (userId == null) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
   const body = await request.json()
-  const { firstName, lastName } = body
+  const { editableFirstName, editableLastName } = body
   await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
-      firstName: firstName,
-      lastName: lastName
-    }
+      firstName: editableFirstName,
+      lastName: editableLastName,
+    },
   })
-  return NextResponse.json({status: 200})
+  return NextResponse.json({ status: 200 })
 }
-
-
-
-
-
-
-
-
-
 
 /*
 

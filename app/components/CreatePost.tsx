@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-const CreatePost = () => {
+const CreatePost = ({ onPost }: { onPost: () => void }) => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   //submit post using prisma client
@@ -24,6 +24,7 @@ const CreatePost = () => {
       if (response.ok) {
         setTitle("") // Clear form
         setContent("") // Clear form
+        onPost()
       } else {
       }
     } catch (error) {

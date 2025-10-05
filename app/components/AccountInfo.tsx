@@ -14,15 +14,22 @@ const AccountInfo = () => {
   const { userId } = useAuth()
   const [user, setUser] = useState<User | null>(null)
   const [firstName, setFirstName] = useState("")
+  const [editableFirstName, setEditableFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [editableLastName, setEditableLastName] = useState("")
   const [username, setUsername] = useState("")
   useEffect(() => {
     const fetchUser = async () => {
+      if (!userId) {
+        return
+      }
       const response = await fetch(`/api/fetchUser?userId=${userId}`)
       if (response.ok) {
         const data: User = await response.json()
         setUser(data)
         setUsername(data.username)
+        setFirstName(data.firstName)
+        setLastName(data.lastName)
       }
     }
     fetchUser()
@@ -32,7 +39,7 @@ const AccountInfo = () => {
       <div className="p-2 text-2xl">
         Account information for <br></br>
         <div className="font-normal text-xl text-gray-700">
-          {user?.firstName} {user?.lastName}
+          {firstName} {lastName}
         </div>
         <br></br>
         Unique username: <br></br>
@@ -42,9 +49,9 @@ const AccountInfo = () => {
       <div className="flex items-center justify-center">
         First name:&nbsp;&nbsp;
         <input
-          value={firstName}
+          value={editableFirstName}
           onChange={(event) => {
-            setFirstName(event.target.value)
+            setEditableFirstName(event.target.value)
           }}
           type="text"
           className="border-2"
@@ -54,9 +61,9 @@ const AccountInfo = () => {
       <div className="flex items-center justify-center">
         Last name:&nbsp;&nbsp;
         <input
-          value={lastName}
+          value={editableLastName}
           onChange={(event) => {
-            setLastName(event.target.value)
+            setEditableLastName(event.target.value)
           }}
           type="text"
           className="border-2"
@@ -65,14 +72,15 @@ const AccountInfo = () => {
       </div>
       <button
         onClick={async () => {
+          setFirstName(editableFirstName)
+          setLastName(editableLastName)
           await fetch("/api/updateAccount", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ firstName, lastName }),
+            body: JSON.stringify({ editableFirstName, editableLastName }),
           })
-          alert("Reload to see the changes!")
         }}
         className="bg-gray-100 p-2 hover:cursor-pointer hover:bg-gray-200"
       >

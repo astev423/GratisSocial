@@ -27,8 +27,6 @@ export default function UserPage() {
   const [foundUser, setFoundUser] = useState(false)
   useEffect(() => {
     const fetchAccountInfo = async () => {
-      // reponse returns a JSON with stuff like status and if it was ok, we need to .json() it to get
-      // the user info
       try {
         const response = await fetch(`/api/fetchUser?username=${username}`)
         if (response.ok) {
