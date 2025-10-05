@@ -30,9 +30,8 @@ export async function POST(request: Request) {
     })
     return NextResponse.json(newPost, { status: 201 })
   } catch (error) {
-    alert("Error creating post:" + error)
     return NextResponse.json(
-      { message: "Error creating post." },
+      { message: `Error creating post. ${error}` },
       { status: 500 }
     )
   } finally {

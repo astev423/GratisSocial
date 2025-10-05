@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 const prisma = new PrismaClient()
 
-// It expects a 'userId' query parameter in the URL (e.g., /api/user?userId=123)
+// Don't validate id server side since we need to use this for viewing other account's follow info
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get("userId")
