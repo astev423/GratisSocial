@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 const prisma = new PrismaClient()
 
 // It expects a 'userId' query parameter in the URL (e.g., /api/user?userId=123)
+// MAKE THIS MORE SECURE, DONT LEAK USERID
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get("userId")

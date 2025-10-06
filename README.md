@@ -4,6 +4,8 @@ PROBLEMS:
 -HUGE SECURITY ISSUE WITH fetchUser API CALL, IT RETURNS ALL INFO OF USER.
 To fix this I think it should only return username, firstname, and lastname
 No need to return email or id, also don't let people search by ID, try and keep id secret
+-When login username should be input. also remove the API call that happens everytime you go to home page. instead put call it
+only when user makes new account
 
 IDEAS: Remove once repo made public
 -add button to delete posts
