@@ -1,5 +1,4 @@
 "use client"
-import Header from "@/app/components/Header"
 import PostFeed from "@/app/components/PostFeed"
 import ProfileInfo from "@/app/components/ProfileInfo"
 import { useParams } from "next/navigation"
@@ -49,7 +48,6 @@ export default function UserPage() {
   }, [username])
   return (
     <div>
-      <Header></Header>
       {foundUser ? (
         <div className="flex m-20 gap-20">
           <ProfileInfo userInfo={user}></ProfileInfo>

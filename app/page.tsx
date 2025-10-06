@@ -1,4 +1,3 @@
-import Header from "./components/Header"
 import { auth } from "@clerk/nextjs/server"
 import FeedContainer from "./components/FeedContainer"
 
@@ -6,7 +5,6 @@ export default async function Home() {
   const { userId } = await auth()
   return (
     <div>
-      <Header></Header>
       {userId ? (
         // useState needs to be on client component to feedcontainer was made and auth is done here
         <FeedContainer />

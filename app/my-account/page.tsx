@@ -1,5 +1,4 @@
 import React from "react"
-import Header from "../components/Header"
 import AccountInfo from "../components/AccountInfo"
 import PostFeed from "../components/PostFeed"
 import FollowerInfo from "../components/FollowerInfo"
@@ -10,7 +9,6 @@ const page = async () => {
   const { userId } = await auth()
   return (
     <div>
-      <Header></Header>
       {userId ? (
         <div>
           <div className="flex justify-center p-8 gap-20 ">
