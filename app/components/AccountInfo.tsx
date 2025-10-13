@@ -4,8 +4,6 @@ import { useAuth } from "@clerk/nextjs"
 import React, { useEffect, useState } from "react"
 
 interface User {
-  id: string
-  email: string
   firstName: string
   lastName: string
   username: string

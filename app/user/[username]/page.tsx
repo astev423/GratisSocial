@@ -6,14 +6,12 @@ import { useEffect, useState } from "react"
 
 interface User {
   id: string
-  email: string
   firstName: string
   lastName: string
 }
 
 const defaultUser: User = {
   id: "temp",
-  email: "temp",
   firstName: "temp",
   lastName: "temp",
 }
@@ -31,10 +29,9 @@ export default function UserPage() {
         if (response.ok) {
           const data: User = await response.json()
           // data is the whole json object for all user data. even userid and other stuff
-          const { firstName, lastName, email, id } = data
+          const { firstName, lastName, id } = data
           setUser({
             id: id,
-            email: email,
             firstName: firstName,
             lastName: lastName,
           })
