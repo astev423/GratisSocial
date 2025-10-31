@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import CommentFeed from "./CommentFeed"
 
-interface PostProps {
+type PostProps = {
   id: string
   title: string
   content: string
@@ -10,7 +10,7 @@ interface PostProps {
   likes: number
   comments: number
 }
-interface User {
+type User = {
   firstName: string
   lastName: string
 }
@@ -33,7 +33,9 @@ const Post: React.FC<PostProps> = ({
   const [user, setUser] = useState<User | null>(null)
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`/api/fetchUser?userId=${userId}`)
+      const response = await fetch("/api/fetchUser", {
+        method: "POST",
+      })
       if (response.ok) {
         const data: User = await response.json()
         setUser(data)

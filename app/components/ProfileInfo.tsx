@@ -1,17 +1,6 @@
 import React from "react"
 
-interface UserInfo {
-  id: string
-  firstName: string
-  lastName: string
-}
-
-interface ProfileInfoProps {
-  userInfo: UserInfo
-}
-
-const ProfileInfo: React.FC<ProfileInfoProps> = ({ userInfo }) => {
-  const bob = userInfo.id
+const ProfileInfo = () => {
   return (
     <div className="flex gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
       <div className="font-bold text-2xl">Follower Information</div>

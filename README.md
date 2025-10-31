@@ -1,13 +1,21 @@
 ## IDEAS AND PROBLEMS
 
+
+Use react dev tools for site
 PROBLEMS:
+-I dont think follow info shows for other users since it is based off client's id
 -Too much info in my components and pages, use layout and globals to prevent repetition. try to split it up more
 -Have multiple folders for components, and a dedicated pages folder for all pages
 
 IDEAS: Remove once repo made public
+-try fetching on server components https://www.youtube.com/watch?v=rGPpQdbDbwo&list=WL&index=23
+-use adapter pattern for getting userId from clerk incase clerk changes how id is gotten
 -add button to delete posts
 -add follower mechanic
 -add dm mechanic
+
+## IMPORTANT NOTES
+-Try to to use SSR when possible, especially for fetching info. Much easier than doing useEffect on a client component
 
 ## WELCOME TO GratisSocial
 

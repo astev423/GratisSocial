@@ -3,7 +3,7 @@
 import { useAuth } from "@clerk/nextjs"
 import React, { useEffect, useState } from "react"
 
-interface User {
+type User = {
   firstName: string
   lastName: string
   username: string
@@ -21,7 +21,9 @@ const AccountInfo = () => {
       if (!userId) {
         return
       }
-      const response = await fetch(`/api/fetchUser?userId=${userId}`)
+      const response = await fetch("/api/fetchUser", {
+        method: "POST",
+      })
       if (response.ok) {
         const data: User = await response.json()
         setUser(data)

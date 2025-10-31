@@ -7,11 +7,8 @@ const prisma = new PrismaClient()
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const type = searchParams.get("type")
-  if (!type) {
-    return
-  }
-  let { userId } = await auth()
-  if (!userId) {
+  const { userId } = await auth()
+  if (!userId || !type) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
   if (type === "following") {
@@ -28,12 +25,9 @@ export async function GET(request: Request) {
     const allPosts = await prisma.post.findMany()
     return NextResponse.json(allPosts, { status: 200 })
   } else {
-    if (userId) {
-      userId = type
-    }
     const userPosts = await prisma.post.findMany({
       where: {
-        userId: userId,
+        username: type,
       },
     })
     return NextResponse.json(userPosts, { status: 200 })

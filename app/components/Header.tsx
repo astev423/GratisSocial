@@ -19,7 +19,9 @@ const Header = () => {
       if (!userId) {
         return
       }
-      const response = await fetch(`/api/fetchUser?userId=${userId}`)
+      const response = await fetch("/api/fetchUser", {
+        method: "POST",
+      })
       if (!response.ok) {
         await fetch("/api/createAccount", {
           method: "POST",

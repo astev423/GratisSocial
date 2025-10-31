@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "@clerk/nextjs"
 
-interface followInfoInterface {
+type followInfoType = {
   following: number
   followers: number
 }
@@ -13,7 +13,7 @@ interface followInfoInterface {
 // fetch wont work. putting it in dependancy array makes it rerun fetch once it has proper value
 const FollowerInfo = () => {
   const { userId } = useAuth()
-  const [followInfo, setFollowInfo] = useState<followInfoInterface>({
+  const [followInfo, setFollowInfo] = useState<followInfoType>({
     following: 0,
     followers: 0,
   })
@@ -24,7 +24,7 @@ const FollowerInfo = () => {
     const fetchFollowInfo = async () => {
       const response = await fetch(`/api/fetchFollowInfo?userId=${userId}`)
       if (response.ok) {
-        const data: followInfoInterface = await response.json()
+        const data: followInfoType = await response.json()
         setFollowInfo(data)
       }
     }

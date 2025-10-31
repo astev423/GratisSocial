@@ -21,11 +21,14 @@ export async function POST(request: Request) {
       data: {
         title,
         content,
-        author: {
+        authorId: {
           connect: { id: userId },
         },
         likes: 0,
         comments: 0,
+        authorUsername: {
+          connect: { username: username },
+        },
       },
     })
     return NextResponse.json(newPost, { status: 201 })

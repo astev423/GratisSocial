@@ -20,20 +20,26 @@ model User {
   firstName String
   lastName  String
   createdAt DateTime @default(now())
-  posts     Post[]
+
+  // Updated relations matching the two on Post
+  postsById       Post[] @relation("authorId")
+  postsByUsername Post[] @relation("authorUsername")
+
   followers Follow[] @relation("followedBy")
   following Follow[] @relation("following")
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  author    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  likes     Int
-  comments  Int
+  id             String   @id @default(uuid())
+  title          String
+  content        String
+  createdAt      DateTime @default(now())
+  userId         String
+  authorId       User     @relation("authorId", fields: [userId], references: [id], onDelete: Cascade)
+  authorUsername User     @relation("authorUsername", fields: [username], references: [username], onDelete: Cascade)
+  username       String
+  likes          Int
+  comments       Int
 }
 
 model Follow {

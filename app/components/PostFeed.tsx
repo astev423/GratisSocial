@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import Post from "./Post"
 
-interface Post {
+type Post = {
   id: string
   title: string
   content: string
@@ -16,7 +16,7 @@ interface Post {
   comments: number
 }
 
-interface PostFeedProps {
+type PostFeedProps = {
   postsToSee: string
 }
 
