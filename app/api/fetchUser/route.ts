@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server"
 
 const prisma = new PrismaClient()
 
+// Get user from their ID
 export async function POST() {
   const { userId } = await auth()
   if (!userId) {
@@ -23,6 +24,7 @@ export async function POST() {
   return NextResponse.json(userObjectWithoutSensitiveInfo, { status: 200 })
 }
 
+// Get user from URL username parameters
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const usernameFromParams = searchParams.get("username")

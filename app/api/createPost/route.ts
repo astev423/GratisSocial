@@ -7,15 +7,33 @@ const prisma = new PrismaClient()
 export async function POST(request: Request) {
   const { title, content } = await request.json()
   const { userId } = await auth()
+
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
+
   if (!title || !content) {
     return NextResponse.json(
       { message: "Title and content are required." },
       { status: 400 }
     )
   }
+  // fetch username from your user endpoint
+  const res = await fetch(new URL("/api/fetchUserIdProvided", request.url), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId }),
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    const detail = await res.json().catch(() => null)
+    return NextResponse.json(
+      { message: "Failed to resolve username", detail },
+      { status: 502 }
+    )
+  }
+  const { username } = (await res.json()) as { username: string }
+
   try {
     const newPost = await prisma.post.create({
       data: {
