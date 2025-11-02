@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../../generated/prisma"
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 
