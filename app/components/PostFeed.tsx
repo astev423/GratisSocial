@@ -8,7 +8,7 @@ type Post = {
   title: string
   content: string
   createdAt: string
-  authorUsername: string
+  posterUsername: string
   likes: number
   comments: number
 }
@@ -48,7 +48,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
             title={post.title}
             content={post.content}
             createdAt={post.createdAt}
-            username={post.authorUsername}
+            posterUsername={post.posterUsername}
             likes={post.likes}
             comments={post.comments}
           />

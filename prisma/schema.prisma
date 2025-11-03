@@ -38,7 +38,7 @@ model Post {
   userId         String
   authorId       User     @relation("authorId", fields: [userId], references: [id], onDelete: Cascade)
   authorUsername User     @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
-  posterUsername       String
+  posterUsername String
   likes          Int
   comments       Int
 }
