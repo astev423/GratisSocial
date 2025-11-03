@@ -5,12 +5,14 @@ import React, { useState } from "react"
 const CreatePost = ({ onPost }: { onPost: () => void }) => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
+
   //submit post using prisma client
   const submitPost = async () => {
     if (!title || !content) {
       alert("You must provide both content and a title")
       return
     }
+
     try {
       const response = await fetch("/api/createPost", {
         // Call your API route

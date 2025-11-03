@@ -16,11 +16,13 @@ const AccountInfo = () => {
   const [lastName, setLastName] = useState("")
   const [editableLastName, setEditableLastName] = useState("")
   const [username, setUsername] = useState("")
+
   useEffect(() => {
     const fetchUser = async () => {
       if (!userId) {
         return
       }
+
       const response = await fetch("/api/fetchUser", {
         method: "POST",
       })
@@ -34,6 +36,7 @@ const AccountInfo = () => {
     }
     fetchUser()
   }, [userId])
+
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">
       <div className="p-2 text-2xl">

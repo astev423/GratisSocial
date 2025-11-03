@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../../generated/prisma"
+import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 
@@ -8,9 +8,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const type = searchParams.get("type")
   const { userId } = await auth()
+
   if (!userId || !type) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
+
   if (type === "following") {
     const allPosts = await prisma.post.findMany()
     return NextResponse.json(allPosts, { status: 200 })
@@ -20,9 +22,11 @@ export async function GET(request: Request) {
         userId: userId,
       },
     })
+
     return NextResponse.json(userPosts, { status: 200 })
   } else if (type === "all") {
     const allPosts = await prisma.post.findMany()
+
     return NextResponse.json(allPosts, { status: 200 })
   } else {
     const userPosts = await prisma.post.findMany({
@@ -30,6 +34,7 @@ export async function GET(request: Request) {
         username: type,
       },
     })
+
     return NextResponse.json(userPosts, { status: 200 })
   }
 }

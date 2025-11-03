@@ -8,20 +8,20 @@ type Post = {
   title: string
   content: string
   createdAt: string
-  author: {
-    id: string
-  }
-  userId: string
+  posterUsername: string
   likes: number
   comments: number
 }
 
+// Union for enum like safety, prevent mispellings
 type PostFeedProps = {
-  postsToSee: string
+  postsToSee: "following" | "all" | "myPosts"
 }
 
 const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
   const [posts, setPosts] = useState<Post[]>([])
+
+  // Fetch all posts depending on which posts selected in props
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/posts?type=${postsToSee}`)
@@ -36,6 +36,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
     }
     fetchPosts()
   }, [postsToSee])
+
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <div className="text-3xl font-bold">Posts</div>
@@ -47,7 +48,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
             title={post.title}
             content={post.content}
             createdAt={post.createdAt}
-            userId={post.userId}
+            posterUsername={post.posterUsername}
             likes={post.likes}
             comments={post.comments}
           />

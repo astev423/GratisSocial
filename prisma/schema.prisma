@@ -4,8 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  engineType = "library" // Node-API engines reduce OpenSSL mismatches
+  binaryTargets = ["native"]
 }
 
 datasource db {
@@ -36,8 +37,8 @@ model Post {
   createdAt      DateTime @default(now())
   userId         String
   authorId       User     @relation("authorId", fields: [userId], references: [id], onDelete: Cascade)
-  authorUsername User     @relation("authorUsername", fields: [username], references: [username], onDelete: Cascade)
-  username       String
+  authorUsername User     @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
+  posterUsername String
   likes          Int
   comments       Int
 }
