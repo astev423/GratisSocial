@@ -1,8 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
-
-const prisma = new PrismaClient()
 
 // This makes a new account entirely from info provided from clerk authentication
 export async function POST() {
@@ -10,6 +8,8 @@ export async function POST() {
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
+
+  // Get username and email from ClerkJS and make account in DB with that info
   const user = await currentUser()
   const primaryEmail = user?.emailAddresses.find(
     (email) => email.id === user.primaryEmailAddressId

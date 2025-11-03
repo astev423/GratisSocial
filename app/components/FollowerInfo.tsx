@@ -17,6 +17,8 @@ const FollowerInfo = () => {
     following: 0,
     followers: 0,
   })
+
+  // Fetch and set follow info
   useEffect(() => {
     if (!userId) {
       return
@@ -31,6 +33,7 @@ const FollowerInfo = () => {
     fetchFollowInfo()
   }, [userId])
   const { followers, following } = followInfo
+
   return (
     <div className="flex gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
       <div className="font-bold text-2xl">Follower Information</div>

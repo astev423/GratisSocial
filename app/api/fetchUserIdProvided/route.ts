@@ -1,13 +1,11 @@
-import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma"
 
-const prisma = new PrismaClient()
-
-// Get user from their ID in POST request
+// Get user from their ID in POST request, only call this from SERVER as users can fake their ID
 export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(() => null)
-    const userId = typeof body?.userId === "string" ? body.userId : null
+    const body = await req.json()
+    const { userId } = body
     if (!userId) {
       return NextResponse.json({ error: "userId required" }, { status: 400 })
     }

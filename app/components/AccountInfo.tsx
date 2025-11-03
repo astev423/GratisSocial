@@ -8,7 +8,8 @@ type User = {
   lastName: string
   username: string
 }
-const AccountInfo = () => {
+
+export const AccountInfo = () => {
   const { userId } = useAuth()
   const [user, setUser] = useState<User | null>(null)
   const [firstName, setFirstName] = useState("")
@@ -19,10 +20,6 @@ const AccountInfo = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!userId) {
-        return
-      }
-
       const response = await fetch("/api/fetchUser", {
         method: "POST",
       })
@@ -35,7 +32,7 @@ const AccountInfo = () => {
       }
     }
     fetchUser()
-  }, [userId])
+  }, [])
 
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">

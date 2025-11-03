@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-const CreatePost = ({ onPost }: { onPost: () => void }) => {
+export default function CreatePost({ onPost }: { onPost: () => void }) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
 
@@ -26,8 +26,10 @@ const CreatePost = ({ onPost }: { onPost: () => void }) => {
       if (response.ok) {
         setTitle("") // Clear form
         setContent("") // Clear form
+        // Update parent to display new post
         onPost()
       } else {
+        console.log("Creating post API call didn't return right stuff")
       }
     } catch (error) {
       console.error("Network or API call error:", error)
@@ -58,5 +60,3 @@ const CreatePost = ({ onPost }: { onPost: () => void }) => {
     </div>
   )
 }
-
-export default CreatePost

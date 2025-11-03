@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import CommentFeed from "./CommentFeed"
+import { formatDate } from "@/lib/utils"
 
 type PostProps = {
   id: string
@@ -11,23 +12,15 @@ type PostProps = {
   comments: number
 }
 
-const Post: React.FC<PostProps> = ({
-  title,
+export default function Post({
+  id,
   posterUsername,
+  title,
   content,
   createdAt,
   likes,
   comments,
-}) => {
-  function formatDate(dateTimeString: string): string {
-    const date = new Date(dateTimeString)
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-  }
-
+}: PostProps) {
   return (
     <div className="bg-white p-5 flex flex-col gap-4 w-150">
       <div className="font-bold text-4xl text-center">{title}</div>
@@ -41,5 +34,3 @@ const Post: React.FC<PostProps> = ({
     </div>
   )
 }
-
-export default Post
