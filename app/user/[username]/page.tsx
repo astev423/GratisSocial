@@ -26,19 +26,22 @@ export default function UserPage() {
     const fetchAccountInfo = async () => {
       try {
         const response = await fetch(
-          `/api/fetchUser?username=${paramsUsername}`
+          `/api/fetchUser?username=${paramsUsername}`,
         )
-        if (response.ok) {
-          const data: User = await response.json()
-          // data is the whole json object for all user data. even userid and other stuff
-          const { username, firstName, lastName } = data
-          setUser({
-            username: username,
-            firstName: firstName,
-            lastName: lastName,
-          })
-          setFoundUser(true)
+        if (!response.ok) {
+          console.log("Error fetching user")
+          return
         }
+
+        const data: User = await response.json()
+        // data is the whole json object for all user data. even userid and other stuff
+        const { username, firstName, lastName } = data
+        setUser({
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+        })
+        setFoundUser(true)
       } catch (error) {
         alert(`Network issue occured ${error}`)
       }

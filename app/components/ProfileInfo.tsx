@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 export default function ProfileInfo() {
   return (
@@ -7,5 +7,5 @@ export default function ProfileInfo() {
       <div className="font-bold text-xl">Followers: </div>
       <div className="font-bold text-xl">Following: </div>
     </div>
-  )
+  );
 }

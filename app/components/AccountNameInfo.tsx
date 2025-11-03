@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@clerk/nextjs"
 import React, { useEffect, useState } from "react"
 
 type User = {
@@ -9,7 +8,7 @@ type User = {
   username: string
 }
 
-export const AccountInfo = () => {
+export const AccountNameInfo = () => {
   const [editableFirstName, setEditableFirstName] = useState("")
   const [editableLastName, setEditableLastName] = useState("")
   const [username, setUsername] = useState("")
@@ -85,4 +84,4 @@ export const AccountInfo = () => {
   )
 }
 
-export default AccountInfo
+export default AccountNameInfo

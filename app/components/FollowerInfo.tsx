@@ -1,18 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { useAuth } from "@clerk/nextjs"
 
 type followInfoType = {
   following: number
   followers: number
 }
 
-// Find followers and people following for current user
-// MUST INCLUDE userId in dependancy arry because it is asyncronous. Initially it will be null and
-// fetch wont work. putting it in dependancy array makes it rerun fetch once it has proper value
-const FollowerInfo = () => {
-  const { userId } = useAuth()
+export default function FollowerInfo(username: string) {
   const [followInfo, setFollowInfo] = useState<followInfoType>({
     following: 0,
     followers: 0,
@@ -20,9 +15,6 @@ const FollowerInfo = () => {
 
   // Fetch and set follow info
   useEffect(() => {
-    if (!userId) {
-      return
-    }
     const fetchFollowInfo = async () => {
       const response = await fetch(`/api/fetchFollowInfo?userId=${userId}`)
       if (response.ok) {
@@ -31,7 +23,7 @@ const FollowerInfo = () => {
       }
     }
     fetchFollowInfo()
-  }, [userId])
+  }, [])
   const { followers, following } = followInfo
 
   return (
@@ -42,5 +34,3 @@ const FollowerInfo = () => {
     </div>
   )
 }
-
-export default FollowerInfo

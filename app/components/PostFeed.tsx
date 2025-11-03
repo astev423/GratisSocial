@@ -15,7 +15,7 @@ type Post = {
 
 // Union for enum like safety, prevent mispellings
 type PostFeedProps = {
-  postsToSee: "following" | "all" | "myPosts"
+  postsToSee: "following" | "all" | "myPosts" | string
 }
 
 export default function PostFeed({ postsToSee }: PostFeedProps) {
@@ -30,7 +30,7 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
         setPosts(data.reverse())
       } else {
         alert(
-          "Error, no posts to display. Follow users who have posted to see posts"
+          "Error, no posts to display. Follow users who have posted to see posts",
         )
       }
     }

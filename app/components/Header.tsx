@@ -14,6 +14,7 @@ import { useEffect } from "react"
 const Header = () => {
   // If user auth'ed with clerk we need to add them to database via createAccount api
   const { userId } = useAuth()
+
   useEffect(() => {
     const fetchUser = async () => {
       // If not signed in with clerk then don't even try fetching or making account since no info given

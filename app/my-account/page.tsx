@@ -1,5 +1,5 @@
 import React from "react"
-import AccountInfo from "../components/AccountInfo"
+import AccountNameInfo from "../components/AccountNameInfo"
 import PostFeed from "../components/PostFeed"
 import FollowerInfo from "../components/FollowerInfo"
 import { auth } from "@clerk/nextjs/server"
@@ -15,7 +15,7 @@ const page = async () => {
         <div>
           <div className="flex justify-center p-8 gap-20 ">
             <div>
-              <AccountInfo />
+              <AccountNameInfo />
             </div>
             <PostFeed postsToSee="myPosts"></PostFeed>
             <div>
