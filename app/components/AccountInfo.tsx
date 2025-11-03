@@ -10,11 +10,7 @@ type User = {
 }
 
 export const AccountInfo = () => {
-  const { userId } = useAuth()
-  const [user, setUser] = useState<User | null>(null)
-  const [firstName, setFirstName] = useState("")
   const [editableFirstName, setEditableFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
   const [editableLastName, setEditableLastName] = useState("")
   const [username, setUsername] = useState("")
 
@@ -25,10 +21,9 @@ export const AccountInfo = () => {
       })
       if (response.ok) {
         const data: User = await response.json()
-        setUser(data)
+        setEditableFirstName(data.firstName)
+        setEditableLastName(data.lastName)
         setUsername(data.username)
-        setFirstName(data.firstName)
-        setLastName(data.lastName)
       }
     }
     fetchUser()
@@ -39,7 +34,7 @@ export const AccountInfo = () => {
       <div className="p-2 text-2xl">
         Account information for <br></br>
         <div className="font-normal text-xl text-gray-700">
-          {firstName} {lastName}
+          {editableFirstName} {editableLastName}
         </div>
         <br></br>
         Unique username: <br></br>
@@ -55,7 +50,7 @@ export const AccountInfo = () => {
           }}
           type="text"
           className="border-2"
-          placeholder={user?.firstName}
+          placeholder={editableFirstName}
         ></input>
       </div>
       <div className="flex items-center justify-center">
@@ -67,13 +62,13 @@ export const AccountInfo = () => {
           }}
           type="text"
           className="border-2"
-          placeholder={user?.lastName}
+          placeholder={editableLastName}
         ></input>
       </div>
       <button
         onClick={async () => {
-          setFirstName(editableFirstName)
-          setLastName(editableLastName)
+          setEditableFirstName(editableFirstName)
+          setEditableLastName(editableLastName)
           await fetch("/api/updateAccount", {
             method: "PUT",
             headers: {

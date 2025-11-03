@@ -18,7 +18,7 @@ type PostFeedProps = {
   postsToSee: "following" | "all" | "myPosts"
 }
 
-const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
+export default function PostFeed({ postsToSee }: PostFeedProps) {
   const [posts, setPosts] = useState<Post[]>([])
 
   // Fetch all posts depending on which posts selected in props
@@ -57,5 +57,3 @@ const PostFeed: React.FC<PostFeedProps> = ({ postsToSee }) => {
     </div>
   )
 }
-
-export default PostFeed

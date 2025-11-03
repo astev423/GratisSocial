@@ -7,6 +7,8 @@ import { auth } from "@clerk/nextjs/server"
 // Here user can change their prof pic, name, and see all their posts
 const page = async () => {
   const { userId } = await auth()
+
+  // Only show user profile page if they are signed in
   return (
     <div>
       {userId ? (

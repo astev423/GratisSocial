@@ -1,9 +1,8 @@
 ## IDEAS AND PROBLEMS
 
-
 Use react dev tools for site
 PROBLEMS:
--I dont think follow info shows for other users since it is based off client's id
+-Change user username when they change their username in clerk, make sure no duplicates
 -Too much info in my components and pages, use layout and globals to prevent repetition. try to split it up more
 -Have multiple folders for components, and a dedicated pages folder for all pages
 
@@ -15,6 +14,7 @@ IDEAS: Remove once repo made public
 -add dm mechanic
 
 ## IMPORTANT NOTES
+
 -Try to to use SSR when possible, especially for fetching info. Much easier than doing useEffect on a client component
 
 ## WELCOME TO GratisSocial
