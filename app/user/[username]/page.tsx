@@ -1,4 +1,5 @@
 "use client"
+import FollowerInfo from "@/app/components/FollowerInfo"
 import PostFeed from "@/app/components/PostFeed"
 import ProfileInfo from "@/app/components/ProfileInfo"
 import { useParams } from "next/navigation"
@@ -19,35 +20,29 @@ const defaultUser: User = {
 // Page is based off unique username of user, similar to my-account page but cant be edited
 export default function UserPage() {
   const params = useParams()
-  const { paramsUsername } = params
+  const { username: paramsUsername } = params
   const [user, setUser] = useState<User>(defaultUser)
   const [foundUser, setFoundUser] = useState(false)
   useEffect(() => {
-    const fetchAccountInfo = async () => {
-      try {
-        const response = await fetch(
-          `/api/fetchUser?username=${paramsUsername}`,
-        )
-        if (!response.ok) {
-          console.log("Error fetching user")
-          return
-        }
-
-        const data: User = await response.json()
-        // data is the whole json object for all user data. even userid and other stuff
-        const { username, firstName, lastName } = data
-        setUser({
-          username: username,
-          firstName: firstName,
-          lastName: lastName,
-        })
-        setFoundUser(true)
-      } catch (error) {
-        alert(`Network issue occured ${error}`)
+    const fetchUser = async () => {
+      const response = await fetch(`/api/fetchUser?username=${paramsUsername}`)
+      if (!response.ok) {
+        console.log("Error fetching user")
+        return
       }
+
+      const data: User = await response.json()
+      // data is the whole json object for all user data. even userid and other stuff
+      const { username, firstName, lastName } = data
+      setUser({
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+      })
+      setFoundUser(true)
     }
-    fetchAccountInfo()
-  }, [paramsUsername])
+    fetchUser()
+  }, [])
 
   return (
     <div>
@@ -55,6 +50,7 @@ export default function UserPage() {
         <div className="flex m-20 gap-20">
           <ProfileInfo></ProfileInfo>
           <PostFeed postsToSee={user.username}></PostFeed>
+          <FollowerInfo username={user.username}></FollowerInfo>
         </div>
       ) : (
         <div className="flex ">

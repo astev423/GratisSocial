@@ -14,13 +14,12 @@ export async function POST(request: Request) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId }),
-    cache: "no-store",
   })
   if (!res.ok) {
     const detail = await res.json().catch(() => null)
     return NextResponse.json(
       { message: "Failed to resolve username", detail },
-      { status: 502 }
+      { status: 502 },
     )
   }
   const { username } = await res.json()
@@ -30,7 +29,7 @@ export async function POST(request: Request) {
   if (!title || !content) {
     return NextResponse.json(
       { message: "Title and content are required." },
-      { status: 400 }
+      { status: 400 },
     )
   }
 
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { message: `Error creating post. ${error}` },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

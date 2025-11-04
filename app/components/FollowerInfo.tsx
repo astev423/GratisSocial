@@ -7,24 +7,31 @@ type followInfoType = {
   followers: number
 }
 
-export default function FollowerInfo(username: string) {
-  const [followInfo, setFollowInfo] = useState<followInfoType>({
-    following: 0,
-    followers: 0,
-  })
+type followInfoProps = {
+  username: string
+}
+
+export default function FollowerInfo({ username }: followInfoProps) {
+  const [followers, setFollowers] = useState(0)
+  const [following, setFollowing] = useState(0)
 
   // Fetch and set follow info
   useEffect(() => {
     const fetchFollowInfo = async () => {
-      const response = await fetch(`/api/fetchFollowInfo?userId=${userId}`)
-      if (response.ok) {
-        const data: followInfoType = await response.json()
-        setFollowInfo(data)
+      const response = await fetch("/api/fetchFollowInfo", {
+        method: "POST",
+        body: JSON.stringify({ username }),
+      })
+      if (!response.ok) {
+        console.log("Couldn't fetch follow info for that username")
       }
+
+      const data: followInfoType = await response.json()
+      setFollowers(data.followers)
+      setFollowing(data.following)
     }
     fetchFollowInfo()
   }, [])
-  const { followers, following } = followInfo
 
   return (
     <div className="flex gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
