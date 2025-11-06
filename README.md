@@ -13,6 +13,8 @@ PROBLEMS:
 
 ## IDEAS: Remove once repo made public
 
+-add suspense for loading posts and other info
+
 -try fetching on server components https://www.youtube.com/watch?v=rGPpQdbDbwo&list=WL&index=23
 
 -use adapter pattern for getting userId from clerk incase clerk changes how id is gotten

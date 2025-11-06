@@ -39,21 +39,29 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
 
   return (
     <div className="flex flex-col justify-center items-center gap-5">
-      <div className="text-3xl font-bold">Posts</div>
-      <div className="flex flex-col gap-5">
-        {posts.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            content={post.content}
-            createdAt={post.createdAt}
-            posterUsername={post.posterUsername}
-            likes={post.likes}
-            comments={post.comments}
-          />
-        ))}
+      <div className="text-3xl bg-white p-5 w-150 text-center font-bold">
+        Posts
       </div>
+      {posts.length == 0 ? (
+        <div className="bg-white p-5 text-center text-2xl gap-4 w-150">
+          No posts found
+        </div>
+      ) : (
+        <div className="flex flex-col gap-5">
+          {posts.map((post) => (
+            <Post
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              createdAt={post.createdAt}
+              posterUsername={post.posterUsername}
+              likes={post.likes}
+              comments={post.comments}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

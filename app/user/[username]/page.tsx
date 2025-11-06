@@ -23,11 +23,13 @@ export default function UserPage() {
   const { username: paramsUsername } = params
   const [user, setUser] = useState<User>(defaultUser)
   const [foundUser, setFoundUser] = useState(false)
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     const fetchUser = async () => {
       const response = await fetch(`/api/fetchUser?username=${paramsUsername}`)
       if (!response.ok) {
         console.log("Error fetching user")
+        setLoading(false)
         return
       }
 
@@ -40,21 +42,38 @@ export default function UserPage() {
         lastName: lastName,
       })
       setFoundUser(true)
+      setLoading(false)
     }
     fetchUser()
   }, [])
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {foundUser ? (
-        <div className="flex m-20 gap-20">
-          <ProfileInfo></ProfileInfo>
+        <div className="flex m-20 gap-15">
+          <div className="grow-0">
+            <ProfileInfo
+              username={user.username}
+              firstName={user.firstName}
+              lastName={user.lastName}
+            ></ProfileInfo>
+          </div>
           <PostFeed postsToSee={user.username}></PostFeed>
-          <FollowerInfo username={user.username}></FollowerInfo>
+          <div className="grow-0">
+            <FollowerInfo username={user.username}></FollowerInfo>
+          </div>
+        </div>
+      ) : loading ? (
+        <div className="flex mt-30 justify-center">
+          <div className="items-center text-5xl gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
+            Loading
+          </div>
         </div>
       ) : (
-        <div className="flex ">
-          <div className="font-black text-6xl p-20">Failed to find user</div>
+        <div className="flex mt-30 justify-center">
+          <div className="items-center text-5xl gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
+            Failed to find user
+          </div>
         </div>
       )}
     </div>
