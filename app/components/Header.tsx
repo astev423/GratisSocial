@@ -12,10 +12,12 @@ import {
 import { useEffect } from "react"
 
 const Header = () => {
-  const { userId } = useAuth()
   // If user auth'ed with clerk we need to add them to database via createAccount api
+  const { userId } = useAuth()
+
   useEffect(() => {
     const fetchUser = async () => {
+      // If not signed in with clerk then don't even try fetching or making account since no info given
       if (!userId) {
         return
       }
@@ -30,6 +32,7 @@ const Header = () => {
     }
     fetchUser()
   }, [userId])
+
   return (
     <div className="flex flex-wrap bg-white p-8 items-center justify-between">
       <div className="flex items-end">

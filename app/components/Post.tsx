@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from "react"
 import CommentFeed from "./CommentFeed"
+import { formatDate } from "@/lib/utils"
+import type { Post as PostModel } from "./PostFeed"
 
-type PostProps = {
-  id: string
-  posterUsername: string
-  title: string
-  content: string
-  createdAt: string
-  likes: number
-  comments: number
-}
+type PostProps = Readonly<{ post: PostModel }>
 
-const Post: React.FC<PostProps> = ({
-  title,
-  posterUsername,
-  content,
-  createdAt,
-  likes,
-  comments,
-}) => {
-  function formatDate(dateTimeString: string): string {
-    const date = new Date(dateTimeString)
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-  }
-
+// Destructure from props as props are objects, THEN WE CAN DESTRUCTURE ITEMS, NOT BEFORE!
+export default function Post({ post }: PostProps) {
+  const { title, posterUsername, createdAt, content, likes, comments } = post
   return (
     <div className="bg-white p-5 flex flex-col gap-4 w-150">
       <div className="font-bold text-4xl text-center">{title}</div>
@@ -41,5 +20,3 @@ const Post: React.FC<PostProps> = ({
     </div>
   )
 }
-
-export default Post

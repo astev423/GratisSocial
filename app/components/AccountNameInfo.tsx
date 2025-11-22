@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@clerk/nextjs"
 import React, { useEffect, useState } from "react"
 
 type User = {
@@ -8,41 +7,33 @@ type User = {
   lastName: string
   username: string
 }
-const AccountInfo = () => {
-  const { userId } = useAuth()
-  const [user, setUser] = useState<User | null>(null)
-  const [firstName, setFirstName] = useState("")
+
+export const AccountNameInfo = () => {
   const [editableFirstName, setEditableFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
   const [editableLastName, setEditableLastName] = useState("")
   const [username, setUsername] = useState("")
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!userId) {
-        return
-      }
-
       const response = await fetch("/api/fetchUser", {
         method: "POST",
       })
       if (response.ok) {
         const data: User = await response.json()
-        setUser(data)
+        setEditableFirstName(data.firstName)
+        setEditableLastName(data.lastName)
         setUsername(data.username)
-        setFirstName(data.firstName)
-        setLastName(data.lastName)
       }
     }
     fetchUser()
-  }, [userId])
+  }, [])
 
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">
       <div className="p-2 text-2xl">
         Account information for <br></br>
         <div className="font-normal text-xl text-gray-700">
-          {firstName} {lastName}
+          {editableFirstName} {editableLastName}
         </div>
         <br></br>
         Unique username: <br></br>
@@ -58,7 +49,7 @@ const AccountInfo = () => {
           }}
           type="text"
           className="border-2"
-          placeholder={user?.firstName}
+          placeholder={editableFirstName}
         ></input>
       </div>
       <div className="flex items-center justify-center">
@@ -70,13 +61,13 @@ const AccountInfo = () => {
           }}
           type="text"
           className="border-2"
-          placeholder={user?.lastName}
+          placeholder={editableLastName}
         ></input>
       </div>
       <button
         onClick={async () => {
-          setFirstName(editableFirstName)
-          setLastName(editableLastName)
+          setEditableFirstName(editableFirstName)
+          setEditableLastName(editableLastName)
           await fetch("/api/updateAccount", {
             method: "PUT",
             headers: {
@@ -93,4 +84,4 @@ const AccountInfo = () => {
   )
 }
 
-export default AccountInfo
+export default AccountNameInfo

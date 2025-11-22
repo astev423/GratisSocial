@@ -1,15 +1,23 @@
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
-const prisma = new PrismaClient()
+// Take in username and return follow info
+export async function POST(request: Request) {
+  const body = await request.json()
+  const { username } = body
 
-// Don't validate id server side since we need to use this for viewing other account's follow info
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const userId = searchParams.get("userId")
-  if (!userId) {
-    return NextResponse.json({ error: "User ID is required." }, { status: 400 })
+  // Use username to get id
+  const user = await prisma.user.findFirst({
+    where: {
+      username: username,
+    },
+  })
+  if (!user) {
+    return NextResponse.json({ error: "User not found" }, { status: 400 })
   }
+  const { id: userId } = user
+
+  // Use id to get follower infomation
   const followersCount = await prisma.follow.count({
     where: {
       personFollowedId: userId,
@@ -20,8 +28,9 @@ export async function GET(request: Request) {
       followerId: userId,
     },
   })
+
   return NextResponse.json(
     { following: followingCount, followers: followersCount },
-    { status: 200 }
+    { status: 200 },
   )
 }

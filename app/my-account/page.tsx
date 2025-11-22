@@ -1,23 +1,29 @@
 import React from "react"
-import AccountInfo from "../components/AccountInfo"
+import AccountNameInfo from "../components/AccountNameInfo"
 import PostFeed from "../components/PostFeed"
 import FollowerInfo from "../components/FollowerInfo"
-import { auth } from "@clerk/nextjs/server"
+import { currentUser } from "@clerk/nextjs/server"
 
 // Here user can change their prof pic, name, and see all their posts
-const page = async () => {
-  const { userId } = await auth()
+export default async function page() {
+  const user = await currentUser()
+  if (!user) {
+    return
+  }
+  const { username } = user
+
+  // Only show user profile page if they are signed in
   return (
     <div>
-      {userId ? (
+      {username ? (
         <div>
           <div className="flex justify-center p-8 gap-20 ">
             <div>
-              <AccountInfo />
+              <AccountNameInfo />
             </div>
             <PostFeed postsToSee="myPosts"></PostFeed>
             <div>
-              <FollowerInfo />
+              <FollowerInfo username={username} />
             </div>
           </div>
         </div>
@@ -29,5 +35,3 @@ const page = async () => {
     </div>
   )
 }
-
-export default page

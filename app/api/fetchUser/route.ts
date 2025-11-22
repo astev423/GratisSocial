@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
-
-const prisma = new PrismaClient()
 
 // Get user from their ID
 export async function POST() {
@@ -10,6 +8,7 @@ export async function POST() {
   if (!userId) {
     return NextResponse.json({ error: "User not found" }, { status: 400 })
   }
+
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -40,6 +39,7 @@ export async function GET(request: Request) {
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 400 })
   }
+
   const { username, firstName, lastName } = user
   const userObjectWithoutSensitiveInfo = { username, firstName, lastName }
   return NextResponse.json(userObjectWithoutSensitiveInfo, { status: 200 })

@@ -1,20 +1,34 @@
 ## IDEAS AND PROBLEMS
 
-
 Use react dev tools for site
 PROBLEMS:
--I dont think follow info shows for other users since it is based off client's id
+
+-Move state down, client comps too high up
+
+-Change user username when they change their username in clerk, make sure no duplicates
+
 -Too much info in my components and pages, use layout and globals to prevent repetition. try to split it up more
+
 -Have multiple folders for components, and a dedicated pages folder for all pages
 
-IDEAS: Remove once repo made public
+-Allow users to filter posts by following or all public posts (private posts only see via follow)
+
+## IDEAS: Remove once repo made public
+
+-add suspense for loading posts and other info
+
 -try fetching on server components https://www.youtube.com/watch?v=rGPpQdbDbwo&list=WL&index=23
+
 -use adapter pattern for getting userId from clerk incase clerk changes how id is gotten
+
 -add button to delete posts
+
 -add follower mechanic
+
 -add dm mechanic
 
 ## IMPORTANT NOTES
+
 -Try to to use SSR when possible, especially for fetching info. Much easier than doing useEffect on a client component
 
 ## WELCOME TO GratisSocial
@@ -23,12 +37,34 @@ Open social media platform, we don't sell your data, in fact we can't, since the
 nice, simple, intuitive platform anyone can use.
 Built using NextJS, typescript, Prisma ORM, and Clerk
 
-## HOW TO USE
+## HOW TO SET UP GRATIS
 
-You will need to clone the repo, then run
+**1. You will need to clone the repo, then run**
 
+```
 npm install
+```
+**2. Then, make a database and run it in the background (my DB is psql on linux)**
 
-Then you need to make a database and have it running in the backround (I use psql on linux)
-Then you need to connect it to Prisma (follow the prisma website tutorial)
-You will also need to set up Clerk (follow their website tutorial aswell)
+**3. Then connect your DB to Prisma (follow the prisma website tutorial or read steps below (my steps might not work))**
+
+For connecting it to psql I simply made a .env file with my database information
+
+```
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+```
+
+and then ran the commands:
+
+```
+npx prisma migrate dev --name init
+npx prisma generate
+```
+**3. You will also need to set up Clerk (follow their website tutorial or steps below)**
+
+Make a clerk account and get your API keys and then put it in the .env file like so
+```
+<other env file above>
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_public_key_here
+CLERK_SECRET_KEY=your_private_key_here
+```
