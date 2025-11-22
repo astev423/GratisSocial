@@ -1,39 +1,36 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
+import { type Dispatch, type SetStateAction } from "react"
 
-export default function CreatePost({ onPost }: { onPost: () => void }) {
+type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> }
+
+export default function CreatePost({ setRefreshKey }: CreatePostProps) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
 
   //submit post using prisma client
-  const submitPost = async () => {
+  async function submitPost() {
     if (!title || !content) {
       alert("You must provide both content and a title")
       return
     }
 
-    try {
-      const response = await fetch("/api/createPost", {
-        // Call your API route
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, content }),
-      })
-
-      if (response.ok) {
-        setTitle("") // Clear form
-        setContent("") // Clear form
-        // Update parent to display new post
-        onPost()
-      } else {
-        console.log("Creating post API call didn't return right stuff")
-      }
-    } catch (error) {
-      console.error("Network or API call error:", error)
+    const response = await fetch("/api/createPost", {
+      // Call your API route
+      method: "POST",
+      body: JSON.stringify({ title, content }),
+    })
+    if (!response.ok) {
+      console.log("CreatePost API call had error")
+      return
     }
+
+    // Clear form after post for next post
+    setTitle("")
+    setContent("")
+    // Stateful functions are special and can affect value even if state isnt in this component
+    setRefreshKey((refreshKey) => refreshKey + 1)
   }
 
   return (
@@ -53,9 +50,11 @@ export default function CreatePost({ onPost }: { onPost: () => void }) {
       ></textarea>
       <button
         onClick={submitPost}
-        className="bg-gray-400 p-5 hover:cursor-pointer hover:bg-gray-600"
+        className="group bg-gray-400 p-5 hover:cursor-pointer hover:bg-gray-600"
       >
-        Submit Post
+        <span className="group-hover:scale-130 duration-200 inline-block hover:scale-130">
+          Submit Post
+        </span>
       </button>
     </div>
   )

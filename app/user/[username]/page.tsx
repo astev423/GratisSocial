@@ -4,18 +4,15 @@ import PostFeed from "@/app/components/PostFeed"
 import ProfileInfo from "@/app/components/ProfileInfo"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-
-type User = {
-  username: string
-  firstName: string
-  lastName: string
-}
+import type { User } from "../../../types/types"
 
 const defaultUser: User = {
   username: "temp",
   firstName: "temp",
   lastName: "temp",
 }
+
+// This can be made a server component since we don't need to update data, work on that next
 
 // Page is based off unique username of user, similar to my-account page but cant be edited
 export default function UserPage() {

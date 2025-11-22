@@ -3,9 +3,10 @@ import FeedContainer from "./components/FeedContainer"
 
 export default async function Home() {
   const { userId } = await auth()
+
   return (
     <div>
-      {userId ? (
+      {userId != null ? (
         // useState needs to be on client component to feedcontainer was made and auth is done here
         <FeedContainer />
       ) : (

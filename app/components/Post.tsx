@@ -1,8 +1,8 @@
 import CommentFeed from "./CommentFeed"
 import { formatDate } from "@/lib/utils"
-import type { Post as PostModel } from "./PostFeed"
+import type { Post as PostType } from "../../types/types"
 
-type PostProps = Readonly<{ post: PostModel }>
+type PostProps = Readonly<{ post: PostType }>
 
 // Destructure from props as props are objects, THEN WE CAN DESTRUCTURE ITEMS, NOT BEFORE!
 export default function Post({ post }: PostProps) {

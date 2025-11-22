@@ -11,6 +11,7 @@ import {
 } from "@clerk/nextjs"
 import { useEffect } from "react"
 
+// try and make this a server comp
 const Header = () => {
   // If user auth'ed with clerk we need to add them to database via createAccount api
   const { userId } = useAuth()
@@ -42,20 +43,26 @@ const Header = () => {
       </div>
       <div className="flex gap-20 mr-40">
         <Link href={"/"}>
-          <div className="text-2xl font-bold">Home</div>
+          <div className="text-2xl hover:scale-130 duration-300 font-bold">
+            Home
+          </div>
         </Link>
         <div className="flex gap-20 text-2xl font-bold">
           <SignedOut>
             <SignInButton>
-              <div className="hover:cursor-pointer">Sign in</div>
+              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">
+                Sign in
+              </div>
             </SignInButton>
             <SignUpButton>
-              <div className="hover:cursor-pointer">Sign up</div>
+              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">
+                Sign up
+              </div>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
             <Link href={"/my-account"}>
-              <div>My account</div>
+              <div className="hover:scale-130 duration-300 ">My account</div>
             </Link>
             <UserButton />
           </SignedIn>
