@@ -3,6 +3,8 @@
 Use react dev tools for site
 PROBLEMS:
 
+-Move state down, client comps too high up
+
 -Change user username when they change their username in clerk, make sure no duplicates
 
 -Too much info in my components and pages, use layout and globals to prevent repetition. try to split it up more

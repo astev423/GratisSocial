@@ -12,7 +12,7 @@ export default function FeedContainer() {
   return (
     <div className="center-menu flex flex-col items-center justify-center gap-15 mt-20">
       <CreatePost onPost={() => setRefreshKey((prev) => prev + 1)} />
-      <PostFeed key={refreshKey} postsToSee="following" />
+      <PostFeed postsToSee="following" />
     </div>
   )
 }

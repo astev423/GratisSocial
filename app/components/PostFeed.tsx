@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react"
 import Post from "./Post"
 
-type Post = {
+export type Post = {
   id: string
+  posterUsername: string
   title: string
   content: string
   createdAt: string
-  posterUsername: string
   likes: number
   comments: number
 }
@@ -49,16 +49,8 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
       ) : (
         <div className="flex flex-col gap-5">
           {posts.map((post) => (
-            <Post
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              createdAt={post.createdAt}
-              posterUsername={post.posterUsername}
-              likes={post.likes}
-              comments={post.comments}
-            />
+            // Props get passed in as an object even if just one, key gets stripped out of obj
+            <Post post={post} key={post.id} />
           ))}
         </div>
       )}
