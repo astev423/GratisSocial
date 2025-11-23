@@ -16,6 +16,7 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
     const response = await fetch(`/api/posts?type=${postsToSee}`)
     if (!response.ok) {
       console.log("Failed to fetch posts in PostFeed")
+      return
     }
 
     const data: PostType[] = await response.json()
@@ -40,7 +41,12 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
         <div className="flex flex-col gap-5">
           {posts.map((post) => (
             // Props get passed in as an object even if just one, key gets stripped out of obj
-            <Post post={post} key={post.id} />
+            <Post
+              refetch={fetchPosts}
+              postsToSee={postsToSee}
+              post={post}
+              key={post.id}
+            />
           ))}
         </div>
       )}

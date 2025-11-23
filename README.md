@@ -1,13 +1,14 @@
 ## IDEAS AND PROBLEMS
 
-Use react dev tools for site
 PROBLEMS:
+
+-Have separate fetchPosts for user profile so can use enum and usernames can be "myPosts"
 
 -Move state down, client comps too high up
 
 -Change user username when they change their username in clerk, make sure no duplicates
 
--Too much info in my components and pages, use layout and globals to prevent repetition. try to split it up more
+-Too much info in my components and pages, use layout and globals to prevent repetition. Try to split it up more
 
 -Have multiple folders for components, and a dedicated pages folder for all pages
 
@@ -19,7 +20,7 @@ PROBLEMS:
 
 -try fetching on server components https://www.youtube.com/watch?v=rGPpQdbDbwo&list=WL&index=23
 
--use adapter pattern for getting userId from clerk incase clerk changes how id is gotten
+-use adapter pattern for getting userId from clerk in case clerk changes how ID is gotten
 
 -add button to delete posts
 
@@ -29,7 +30,7 @@ PROBLEMS:
 
 ## IMPORTANT NOTES
 
--Try to to use SSR when possible, especially for fetching info. Much easier than doing useEffect on a client component
+-Try to use SSR when possible, especially for fetching info. Much easier than doing useEffect on a client component
 
 ## WELCOME TO GratisSocial
 
