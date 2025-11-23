@@ -2,8 +2,6 @@
 
 PROBLEMS:
 
--Have separate fetchPosts for user profile so can use enum and usernames can be "myPosts"
-
 -Move state down, client comps too high up
 
 -Change user username when they change their username in clerk, make sure no duplicates

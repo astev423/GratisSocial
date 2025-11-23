@@ -1,10 +1,12 @@
 "use client"
 import FollowerInfo from "@/app/components/FollowerInfo"
-import PostFeed from "@/app/components/PostFeed"
+import PostFeed from "../../components/posts/PostFeed"
 import ProfileInfo from "@/app/components/ProfileInfo"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import type { User } from "../../../types/types"
+import { useAuth } from "@clerk/nextjs"
+import NotSignedInError from "@/app/components/NotSignedInError"
 
 const defaultUser: User = {
   username: "temp",
@@ -16,6 +18,7 @@ const defaultUser: User = {
 
 // Page is based off unique username of user, similar to my-account page but cant be edited
 export default function UserPage() {
+  const { userId } = useAuth()
   const params = useParams()
   const { username: paramsUsername } = params
   const [user, setUser] = useState<User>(defaultUser)
@@ -46,7 +49,7 @@ export default function UserPage() {
     fetchUser()
   }, [])
 
-  return (
+  return userId != null ? (
     <div className="flex items-center justify-center">
       {foundUser ? (
         <div className="flex m-20 gap-15">
@@ -79,5 +82,7 @@ export default function UserPage() {
         </div>
       )}
     </div>
+  ) : (
+    <NotSignedInError />
   )
 }

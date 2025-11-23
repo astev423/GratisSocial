@@ -1,9 +1,10 @@
-import CommentFeed from "./CommentFeed"
 import { formatDate } from "@/lib/utils"
-import type { Post as PostType } from "../../types/types"
+import type { Post as PostType } from "../../../types/types"
 import ConfirmPostDeletion from "./ConfirmPostDeletion"
 import { useState } from "react"
 import { useAuth } from "@clerk/nextjs"
+import CommentFeed from "../comments/CommentFeed"
+import Link from "next/link"
 
 type PostProps = Readonly<{
   post: PostType
@@ -22,7 +23,8 @@ export default function Post({ post, refetch }: PostProps) {
         {post.userId == userId ? (
           <div
             onClick={() => setShowConfirmation(true)}
-            className="self-start text-3xl hover:brightness-50 hover:scale-140 hover:cursor-pointer"
+            className="self-start text-3xl hover:brightness-50 hover:scale-140 duration-300
+                      hover:cursor-pointer"
           >
             ❌
           </div>
@@ -35,7 +37,15 @@ export default function Post({ post, refetch }: PostProps) {
           refetch={refetch}
         />
       )}
-      <div>By: {post.posterUsername}</div>
+      <div className="flex gap-1">
+        <div>By: </div>
+        <Link
+          href={`/user/${post.posterUsername}`}
+          className="text-blue-600 hover:underline"
+        >
+          {post.posterUsername}
+        </Link>
+      </div>
       <div>Posted on: {formatDate(post.createdAt)}</div>
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>

@@ -4,13 +4,16 @@ import { useEffect, useState } from "react"
 import Post from "./Post"
 import type { Post as PostType } from "../../types/types"
 
-// Union for enum like safety, prevent mispellings
+// Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
   postsToSee: "following" | "all" | "myPosts" | "specificUser"
-  username: string | undefined
+  username?: string | undefined
 }
 
-export default function PostFeed({ postsToSee, username }: PostFeedProps) {
+export default function PostFeed({
+  postsToSee,
+  username = undefined,
+}: PostFeedProps) {
   const [posts, setPosts] = useState<PostType[]>([])
 
   async function fetchPosts(): Promise<void> {

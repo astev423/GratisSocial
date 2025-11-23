@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import {
   SignInButton,
@@ -7,32 +5,31 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-  useAuth,
 } from "@clerk/nextjs"
-import { useEffect } from "react"
+import { auth } from "@clerk/nextjs/server"
 
-// try and make this a server comp
-const Header = () => {
+export default async function Header() {
   // If user auth'ed with clerk we need to add them to database via createAccount api
-  const { userId } = useAuth()
+  const { userId } = await auth()
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      // If not signed in with clerk then don't even try fetching or making account since no info given
-      if (!userId) {
-        return
-      }
-      const response = await fetch("/api/fetchUser", {
+  async function fetchUser() {
+    // If not signed in with clerk then don't even try fetching or making account since no info given
+    if (!userId) {
+      return
+    }
+
+    // If user signed in with clerk check DB if they exist, if not then make account for them
+    const response = await fetch("/api/fetchUser", {
+      method: "POST",
+    })
+    if (!response.ok) {
+      await fetch("/api/createAccount", {
         method: "POST",
       })
-      if (!response.ok) {
-        await fetch("/api/createAccount", {
-          method: "POST",
-        })
-      }
     }
-    fetchUser()
-  }, [userId])
+  }
+
+  fetchUser()
 
   return (
     <div className="flex flex-wrap bg-white p-8 items-center justify-between">
@@ -71,5 +68,3 @@ const Header = () => {
     </div>
   )
 }
-
-export default Header
