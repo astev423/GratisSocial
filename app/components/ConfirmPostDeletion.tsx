@@ -13,7 +13,7 @@ export default function ConfirmPostDeletion({
   setShowConfirmation,
   refetch,
 }: ConfirmProps) {
-  async function deletePost() {
+  async function deletePost(): Promise<void> {
     const response = await fetch("/api/deletePost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

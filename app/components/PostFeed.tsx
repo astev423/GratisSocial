@@ -1,19 +1,24 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Post from "./Post"
 import type { Post as PostType } from "../../types/types"
 
 // Union for enum like safety, prevent mispellings
 type PostFeedProps = {
-  postsToSee: "following" | "all" | "myPosts" | string
+  postsToSee: "following" | "all" | "myPosts" | "specificUser"
+  username: string | undefined
 }
 
-export default function PostFeed({ postsToSee }: PostFeedProps) {
+export default function PostFeed({ postsToSee, username }: PostFeedProps) {
   const [posts, setPosts] = useState<PostType[]>([])
 
-  async function fetchPosts() {
-    const response = await fetch(`/api/posts?type=${postsToSee}`)
+  async function fetchPosts(): Promise<void> {
+    const url = username
+      ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
+      : `/api/posts?type=${postsToSee}`
+
+    const response = await fetch(url)
     if (!response.ok) {
       console.log("Failed to fetch posts in PostFeed")
       return
@@ -41,12 +46,7 @@ export default function PostFeed({ postsToSee }: PostFeedProps) {
         <div className="flex flex-col gap-5">
           {posts.map((post) => (
             // Props get passed in as an object even if just one, key gets stripped out of obj
-            <Post
-              refetch={fetchPosts}
-              postsToSee={postsToSee}
-              post={post}
-              key={post.id}
-            />
+            <Post refetch={fetchPosts} post={post} key={post.id} />
           ))}
         </div>
       )}

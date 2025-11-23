@@ -21,26 +21,28 @@ export default function UserPage() {
   const [user, setUser] = useState<User>(defaultUser)
   const [foundUser, setFoundUser] = useState(false)
   const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch(`/api/fetchUser?username=${paramsUsername}`)
-      if (!response.ok) {
-        console.log("Error fetching user")
-        setLoading(false)
-        return
-      }
 
-      const data: User = await response.json()
-      // data is the whole json object for all user data. even userid and other stuff
-      const { username, firstName, lastName } = data
-      setUser({
-        username: username,
-        firstName: firstName,
-        lastName: lastName,
-      })
-      setFoundUser(true)
+  async function fetchUser() {
+    const response = await fetch(`/api/fetchUser?username=${paramsUsername}`)
+    if (!response.ok) {
+      console.log("Error fetching user")
       setLoading(false)
+      return
     }
+
+    const data: User = await response.json()
+    // data is the whole json object for all user data. even userid and other stuff
+    const { username, firstName, lastName } = data
+    setUser({
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+    })
+    setFoundUser(true)
+    setLoading(false)
+  }
+
+  useEffect(() => {
     fetchUser()
   }, [])
 
@@ -55,7 +57,10 @@ export default function UserPage() {
               lastName={user.lastName}
             ></ProfileInfo>
           </div>
-          <PostFeed postsToSee={user.username}></PostFeed>
+          <PostFeed
+            username={paramsUsername?.toString()}
+            postsToSee={"specificUser"}
+          ></PostFeed>
           <div className="grow-0">
             <FollowerInfo username={user.username}></FollowerInfo>
           </div>

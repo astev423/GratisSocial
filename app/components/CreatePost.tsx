@@ -10,7 +10,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
   const [content, setContent] = useState("")
 
   //submit post using prisma client
-  async function submitPost() {
+  async function submitPost(): Promise<void> {
     if (!title || !content) {
       alert("You must provide both content and a title")
       return
