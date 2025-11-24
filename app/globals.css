@@ -1,4 +1,13 @@
 @import "tailwindcss";
+@tailwind utilities;
+
 body {
   @apply bg-slate-100;
+}
+
+/* Global variables here */
+@layer components {
+  .clickable-scale-animation {
+    @apply transition-transform duration-300 hover:cursor-pointer hover:scale-130;
+  }
 }

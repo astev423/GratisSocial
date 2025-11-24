@@ -1,12 +1,12 @@
-import { auth } from '@clerk/nextjs/server';
+import { auth } from "@clerk/nextjs/server";
 
-import FailedToFindUser from '@/app/components/FailedToFindUser';
-import FollowerInfo from '@/app/components/FollowerInfo';
-import NotSignedInError from '@/app/components/NotSignedInError';
-import ProfileInfo from '@/app/components/ProfileInfo';
+import FailedToFindUser from "@/app/components/FailedToFindUser";
+import FollowerInfo from "@/app/components/FollowerInfo";
+import NotSignedInError from "@/app/components/NotSignedInError";
+import ProfileInfo from "@/app/components/ProfileInfo";
 
-import { fetchUser } from '../../../lib/server/serverUtils';
-import PostFeed from '../../components/posts/PostFeed';
+import { fetchUser } from "../../../lib/server/dbQueries";
+import PostFeed from "../../components/posts/PostFeed";
 
 type PageProps = {
   params: Promise<{ username: string }>;

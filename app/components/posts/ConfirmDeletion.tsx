@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from "react";
 
 type ConfirmProps = {
-  setShowConfirmation: Dispatch<SetStateAction<boolean>>;
-  postId: string;
-  refetch: () => void;
+  confirmObject: {
+    setShowConfirmation: Dispatch<SetStateAction<boolean>>;
+    postId: string;
+    refetch: () => void;
+  };
 };
 
-export default function ConfirmPostDeletion({
-  postId,
-  setShowConfirmation,
-  refetch,
-}: ConfirmProps) {
+export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
+  const { postId, refetch, setShowConfirmation } = confirmObject;
+
   async function deletePost(): Promise<void> {
-    const response = await fetch('/api/deletePost', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/deletePost", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ postId }),
     });
     if (!response.ok) {
-      console.log('Error while trying to delete post');
+      console.log("Error while trying to delete post");
       return;
     }
 
-    // If post actually deleted we need to refetch
+    // If post actually deleted we need to reload posts to get rid of deleted one
     if (response.status == 200) {
       refetch();
     }
@@ -37,7 +37,9 @@ export default function ConfirmPostDeletion({
         <div className="absolute inset-0 flex items-center justify-center p-4">
           <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-lg">
             <h2 className="text-lg font-semibold">Are you sure?</h2>
-            <p className="mt-2 text-sm text-gray-600">This action cannot be undone.</p>
+            <p className="mt-2 text-sm text-gray-600">
+              This action cannot be undone.
+            </p>
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setShowConfirmation(false)}

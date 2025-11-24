@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import Link from "next/link";
 
-import Link from 'next/link';
+import { useAuth } from "@clerk/nextjs";
 
-import { useAuth } from '@clerk/nextjs';
+import { formatDate } from "@/lib/shared/sharedUtils";
 
-import { formatDate } from '@/lib/shared/sharedUtils';
+import type { Post as PostType } from "../../../types/types";
+import CommentFeed from "../comments/CommentFeed";
+import ConfirmDeletion from "./ConfirmDeletion";
 
-import type { Post as PostType } from '../../../types/types';
-import CommentFeed from '../comments/CommentFeed';
-import ConfirmPostDeletion from './ConfirmPostDeletion';
+import { useState } from "react";
 
 type PostProps = Readonly<{
   post: PostType;
@@ -18,13 +18,18 @@ type PostProps = Readonly<{
 export default function Post({ post, refetch }: PostProps) {
   const { userId } = useAuth();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const confirmProps = {
+    postId: post.id,
+    setShowConfirmation: setShowConfirmation,
+    refetch: refetch,
+  };
 
   return (
     <div className="bg-white p-5 flex flex-col gap-4 w-150">
-      {/* This is for the top part of the post, allow deletion if its users own post */}
       <div className="flex justify-between ">
         <div className="text-4xl font-bold">{post.title}</div>
 
+        {/* This part shows red X on post if post creator matches user*/}
         {post.userId == userId && (
           <div
             onClick={() => setShowConfirmation(true)}
@@ -37,13 +42,7 @@ export default function Post({ post, refetch }: PostProps) {
       </div>
 
       {/* If red X pressed then confirm if user wants to delete post*/}
-      {showConfirmation && (
-        <ConfirmPostDeletion
-          postId={post.id}
-          setShowConfirmation={setShowConfirmation}
-          refetch={refetch}
-        />
-      )}
+      {showConfirmation && <ConfirmDeletion confirmObject={confirmProps} />}
 
       {/* All other post info besides title down here*/}
       <div className="flex gap-2">
