@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import { ClerkProvider } from '@clerk/nextjs';
 
-import Header from './components/Header';
+import Header from './components/header/Header';
 import './globals.css';
 
 export const metadata: Metadata = {

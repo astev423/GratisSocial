@@ -1,36 +1,36 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { type Dispatch, type SetStateAction } from "react"
+import { useState } from 'react';
+import { type Dispatch, type SetStateAction } from 'react';
 
-type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> }
+type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> };
 
 export default function CreatePost({ setRefreshKey }: CreatePostProps) {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   //submit post using prisma client
-  async function submitPost(): Promise<void> {
+  async function submitPost() {
     if (!title || !content) {
-      alert("You must provide both content and a title")
-      return
+      alert('You must provide both content and a title');
+      return;
     }
 
-    const response = await fetch("/api/createPost", {
+    const response = await fetch('/api/createPost', {
       // Call your API route
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({ title, content }),
-    })
+    });
     if (!response.ok) {
-      console.log("CreatePost API call had error")
-      return
+      console.log('CreatePost API call had error');
+      return;
     }
 
     // Clear form after post for next post
-    setTitle("")
-    setContent("")
+    setTitle('');
+    setContent('');
     // Stateful functions are special and can affect value even if state isnt in this component
-    setRefreshKey((refreshKey) => refreshKey + 1)
+    setRefreshKey((refreshKey) => refreshKey + 1);
   }
 
   return (
@@ -57,5 +57,5 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
         </span>
       </button>
     </div>
-  )
+  );
 }
