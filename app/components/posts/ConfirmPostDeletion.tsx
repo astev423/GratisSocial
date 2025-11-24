@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from 'react';
 
 type ConfirmProps = {
-  setShowConfirmation: Dispatch<SetStateAction<boolean>>
-  postId: string
-  refetch: () => void
-}
+  setShowConfirmation: Dispatch<SetStateAction<boolean>>;
+  postId: string;
+  refetch: () => void;
+};
 
 export default function ConfirmPostDeletion({
   postId,
@@ -14,32 +14,30 @@ export default function ConfirmPostDeletion({
   refetch,
 }: ConfirmProps) {
   async function deletePost(): Promise<void> {
-    const response = await fetch("/api/deletePost", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/deletePost', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ postId }),
-    })
+    });
     if (!response.ok) {
-      console.log("Error while trying to delete post")
-      return
+      console.log('Error while trying to delete post');
+      return;
     }
 
     // If post actually deleted we need to refetch
     if (response.status == 200) {
-      refetch()
+      refetch();
     }
   }
 
   return (
     <div>
       <div className="fixed inset-0 z-9999" role="dialog" aria-modal="true">
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 flex items-center justify-center p-4">
           <div className="w-full max-w-sm rounded-lg bg-white p-4 shadow-lg">
             <h2 className="text-lg font-semibold">Are you sure?</h2>
-            <p className="mt-2 text-sm text-gray-600">
-              This action cannot be undone.
-            </p>
+            <p className="mt-2 text-sm text-gray-600">This action cannot be undone.</p>
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setShowConfirmation(false)}
@@ -49,8 +47,8 @@ export default function ConfirmPostDeletion({
               </button>
               <button
                 onClick={() => {
-                  deletePost()
-                  setShowConfirmation(false)
+                  deletePost();
+                  setShowConfirmation(false);
                 }}
                 className="rounded bg-red-600 px-3 py-2 text-sm text-white"
               >
@@ -61,5 +59,5 @@ export default function ConfirmPostDeletion({
         </div>
       </div>
     </div>
-  )
+  );
 }

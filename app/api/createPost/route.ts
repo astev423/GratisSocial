@@ -1,36 +1,26 @@
-import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
-import { prisma } from "@/lib/prisma"
+import { NextResponse } from 'next/server';
+
+import { auth } from '@clerk/nextjs/server';
+
+import { prisma } from '@/lib/prisma';
 
 // Securely get username from Id and set post and title to info in request body
 export async function POST(request: Request) {
-  const { userId } = await auth()
+  const { userId } = await auth();
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Fetch username off id we just validated
-  const res = await fetch(new URL("/api/fetchUserIdProvided", request.url), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId }),
-  })
-  if (!res.ok) {
-    const detail = await res.json().catch(() => null)
-    return NextResponse.json(
-      { message: "Failed to resolve username", detail },
-      { status: 502 },
-    )
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (user == null) {
+    return NextResponse.json({ message: 'User not found' }, { status: 404 });
   }
-  const { username } = await res.json()
+  const { username } = user;
 
   // Now that user is verified get title and post content info and upload it to DB
-  const { title, content } = await request.json()
+  const { title, content } = await request.json();
   if (!title || !content) {
-    return NextResponse.json(
-      { message: "Title and content are required." },
-      { status: 400 },
-    )
+    return NextResponse.json({ message: 'Title and content are required.' }, { status: 400 });
   }
 
   try {
@@ -47,13 +37,10 @@ export async function POST(request: Request) {
           connect: { username: username },
         },
       },
-    })
+    });
 
-    return NextResponse.json(newPost, { status: 201 })
+    return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { message: `Error creating post. ${error}` },
-      { status: 500 },
-    )
+    return NextResponse.json({ message: `Error creating post. ${error}` }, { status: 500 });
   }
 }

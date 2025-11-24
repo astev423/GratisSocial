@@ -1,43 +1,17 @@
-"use client"
+import { fetchFollowInfo } from '@/lib/server/serverUtils';
 
-import React, { useEffect, useState } from "react"
+export default async function FollowerInfo({ username }: { username: string }) {
+  const followInfo = await fetchFollowInfo(username);
 
-type followInfoType = {
-  following: number
-  followers: number
-}
-
-type followInfoProps = {
-  username: string
-}
-
-export default function FollowerInfo({ username }: followInfoProps) {
-  const [followers, setFollowers] = useState(0)
-  const [following, setFollowing] = useState(0)
-
-  // Fetch and set follow info
-  useEffect(() => {
-    const fetchFollowInfo = async () => {
-      const response = await fetch("/api/fetchFollowInfo", {
-        method: "POST",
-        body: JSON.stringify({ username }),
-      })
-      if (!response.ok) {
-        console.log("Couldn't fetch follow info for that username")
-      }
-
-      const data: followInfoType = await response.json()
-      setFollowers(data.followers)
-      setFollowing(data.following)
-    }
-    fetchFollowInfo()
-  }, [])
+  if (followInfo == null) {
+    return <div className="bg-white font-bold">Error loading follower info</div>;
+  }
 
   return (
     <div className="flex gap-2 flex-col p-8 whitespace-nowrap bg-white font-bold">
       <div className="font-bold text-2xl">Follower Information</div>
-      <div className="font-bold text-xl">Followers: {followers}</div>
-      <div className="font-bold text-xl">Following: {following}</div>
+      <div className="font-bold text-xl">Followers: {followInfo.followersCount}</div>
+      <div className="font-bold text-xl">Following: {followInfo.followingCount}</div>
     </div>
-  )
+  );
 }

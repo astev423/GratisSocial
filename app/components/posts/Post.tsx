@@ -1,26 +1,31 @@
-import { formatDate } from "@/lib/utils"
-import type { Post as PostType } from "../../../types/types"
-import ConfirmPostDeletion from "./ConfirmPostDeletion"
-import { useState } from "react"
-import { useAuth } from "@clerk/nextjs"
-import CommentFeed from "../comments/CommentFeed"
-import Link from "next/link"
+import { useState } from 'react';
+
+import Link from 'next/link';
+
+import { useAuth } from '@clerk/nextjs';
+
+import { formatDate } from '@/lib/shared/sharedUtils';
+
+import type { Post as PostType } from '../../../types/types';
+import CommentFeed from '../comments/CommentFeed';
+import ConfirmPostDeletion from './ConfirmPostDeletion';
 
 type PostProps = Readonly<{
-  post: PostType
-  refetch: () => void
-}>
+  post: PostType;
+  refetch: () => void;
+}>;
 
 export default function Post({ post, refetch }: PostProps) {
-  const { userId } = useAuth()
-  const [showConfirmation, setShowConfirmation] = useState(false)
+  const { userId } = useAuth();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  // Maybe split this up into title section and other stuff
   return (
     <div className="bg-white p-5 flex flex-col gap-4 w-150">
+      {/* This is for the top part of the post, allow deletion if its users own post */}
       <div className="flex justify-between ">
         <div className="text-4xl font-bold">{post.title}</div>
-        {post.userId == userId ? (
+
+        {post.userId == userId && (
           <div
             onClick={() => setShowConfirmation(true)}
             className="self-start text-3xl hover:brightness-50 hover:scale-140 duration-300
@@ -28,8 +33,10 @@ export default function Post({ post, refetch }: PostProps) {
           >
             ❌
           </div>
-        ) : null}
+        )}
       </div>
+
+      {/* If red X pressed then confirm if user wants to delete post*/}
       {showConfirmation && (
         <ConfirmPostDeletion
           postId={post.id}
@@ -37,11 +44,13 @@ export default function Post({ post, refetch }: PostProps) {
           refetch={refetch}
         />
       )}
-      <div className="flex gap-1">
+
+      {/* All other post info besides title down here*/}
+      <div className="flex gap-2">
         <div>By: </div>
         <Link
           href={`/user/${post.posterUsername}`}
-          className="text-blue-600 hover:underline"
+          className="text-blue-600 duration-200 hover:scale-120 hover:underline"
         >
           {post.posterUsername}
         </Link>
@@ -53,5 +62,5 @@ export default function Post({ post, refetch }: PostProps) {
       <div>comments: {post.comments}</div>
       <CommentFeed></CommentFeed>
     </div>
-  )
+  );
 }

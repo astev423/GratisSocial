@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Post from "./Post"
-import type { Post as PostType } from "../../types/types"
+import type { Post as PostType } from "../../../types/types"
 
 // Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
@@ -36,23 +36,26 @@ export default function PostFeed({
     fetchPosts()
   }, [postsToSee])
 
+  // If no posts then notify user of problem, otherwise map through all posts and make cards for each
+  if (posts.length == 0) {
+    return (
+      <div className="bg-white p-5 text-center text-2xl gap-4 w-150">
+        No posts found
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <div className="text-3xl bg-white p-5 w-150 text-center font-bold">
         Posts
       </div>
-      {posts.length == 0 ? (
-        <div className="bg-white p-5 text-center text-2xl gap-4 w-150">
-          No posts found
-        </div>
-      ) : (
-        <div className="flex flex-col gap-5">
-          {posts.map((post) => (
-            // Props get passed in as an object even if just one, key gets stripped out of obj
-            <Post refetch={fetchPosts} post={post} key={post.id} />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-col gap-5">
+        {posts.map((post) => (
+          // Props get passed in as an object even if just one, key gets stripped out of obj
+          <Post refetch={fetchPosts} post={post} key={post.id} />
+        ))}
+      </div>
     </div>
   )
 }

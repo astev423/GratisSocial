@@ -1,35 +1,28 @@
-import Link from "next/link"
-import {
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs"
-import { auth } from "@clerk/nextjs/server"
+import Link from 'next/link';
+
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+
+import { prisma } from '@/lib/prisma';
+import { createUser } from '@/lib/server/serverUtils';
 
 export default async function Header() {
   // If user auth'ed with clerk we need to add them to database via createAccount api
-  const { userId } = await auth()
+  const { userId } = await auth();
 
   async function fetchUser() {
-    // If not signed in with clerk then don't even try fetching or making account since no info given
     if (!userId) {
-      return
+      return;
     }
 
     // If user signed in with clerk check DB if they exist, if not then make account for them
-    const response = await fetch("/api/fetchUser", {
-      method: "POST",
-    })
-    if (!response.ok) {
-      await fetch("/api/createAccount", {
-        method: "POST",
-      })
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user == null) {
+      createUser();
     }
   }
 
-  fetchUser()
+  fetchUser();
 
   return (
     <div className="flex flex-wrap bg-white p-8 items-center justify-between">
@@ -39,26 +32,20 @@ export default async function Header() {
         <div className="text-3xl font-bold ">Social</div>
       </div>
       <div className="flex gap-20 mr-40">
-        <Link href={"/"}>
-          <div className="text-2xl hover:scale-130 duration-300 font-bold">
-            Home
-          </div>
+        <Link href={'/'}>
+          <div className="text-2xl hover:scale-130 duration-300 font-bold">Home</div>
         </Link>
         <div className="flex gap-20 text-2xl font-bold">
           <SignedOut>
             <SignInButton>
-              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">
-                Sign in
-              </div>
+              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">Sign in</div>
             </SignInButton>
             <SignUpButton>
-              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">
-                Sign up
-              </div>
+              <div className="hover:cursor-pointer hover:scale-130 duration-300 ">Sign up</div>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-            <Link href={"/my-account"}>
+            <Link href={'/my-account'}>
               <div className="hover:scale-130 duration-300 ">My account</div>
             </Link>
             <UserButton />
@@ -66,5 +53,5 @@ export default async function Header() {
         </div>
       </div>
     </div>
-  )
+  );
 }
