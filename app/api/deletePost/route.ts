@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/prisma/prisma"
 
 // Delete post by id if userId matches poster
 export async function POST(req: Request) {

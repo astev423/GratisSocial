@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { auth } from '@clerk/nextjs/server';
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/prisma/prisma';
 
 // Securely get username from Id and set post and title to info in request body
 export async function POST(request: Request) {

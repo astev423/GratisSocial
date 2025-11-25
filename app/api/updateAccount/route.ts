@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/prisma/prisma"
 
 // Update first and last name
 export async function PUT(request: Request) {

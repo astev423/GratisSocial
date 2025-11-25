@@ -1,5 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/prisma/prisma"
 import { NextResponse } from "next/server"
 
 // This makes a new account entirely from info provided from clerk authentication

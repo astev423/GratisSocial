@@ -1,7 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import "server-only";
 
-import { prisma } from "../prisma";
+import { prisma } from "../../prisma/prisma";
 
 export async function addClerkUserToDb() {
   const { userId } = await auth();

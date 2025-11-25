@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/prisma/prisma';
 
 // Get user from their ID in POST request, only call this from SERVER as users can fake their ID
 export async function POST(req: Request) {
