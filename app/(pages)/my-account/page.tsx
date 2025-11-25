@@ -1,8 +1,8 @@
 import { currentUser } from "@clerk/nextjs/server";
 
 import EditableNameInfo from "../../components/EditableNameInfo";
-import FollowerInfo from "../../components/FollowerInfo";
-import NotSignedInError from "../../components/NotSignedInError";
+import FollowerInfo from "../../components/follow/FollowInfo";
+import NotSignedInError from "../../components/errors/NotSignedInError";
 import PostFeed from "../../components/posts/PostFeed";
 
 // Here user can change their prof pic, name, and see all their posts

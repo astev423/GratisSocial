@@ -5,7 +5,7 @@ import { useAuth } from "@clerk/nextjs";
 import { formatDate } from "@/lib/shared/sharedUtils";
 
 import type { Post as PostType } from "../../../types/types";
-import CommentFeed from "../comments/CommentFeed";
+import CommentFeed from "./comments/CommentFeed";
 import ConfirmDeletion from "./ConfirmDeletion";
 
 import { useState } from "react";

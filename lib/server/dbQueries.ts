@@ -59,13 +59,12 @@ export async function createUser() {
   // Get username and email from ClerkJS and make account in DB with that info
   const user = await currentUser();
   if (user?.primaryEmailAddress == null || user?.username == null) {
-    console.log("User has no primary email or user doesn't exist");
+    console.error("User has no primary email or user doesn't exist");
     return false;
   }
 
   const primaryEmail = user.primaryEmailAddress.emailAddress;
   const uniqueUsername = user.username;
-  console.log("now making user");
   const bob = await prisma.user.create({
     data: {
       id: userId,
@@ -75,7 +74,7 @@ export async function createUser() {
       username: uniqueUsername,
     },
   });
-  console.log(bob);
+  console.log(`User ${bob} created`);
 
   return true;
 }

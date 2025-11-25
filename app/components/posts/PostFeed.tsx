@@ -34,7 +34,7 @@ export default function PostFeed({
 
     const response = await fetch(url);
     if (!response.ok) {
-      console.log("Failed to fetch posts in PostFeed");
+      console.error("Failed to fetch posts in PostFeed");
       return;
     }
 

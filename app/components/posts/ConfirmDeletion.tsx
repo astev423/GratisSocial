@@ -20,7 +20,7 @@ export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
       body: JSON.stringify({ postId }),
     });
     if (!response.ok) {
-      console.log("Error while trying to delete post");
+      console.error("Error while trying to delete post");
       return;
     }
 

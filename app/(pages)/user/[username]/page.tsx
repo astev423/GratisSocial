@@ -1,8 +1,5 @@
-import { auth } from "@clerk/nextjs/server";
-
-import FailedToFindUser from "@/app/components/FailedToFindUser";
-import FollowerInfo from "@/app/components/FollowerInfo";
-import NotSignedInError from "@/app/components/NotSignedInError";
+import FailedToFindUser from "@/app/components/errors/FailedToFindUser";
+import FollowerInfo from "@/app/components/follow/FollowInfo";
 import ProfileInfo from "@/app/components/ProfileInfo";
 
 import { fetchUser } from "../../../../lib/server/dbQueries";
