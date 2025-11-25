@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 // Take in username and return follow info
 export async function POST(request: Request) {
   const username = await request.json();
-  console.log(`hello ${username}`);
 
   // Use username to get id
   const user = await prisma.user.findFirst({

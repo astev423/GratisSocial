@@ -1,3 +1,3 @@
 export default function FollowButton({ username }: { username: string }) {
-  return <div></div>;
+  return <div>Click here to follow</div>;
 }

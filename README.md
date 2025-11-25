@@ -38,8 +38,14 @@ CLERK_SECRET_KEY=your_private_key_here
 
 ## TODO:
 
+Social interaction:
+
+-Add comments to post
+
 -Allow users to filter posts by following or all public posts (private posts only see via follow)
 
--Allow user to change user username when they change their username in clerk, make sure no duplicates
-
 -Add dm mechanic
+
+Other:
+
+-Allow user to change user username when they change their username in clerk, make sure no duplicates

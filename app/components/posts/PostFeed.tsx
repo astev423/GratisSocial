@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import type { Post as PostType } from "../../../types/types";
+import SpinningIcon from "../SpinningIcon";
 
 // Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
@@ -16,16 +17,6 @@ export default function PostFeed({
 }: PostFeedProps) {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
-  const loadingPost: PostType = {
-    id: "Loading Post",
-    userId: "loadingPost",
-    posterUsername: "Loading Post",
-    title: "Loading Post...",
-    content: "Loading Post",
-    createdAt: "Loading Post",
-    likes: 0,
-    comments: 0,
-  };
 
   async function fetchPosts(): Promise<void> {
     const url = username
@@ -51,14 +42,11 @@ export default function PostFeed({
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center gap-5">
-        <div className="text-3xl bg-white p-5 w-150 text-center font-bold">
+        <div className="text-3xl mb-20 bg-white p-5 w-150 text-center font-bold">
           Posts
         </div>
-        <div className="flex flex-col gap-5">
-          <Post refetch={fetchPosts} post={loadingPost} key={"a"} />
-          <Post refetch={fetchPosts} post={loadingPost} key={"b"} />
-          <Post refetch={fetchPosts} post={loadingPost} key={"c"} />
-        </div>
+        <SpinningIcon size={200} />
+        <div className="flex flex-col gap-5 min-w-150 min-h-150"></div>
       </div>
     );
   }
