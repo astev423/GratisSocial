@@ -3,6 +3,19 @@ import "server-only";
 
 import { prisma } from "../prisma";
 
+export async function addClerkUserToDb() {
+  const { userId } = await auth();
+  if (!userId) {
+    return;
+  }
+
+  // If user signed in then check DB if they exist, if not then make account for them
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (user == null) {
+    createUser();
+  }
+}
+
 export async function fetchUser(username: string) {
   return prisma.user.findUnique({
     where: { username },
@@ -52,7 +65,8 @@ export async function createUser() {
 
   const primaryEmail = user.primaryEmailAddress.emailAddress;
   const uniqueUsername = user.username;
-  prisma.user.create({
+  console.log("now making user");
+  const bob = await prisma.user.create({
     data: {
       id: userId,
       email: primaryEmail,
@@ -61,6 +75,7 @@ export async function createUser() {
       username: uniqueUsername,
     },
   });
+  console.log(bob);
 
   return true;
 }

@@ -5,19 +5,14 @@ import FollowerInfo from "@/app/components/FollowerInfo";
 import NotSignedInError from "@/app/components/NotSignedInError";
 import ProfileInfo from "@/app/components/ProfileInfo";
 
-import { fetchUser } from "../../../lib/server/dbQueries";
-import PostFeed from "../../components/posts/PostFeed";
+import { fetchUser } from "../../../../lib/server/dbQueries";
+import PostFeed from "../../../components/posts/PostFeed";
 
 type PageProps = {
   params: Promise<{ username: string }>;
 };
 
 export default async function UserPage({ params }: PageProps) {
-  // Guard against users that aren't signed in or requests to users that don't exist
-  const { userId: viewerUserId } = await auth();
-  if (viewerUserId == null) {
-    return <NotSignedInError />;
-  }
   const { username: paramsUsername } = await params;
   const accountPageUser = await fetchUser(paramsUsername);
   if (accountPageUser == null) {
