@@ -1,5 +1,6 @@
 "use client"
 
+import { useViewedUser } from "@/app/providers/ViewedUserContext"
 import { useFetch } from "@/lib/client/utils"
 
 type FollowInfo = {
@@ -7,8 +8,13 @@ type FollowInfo = {
   following: number
 }
 
-export default function FollowCount({ username }: { username: string }) {
-  const { data } = useFetch<FollowInfo>("/api/fetchFollowInfo", { username })
+export default function FollowCount() {
+  const { username } = useViewedUser()
+  const { data, error } = useFetch<FollowInfo>("/api/fetchFollowInfo", { username })
+
+  if (error) {
+    return <div>Unexpected error getting follow count</div>
+  }
 
   return (
     <>

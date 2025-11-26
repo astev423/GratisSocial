@@ -12,6 +12,7 @@ export default function EditableNameInfo() {
   const [editableFirstName, setEditableFirstName] = useState("Loading...")
   const [editableLastName, setEditableLastName] = useState("Loading...")
   const [username, setUsername] = useState("Loading...")
+  const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -29,7 +30,7 @@ export default function EditableNameInfo() {
   }, [])
 
   return (
-    <div className="flex gap-2 flex-col p-8 bg-white font-bold">
+    <div className="flex gap-2 w-90 flex-col p-8 bg-white font-bold">
       {/* Display account names and unique username */}
       <div className="p-2 gap-2 text-2xl">
         <span>Account information for </span>
@@ -46,7 +47,11 @@ export default function EditableNameInfo() {
         <input
           value={editableFirstName}
           onChange={(e) => {
-            setEditableFirstName(e.target.value)
+            if (editableFirstName.length < 21) {
+              setEditableFirstName(e.target.value)
+            } else {
+              alert(nameTooLongMessage)
+            }
           }}
           type="text"
           className="border-2"
@@ -59,7 +64,11 @@ export default function EditableNameInfo() {
         <input
           value={editableLastName}
           onChange={(e) => {
-            setEditableLastName(e.target.value)
+            if (editableLastName.length < 21) {
+              setEditableLastName(e.target.value)
+            } else {
+              alert(nameTooLongMessage)
+            }
           }}
           type="text"
           className="border-2"

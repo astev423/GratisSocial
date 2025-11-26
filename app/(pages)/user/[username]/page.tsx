@@ -17,16 +17,10 @@ export default async function UserPage({ params }: PageProps) {
   }
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex m-20 gap-15">
-        <div className="grow-0">
-          <ProfileInfo user={accountPageUser} />
-        </div>
-        <PostFeed username={paramsUsername} postsToSee="specificUser" />
-        <div className="grow-0">
-          <FollowCard username={paramsUsername} />
-        </div>
-      </div>
+    <div className="flex items-start justify-center p-8 gap-20 ">
+      <ProfileInfo user={accountPageUser} />
+      <PostFeed username={paramsUsername} postsToSee="specificUser" />
+      <FollowCard accountPageUser={accountPageUser} />
     </div>
   )
 }

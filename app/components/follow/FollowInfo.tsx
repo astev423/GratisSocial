@@ -1,5 +1,6 @@
 "use client"
 
+import { useViewedUser } from "@/app/providers/ViewedUserContext"
 import { useFetch } from "@/lib/client/utils"
 import SpinningIcon from "../SpinningIcon"
 import FollowButton from "./FollowButton"
@@ -9,9 +10,9 @@ type FollowStatus = {
   followStatus: "Following" | "Not Following"
 }
 
-export default function FollowInfo({ username }: { username: string }) {
+export default function FollowInfo() {
+  const { username } = useViewedUser()
   const { data, loading, error } = useFetch<FollowStatus>("/api/followStatus", { username })
-  const isUserFollowing = data?.followStatus == "Following"
 
   if (error) {
     return <div className="text-xl">Failed to find follow info</div>
@@ -23,9 +24,11 @@ export default function FollowInfo({ username }: { username: string }) {
     )
   }
 
+  const isUserFollowing = data?.followStatus == "Following"
+
   return (
     <>
-      <FollowCount username={username} />
+      <FollowCount />
       <FollowButton following={isUserFollowing} />
     </>
   )

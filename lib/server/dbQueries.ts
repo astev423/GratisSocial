@@ -1,6 +1,6 @@
-import { auth, currentUser } from '@clerk/nextjs/server'
-import 'server-only'
-import { prisma } from '../../prisma/prisma'
+import { auth, currentUser } from "@clerk/nextjs/server"
+import "server-only"
+import { prisma } from "../../prisma/prisma"
 
 export async function addClerkUserToDb() {
   const { userId } = await auth()
@@ -15,9 +15,21 @@ export async function addClerkUserToDb() {
   }
 }
 
-export async function fetchUser(username: string) {
+export async function fetchUser(username?: string) {
+  if (username == undefined) {
+    const { userId } = await auth()
+    if (!userId) {
+      return
+    }
+
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: { username: true, firstName: true, lastName: true },
+    })
+  }
+
   return prisma.user.findUnique({
-    where: { username },
+    where: { username: username },
     select: { username: true, firstName: true, lastName: true },
   })
 }
@@ -68,8 +80,8 @@ export async function createUser() {
     data: {
       id: userId,
       email: primaryEmail,
-      firstName: 'placeholder',
-      lastName: 'placeholder',
+      firstName: "placeholder",
+      lastName: "placeholder",
       username: uniqueUsername,
     },
   })
