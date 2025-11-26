@@ -1,5 +1,5 @@
 const Comment = () => {
-  return <>I agree!</>
+  return <div>I agree!</div>
 }
 
 export default Comment

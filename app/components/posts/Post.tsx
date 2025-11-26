@@ -43,7 +43,7 @@ export default function Post({ post, refetch }: PostProps) {
 
       {/* All other post info besides title down here*/}
       <div className="flex gap-2">
-        <>By: </>
+        <div>By: </div>
         <Link
           href={`/user/${post.posterUsername}`}
           className="text-blue-600 duration-200 hover:scale-120 hover:underline"
@@ -51,11 +51,11 @@ export default function Post({ post, refetch }: PostProps) {
           {post.posterUsername}
         </Link>
       </div>
-      <>Posted on: {formatDate(post.createdAt)}</>
+      <div>Posted on: {formatDate(post.createdAt)}</div>
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
-      <>{post.content}</>
-      <>Likes: {post.likes}</>
-      <>comments: {post.comments}</>
+      <div>{post.content}</div>
+      <div>Likes: {post.likes}</div>
+      <div>comments: {post.comments}</div>
       <CommentFeed></CommentFeed>
     </div>
   )

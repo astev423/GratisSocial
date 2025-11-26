@@ -4,11 +4,11 @@ import Comment from "./Comment"
 // json?. then map through that and pass parameters to Comment so it can html it
 const CommentFeed = () => {
   return (
-    <>
+    <div>
       Comments:
       <Comment></Comment>
       <Comment></Comment>
-    </>
+    </div>
   )
 }
 
