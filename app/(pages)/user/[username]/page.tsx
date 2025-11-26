@@ -1,7 +1,7 @@
 import FailedToFindUser from "@/app/components/errors/FailedToFindUser"
-import FollowerInfo from "@/app/components/follow/FollowInfo"
 import ProfileInfo from "@/app/components/ProfileInfo"
 
+import FollowCard from "@/app/components/follow/FollowCard"
 import { fetchUser } from "../../../../lib/server/dbQueries"
 import PostFeed from "../../../components/posts/PostFeed"
 
@@ -24,7 +24,7 @@ export default async function UserPage({ params }: PageProps) {
         </div>
         <PostFeed username={paramsUsername} postsToSee="specificUser" />
         <div className="grow-0">
-          <FollowerInfo username={accountPageUser.username} />
+          <FollowCard username={paramsUsername} />
         </div>
       </div>
     </div>

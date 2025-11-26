@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 // Take in username and return follow info
 export async function POST(request: Request) {
-  const username = await request.json()
+  const { username } = await request.json()
 
   // Use username to get id
   const user = await prisma.user.findFirst({
@@ -28,8 +28,5 @@ export async function POST(request: Request) {
     },
   })
 
-  return NextResponse.json(
-    { following: followingCount, followers: followersCount },
-    { status: 200 },
-  )
+  return NextResponse.json({ following: followingCount, followers: followersCount }, { status: 200 })
 }

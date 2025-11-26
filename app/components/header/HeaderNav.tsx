@@ -14,15 +14,13 @@ export default function HeaderNav() {
         </Link>
 
         {/* Only one nav shown depending on if user is logged in/out  */}
-        <div>
-          <SignedIn>
-            <SignedInNav />
-          </SignedIn>
+        <SignedIn>
+          <SignedInNav />
+        </SignedIn>
 
-          <SignedOut>
-            <SignedOutNav />
-          </SignedOut>
-        </div>
+        <SignedOut>
+          <SignedOutNav />
+        </SignedOut>
       </div>
     </nav>
   )

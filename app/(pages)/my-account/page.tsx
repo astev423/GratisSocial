@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server"
 
+import FollowCard from "@/app/components/follow/FollowCard"
 import EditableNameInfo from "../../components/EditableNameInfo"
-import FollowerInfo from "../../components/follow/FollowInfo"
 import NotSignedInError from "../../components/errors/NotSignedInError"
 import PostFeed from "../../components/posts/PostFeed"
 
@@ -19,7 +19,7 @@ export default async function MyAccountPage() {
     <div className="flex items-start justify-center p-8 gap-20 ">
       <EditableNameInfo />
       <PostFeed postsToSee="myPosts"></PostFeed>
-      <FollowerInfo username={username} />
+      <FollowCard username={username} />
     </div>
   )
 }

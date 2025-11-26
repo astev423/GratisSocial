@@ -1,11 +1,11 @@
-import Link from 'next/link'
+import Link from "next/link"
 
-import { formatDate } from '@/lib/shared/sharedUtils'
-import { useAuth } from '@clerk/nextjs'
-import { useState } from 'react'
-import type { Post as PostType } from '../../../types/types'
-import CommentFeed from './comments/CommentFeed'
-import ConfirmDeletion from './ConfirmDeletion'
+import { formatDate } from "@/lib/shared/sharedUtils"
+import { useAuth } from "@clerk/nextjs"
+import { useState } from "react"
+import type { Post as PostType } from "../../../types/types"
+import CommentFeed from "./comments/CommentFeed"
+import ConfirmDeletion from "./ConfirmDeletion"
 
 type PostProps = Readonly<{
   post: PostType
@@ -43,7 +43,7 @@ export default function Post({ post, refetch }: PostProps) {
 
       {/* All other post info besides title down here*/}
       <div className="flex gap-2">
-        <div>By: </div>
+        <>By: </>
         <Link
           href={`/user/${post.posterUsername}`}
           className="text-blue-600 duration-200 hover:scale-120 hover:underline"
@@ -51,11 +51,11 @@ export default function Post({ post, refetch }: PostProps) {
           {post.posterUsername}
         </Link>
       </div>
-      <div>Posted on: {formatDate(post.createdAt)}</div>
+      <>Posted on: {formatDate(post.createdAt)}</>
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
-      <div>{post.content}</div>
-      <div>Likes: {post.likes}</div>
-      <div>comments: {post.comments}</div>
+      <>{post.content}</>
+      <>Likes: {post.likes}</>
+      <>comments: {post.comments}</>
       <CommentFeed></CommentFeed>
     </div>
   )
