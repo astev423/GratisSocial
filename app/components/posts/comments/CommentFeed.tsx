@@ -6,7 +6,7 @@ import Comment from "./Comment"
 const CommentFeed = () => {
   return (
     <div>
-      Comments: 
+      Comments:
       <Comment></Comment>
       <Comment></Comment>
     </div>

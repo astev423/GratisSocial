@@ -5,5 +5,5 @@ export default function SiteLogo() {
       <div className="text-3xl text-emerald-700 font-bold ">Gratis</div>
       <div className="text-3xl font-bold ">Social</div>
     </div>
-  );
+  )
 }

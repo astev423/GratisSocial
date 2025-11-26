@@ -1,39 +1,40 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 type FollowInfo = {
-  followers: number;
-  following: number;
-};
+  followers: number
+  following: number
+}
 
-export default function FollowCount({ username }: { username: string }) {
-  const [followInfo, setFollowInfo] = useState<FollowInfo | null>(null);
+type FollowCountProps = {
+  username: string
+}
+
+export default function FollowCount({ username }: FollowCountProps) {
+  const [followInfo, setFollowInfo] = useState<FollowInfo | null>(null)
 
   async function fetchFollowInfo() {
-    const response = await fetch("/api/fetchFollowInfo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/fetchFollowInfo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(username),
-    });
+    })
     if (!response.ok) {
-      console.error("Failed to fetch follow info");
-      return;
+      console.error('Failed to fetch follow info')
+      return
     }
 
-    const followInfoResponse = await response.json();
-    console.log(followInfoResponse);
-    setFollowInfo(followInfoResponse);
+    const followInfoResponse = await response.json()
+    setFollowInfo(followInfoResponse)
   }
 
   useEffect(() => {
-    fetchFollowInfo();
-  }, []);
+    fetchFollowInfo()
+  }, [])
 
   if (followInfo == null) {
-    return (
-      <div className="bg-white font-bold">Error loading follower info</div>
-    );
+    return <div className="bg-white font-bold">Error loading follower info</div>
   }
 
   return (
@@ -41,5 +42,5 @@ export default function FollowCount({ username }: { username: string }) {
       <div className="font-bold text-xl">Followers: {followInfo.followers}</div>
       <div className="font-bold text-xl">Following: {followInfo.following}</div>
     </div>
-  );
+  )
 }

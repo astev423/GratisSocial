@@ -8,5 +8,5 @@ export default function FailedToFindUser() {
         </div>
       </div>
     </div>
-  );
+  )
 }

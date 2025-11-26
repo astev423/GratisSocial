@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 type User = {
-  firstName: string;
-  lastName: string;
-  username: string;
-};
+  firstName: string
+  lastName: string
+  username: string
+}
 
 export default function EditableNameInfo() {
-  const [editableFirstName, setEditableFirstName] = useState("Loading...");
-  const [editableLastName, setEditableLastName] = useState("Loading...");
-  const [username, setUsername] = useState("Loading...");
+  const [editableFirstName, setEditableFirstName] = useState("Loading...")
+  const [editableLastName, setEditableLastName] = useState("Loading...")
+  const [username, setUsername] = useState("Loading...")
 
   useEffect(() => {
     const fetchUser = async () => {
       const response = await fetch("/api/fetchUser", {
         method: "POST",
-      });
+      })
       if (response.ok) {
-        const data: User = await response.json();
-        setEditableFirstName(data.firstName);
-        setEditableLastName(data.lastName);
-        setUsername(data.username);
+        const data: User = await response.json()
+        setEditableFirstName(data.firstName)
+        setEditableLastName(data.lastName)
+        setUsername(data.username)
       }
-    };
-    fetchUser();
-  }, []);
+    }
+    fetchUser()
+  }, [])
 
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">
@@ -46,7 +46,7 @@ export default function EditableNameInfo() {
         <input
           value={editableFirstName}
           onChange={(e) => {
-            setEditableFirstName(e.target.value);
+            setEditableFirstName(e.target.value)
           }}
           type="text"
           className="border-2"
@@ -59,7 +59,7 @@ export default function EditableNameInfo() {
         <input
           value={editableLastName}
           onChange={(e) => {
-            setEditableLastName(e.target.value);
+            setEditableLastName(e.target.value)
           }}
           type="text"
           className="border-2"
@@ -76,12 +76,12 @@ export default function EditableNameInfo() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ editableFirstName, editableLastName }),
-          });
+          })
         }}
-        className="bg-gray-100 p-2 hover:cursor-pointer hover:bg-gray-200"
+        className="group grey-button"
       >
-        Click here to submit changes!
+        <span className="grey-button-text">Click here to submit changes!</span>
       </button>
     </div>
-  );
+  )
 }

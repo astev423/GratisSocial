@@ -1,14 +1,14 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server"
 
-import NotSignedInError from "../../components/errors/NotSignedInError";
-import FeedContainer from "../../components/posts/FeedContainer";
+import NotSignedInError from "../../components/errors/NotSignedInError"
+import FeedContainer from "../../components/posts/FeedContainer"
 
 export default async function Home() {
-  const { userId } = await auth();
+  const { userId } = await auth()
 
   if (userId == null) {
-    return <NotSignedInError />;
+    return <NotSignedInError />
   }
 
-  return <FeedContainer />;
+  return <FeedContainer />
 }

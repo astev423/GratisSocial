@@ -1,28 +1,25 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { useAuth } from "@clerk/nextjs";
-
-import { formatDate } from "@/lib/shared/sharedUtils";
-
-import type { Post as PostType } from "../../../types/types";
-import CommentFeed from "./comments/CommentFeed";
-import ConfirmDeletion from "./ConfirmDeletion";
-
-import { useState } from "react";
+import { formatDate } from '@/lib/shared/sharedUtils'
+import { useAuth } from '@clerk/nextjs'
+import { useState } from 'react'
+import type { Post as PostType } from '../../../types/types'
+import CommentFeed from './comments/CommentFeed'
+import ConfirmDeletion from './ConfirmDeletion'
 
 type PostProps = Readonly<{
-  post: PostType;
-  refetch: () => void;
-}>;
+  post: PostType
+  refetch: () => void
+}>
 
 export default function Post({ post, refetch }: PostProps) {
-  const { userId } = useAuth();
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { userId } = useAuth()
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const confirmProps = {
     postId: post.id,
     setShowConfirmation: setShowConfirmation,
     refetch: refetch,
-  };
+  }
 
   return (
     <div className="bg-white p-5 flex flex-col gap-4 w-150">
@@ -61,5 +58,5 @@ export default function Post({ post, refetch }: PostProps) {
       <div>comments: {post.comments}</div>
       <CommentFeed></CommentFeed>
     </div>
-  );
+  )
 }

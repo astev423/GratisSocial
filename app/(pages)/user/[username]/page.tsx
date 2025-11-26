@@ -1,19 +1,19 @@
-import FailedToFindUser from "@/app/components/errors/FailedToFindUser";
-import FollowerInfo from "@/app/components/follow/FollowInfo";
-import ProfileInfo from "@/app/components/ProfileInfo";
+import FailedToFindUser from "@/app/components/errors/FailedToFindUser"
+import FollowerInfo from "@/app/components/follow/FollowInfo"
+import ProfileInfo from "@/app/components/ProfileInfo"
 
-import { fetchUser } from "../../../../lib/server/dbQueries";
-import PostFeed from "../../../components/posts/PostFeed";
+import { fetchUser } from "../../../../lib/server/dbQueries"
+import PostFeed from "../../../components/posts/PostFeed"
 
 type PageProps = {
-  params: Promise<{ username: string }>;
-};
+  params: Promise<{ username: string }>
+}
 
 export default async function UserPage({ params }: PageProps) {
-  const { username: paramsUsername } = await params;
-  const accountPageUser = await fetchUser(paramsUsername);
+  const { username: paramsUsername } = await params
+  const accountPageUser = await fetchUser(paramsUsername)
   if (accountPageUser == null) {
-    return <FailedToFindUser />;
+    return <FailedToFindUser />
   }
 
   return (
@@ -28,5 +28,5 @@ export default async function UserPage({ params }: PageProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import Link from "next/link";
+import Link from "next/link"
 
-import { UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs"
 
 export default function SignedInNav() {
   return (
@@ -13,5 +13,5 @@ export default function SignedInNav() {
         <UserButton />
       </div>
     </div>
-  );
+  )
 }

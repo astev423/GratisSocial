@@ -12,7 +12,7 @@ export async function POST() {
   // Get username and email from ClerkJS and make account in DB with that info
   const user = await currentUser()
   const primaryEmail = user?.emailAddresses.find(
-    (email) => email.id === user.primaryEmailAddressId
+    (email) => email.id === user.primaryEmailAddressId,
   )?.emailAddress
   const uniqueUsername = user?.username || ""
   const newUser = await prisma.user.create({

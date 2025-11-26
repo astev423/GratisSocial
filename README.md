@@ -11,6 +11,7 @@ Built using NextJS, typescript, Prisma ORM, and Clerk
 ```
 npm install
 ```
+
 **2. Then, make a database and run it in the background (my DB is psql on linux)**
 
 **3. Then connect your DB to Prisma (follow the prisma website tutorial or read steps below (my steps might not work))**
@@ -27,9 +28,11 @@ and then ran the commands:
 npx prisma migrate dev --name init
 npx prisma generate
 ```
+
 **3. You will also need to set up Clerk (follow their website tutorial or steps below)**
 
 Make a clerk account and get your API keys and then put it in the .env file like so
+
 ```
 <other env file above>
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_public_key_here

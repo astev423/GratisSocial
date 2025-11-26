@@ -1,43 +1,43 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import Post from "./Post";
-import type { Post as PostType } from "../../../types/types";
-import SpinningIcon from "../SpinningIcon";
+import { useEffect, useState } from "react"
+import Post from "./Post"
+import type { Post as PostType } from "../../../types/types"
+import SpinningIcon from "../SpinningIcon"
 
 // Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
-  postsToSee: "following" | "all" | "myPosts" | "specificUser";
-  username?: string | undefined;
-};
+  postsToSee: "following" | "all" | "myPosts" | "specificUser"
+  username?: string | undefined
+}
 
 export default function PostFeed({
   postsToSee,
   username = undefined,
 }: PostFeedProps) {
-  const [posts, setPosts] = useState<PostType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<PostType[]>([])
+  const [loading, setLoading] = useState(true)
 
   async function fetchPosts(): Promise<void> {
     const url = username
       ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
-      : `/api/posts?type=${postsToSee}`;
+      : `/api/posts?type=${postsToSee}`
 
-    const response = await fetch(url);
+    const response = await fetch(url)
     if (!response.ok) {
-      console.error("Failed to fetch posts in PostFeed");
-      return;
+      console.error("Failed to fetch posts in PostFeed")
+      return
     }
 
-    const data: PostType[] = await response.json();
-    setPosts(data.reverse());
-    setLoading(false);
+    const data: PostType[] = await response.json()
+    setPosts(data.reverse())
+    setLoading(false)
   }
 
   // Fetch all posts depending on which posts selected in props
   useEffect(() => {
-    fetchPosts();
-  }, [postsToSee]);
+    fetchPosts()
+  }, [postsToSee])
 
   if (loading) {
     return (
@@ -48,7 +48,7 @@ export default function PostFeed({
         <SpinningIcon size={200} />
         <div className="flex flex-col gap-5 min-w-150 min-h-150"></div>
       </div>
-    );
+    )
   }
 
   // If no posts then notify user of problem, otherwise map through all posts and make cards for each
@@ -59,7 +59,7 @@ export default function PostFeed({
           No posts found
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -74,5 +74,5 @@ export default function PostFeed({
         ))}
       </div>
     </div>
-  );
+  )
 }

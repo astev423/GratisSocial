@@ -10,4 +10,10 @@ body {
   .clickable-scale-animation {
     @apply transition-transform duration-300 hover:cursor-pointer hover:scale-130;
   }
+  .grey-button {
+    @apply bg-gray-400 rounded-2xl p-5 hover:cursor-pointer hover:bg-gray-600;
+  }
+  .grey-button-text {
+    @apply group-hover:scale-130 duration-200 inline-block hover:scale-130;
+  }
 }
