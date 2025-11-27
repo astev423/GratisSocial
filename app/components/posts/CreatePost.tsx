@@ -1,39 +1,42 @@
-'use client'
+"use client"
 
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useState, type Dispatch, type SetStateAction } from "react"
 
 type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> }
 
 export default function CreatePost({ setRefreshKey }: CreatePostProps) {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
 
-  //submit post using prisma client
-  async function submitPost() {
+  // Submit using form, prevent default to prevent it sending its own api call and reloading
+  async function submitPost(e: React.FormEvent) {
+    e.preventDefault()
+
     if (!title || !content) {
-      alert('You must provide both content and a title')
+      alert("You must provide both content and a title")
       return
     }
 
-    const response = await fetch('/api/createPost', {
-      // Call your API route
-      method: 'POST',
+    const response = await fetch("/api/createPost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ title, content }),
     })
+
     if (!response.ok) {
-      console.error('CreatePost API call had error')
+      console.error("CreatePost API call had error")
       return
     }
 
-    // Clear form after post for next post
-    setTitle('')
-    setContent('')
-    // Stateful functions are special and can affect value even if state isnt in this component
+    setTitle("")
+    setContent("")
     setRefreshKey((refreshKey) => refreshKey + 1)
   }
 
   return (
-    <form className="bg-white flex flex-col gap-5 p-10 w-150">
+    <form onSubmit={submitPost} className="bg-white flex flex-col gap-5 p-10 w-150">
       <div className="font-bold text-2xl">Create a new post!</div>
       <textarea
         value={title}
@@ -47,7 +50,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
         placeholder="Post content"
         className="bg-gray-100 p-4 h-50"
       ></textarea>
-      <button onClick={submitPost} className="group grey-button">
+      <button className="group grey-button">
         <span className="grey-button-text">Submit Post</span>
       </button>
     </form>

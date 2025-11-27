@@ -4,9 +4,9 @@ import { useState } from "react"
 import { useViewedUser } from "../context/ViewedUserContext"
 
 export default function EditableNameInfo() {
-  const user = useViewedUser()
-  const [editableFirstName, setEditableFirstName] = useState(user.firstName)
-  const [editableLastName, setEditableLastName] = useState(user.lastName)
+  const { viewedUser } = useViewedUser()
+  const [editableFirstName, setEditableFirstName] = useState(viewedUser.firstName)
+  const [editableLastName, setEditableLastName] = useState(viewedUser.lastName)
   const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
 
   return (
@@ -18,7 +18,7 @@ export default function EditableNameInfo() {
           {editableFirstName} {editableLastName}
         </div>
         <span>Unique username:</span>
-        <div className="font-normal text-xl text-gray-700">{user.username}</div>
+        <div className="font-normal text-xl text-gray-700">{viewedUser.username}</div>
       </div>
       <div className="mt-2">You can change your name here</div>
 

@@ -13,7 +13,9 @@ type FollowStatus = {
 
 // This uses a refresh key to update refetch in follow count when button is pressed
 export default function FollowInfo() {
-  const { username } = useViewedUser()
+  const {
+    viewedUser: { username },
+  } = useViewedUser()
   const [refreshKey, setRefreshKey] = useState(0)
   const { data, loading, error } = useFetch<FollowStatus>("/api/followStatus", { username, refreshKey })
 
@@ -31,7 +33,7 @@ export default function FollowInfo() {
 
   return (
     <>
-      <FollowCount key={refreshKey} />
+      <FollowCount />
       <FollowButton setRefreshKey={setRefreshKey} following={isUserFollowing} />
     </>
   )

@@ -15,7 +15,7 @@ export default async function MyAccountPage() {
   }
 
   return (
-    <ViewedUserProvider user={user}>
+    <ViewedUserProvider viewedUser={user}>
       <div className="flex items-start justify-center p-8 gap-20 ">
         <EditableNameInfo />
         <PostFeed postsToSee="myPosts"></PostFeed>

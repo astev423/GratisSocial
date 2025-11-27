@@ -18,7 +18,7 @@ export default async function UserPage({ params }: PageProps) {
   }
 
   return (
-    <ViewedUserProvider user={accountPageUser}>
+    <ViewedUserProvider viewedUser={accountPageUser}>
       <div className="flex items-start justify-center p-8 gap-20 ">
         <ProfileInfo />
         <PostFeed username={paramsUsername} postsToSee="specificUser" />

@@ -54,8 +54,8 @@ export function useFetch<T = unknown>(route: string, body?: unknown): FetchState
   return { data, loading, error }
 }
 
-export async function fetchFollowInfo(username: string) {
-  const res = await fetch("/api/fetchFollowInfo", {
+export async function fetchFollowCount(username: string) {
+  const res = await fetch("/api/fetchFollowCount", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
