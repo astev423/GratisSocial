@@ -41,6 +41,8 @@ CLERK_SECRET_KEY=your_private_key_here
 
 ## TODO:
 
+UI: Make UI work on smaller screens as well
+
 Social interaction:
 
 -Add comments to post
@@ -52,3 +54,5 @@ Social interaction:
 Other:
 
 -Allow user to change user username when they change their username in clerk, make sure no duplicates
+
+-Use react dev tools to test performance

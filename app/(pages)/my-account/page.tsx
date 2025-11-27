@@ -1,4 +1,5 @@
 import FollowCard from "@/app/components/follow/FollowCard"
+import { ViewedUserProvider } from "@/app/context/ViewedUserContext"
 import { fetchUser } from "@/lib/server/dbQueries"
 import EditableNameInfo from "../../components/EditableNameInfo"
 import NotSignedInError from "../../components/errors/NotSignedInError"
@@ -14,10 +15,12 @@ export default async function MyAccountPage() {
   }
 
   return (
-    <div className="flex items-start justify-center p-8 gap-20 ">
-      <EditableNameInfo />
-      <PostFeed postsToSee="myPosts"></PostFeed>
-      <FollowCard accountPageUser={user} />
-    </div>
+    <ViewedUserProvider user={user}>
+      <div className="flex items-start justify-center p-8 gap-20 ">
+        <EditableNameInfo />
+        <PostFeed postsToSee="myPosts"></PostFeed>
+        <FollowCard />
+      </div>
+    </ViewedUserProvider>
   )
 }

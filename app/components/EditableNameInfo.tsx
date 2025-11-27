@@ -1,33 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
-type User = {
-  firstName: string
-  lastName: string
-  username: string
-}
+import { useState } from "react"
+import { useViewedUser } from "../context/ViewedUserContext"
 
 export default function EditableNameInfo() {
-  const [editableFirstName, setEditableFirstName] = useState("Loading...")
-  const [editableLastName, setEditableLastName] = useState("Loading...")
-  const [username, setUsername] = useState("Loading...")
+  const user = useViewedUser()
+  const [editableFirstName, setEditableFirstName] = useState(user.firstName)
+  const [editableLastName, setEditableLastName] = useState(user.lastName)
   const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch("/api/fetchUser", {
-        method: "POST",
-      })
-      if (response.ok) {
-        const data: User = await response.json()
-        setEditableFirstName(data.firstName)
-        setEditableLastName(data.lastName)
-        setUsername(data.username)
-      }
-    }
-    fetchUser()
-  }, [])
 
   return (
     <div className="flex gap-2 w-90 flex-col p-8 bg-white font-bold">
@@ -38,7 +18,7 @@ export default function EditableNameInfo() {
           {editableFirstName} {editableLastName}
         </div>
         <span>Unique username:</span>
-        <div className="font-normal text-xl text-gray-700">{username}</div>
+        <div className="font-normal text-xl text-gray-700">{user.username}</div>
       </div>
       <div className="mt-2">You can change your name here</div>
 

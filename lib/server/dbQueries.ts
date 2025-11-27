@@ -24,13 +24,25 @@ export async function fetchUser(username?: string) {
 
     return prisma.user.findUnique({
       where: { id: userId },
-      select: { username: true, firstName: true, lastName: true },
+      select: {
+        username: true,
+        firstName: true,
+        lastName: true,
+        followingCount: true,
+        followersCount: true,
+      },
     })
   }
 
   return prisma.user.findUnique({
     where: { username: username },
-    select: { username: true, firstName: true, lastName: true },
+    select: {
+      username: true,
+      firstName: true,
+      lastName: true,
+      followingCount: true,
+      followersCount: true,
+    },
   })
 }
 
@@ -88,4 +100,90 @@ export async function createUser() {
   console.log(`User ${bob} created`)
 
   return true
+}
+
+export async function getUser(username: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  })
+
+  return user
+}
+
+export async function isUserFollowing(userId: string, viewedUserId: string) {
+  const result = await prisma.follow.findFirst({
+    where: {
+      personFollowedId: viewedUserId,
+      followerId: userId,
+    },
+  })
+  if (result == null) {
+    return false
+  }
+
+  return true
+}
+
+export async function followUser(userId: string, viewedUserId: string) {
+  await prisma.follow.create({
+    data: {
+      personFollowedId: viewedUserId,
+      followerId: userId,
+    },
+  })
+
+  await prisma.user.update({
+    where: {
+      id: viewedUserId,
+    },
+    data: {
+      followersCount: {
+        increment: 1,
+      },
+    },
+  })
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      followingCount: {
+        increment: 1,
+      },
+    },
+  })
+}
+
+export async function unfollowUser(userId: string, viewedUserId: string) {
+  await prisma.follow.deleteMany({
+    where: {
+      followerId: userId,
+      personFollowedId: viewedUserId,
+    },
+  })
+
+  await prisma.user.update({
+    where: {
+      id: viewedUserId,
+    },
+    data: {
+      followersCount: {
+        decrement: 1,
+      },
+    },
+  })
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      followingCount: {
+        decrement: 1,
+      },
+    },
+  })
 }

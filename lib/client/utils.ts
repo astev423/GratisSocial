@@ -1,6 +1,7 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
+import { FollowInfo } from "@/types/types"
+import { useEffect, useState } from "react"
 
 type FetchState<T> = {
   data: T | null
@@ -25,8 +26,8 @@ export function useFetch<T = unknown>(route: string, body?: unknown): FetchState
         const options =
           body !== undefined
             ? {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               }
             : undefined
@@ -51,4 +52,43 @@ export function useFetch<T = unknown>(route: string, body?: unknown): FetchState
   }, [route, JSON.stringify(body)])
 
   return { data, loading, error }
+}
+
+export async function fetchFollowInfo(username: string) {
+  const res = await fetch("/api/fetchFollowInfo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  })
+  if (!res.ok) {
+    return null
+  }
+
+  return res.json() as Promise<FollowInfo>
+}
+
+export async function followUser(username: string) {
+  const res = await fetch("/api/followUser", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  })
+  if (!res.ok) {
+    return false
+  }
+
+  return true
+}
+
+export async function unfollowUser(username: string) {
+  const res = await fetch("/api/unfollowUser", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  })
+  if (!res.ok) {
+    return false
+  }
+
+  return true
 }

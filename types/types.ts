@@ -13,4 +13,11 @@ export type User = {
   username: string
   firstName: string
   lastName: string
+  followingCount: number
+  followersCount: number
+}
+
+export type FollowInfo = {
+  followers: number
+  following: number
 }
