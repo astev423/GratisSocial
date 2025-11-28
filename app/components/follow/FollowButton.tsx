@@ -9,42 +9,19 @@ type FollowButtonProps = {
 }
 
 export default function FollowButton({ following, setRefreshKey }: FollowButtonProps) {
-  const { viewedUser, setViewedUser } = useViewedUser()
+  const { viewedUser } = useViewedUser()
   const { user: viewingUser } = useUser()
   if (viewedUser == null || viewingUser == undefined) {
     return
   }
 
-  const { username: viewerUsername } = viewingUser
-
   // Update counts, user can follow themselves so check for that too
   function updateFollowCounts() {
     if (following) {
       unfollowUser(viewedUser.username)
-      setViewedUser((prev) => ({
-        ...prev,
-        followersCount: prev.followersCount - 1,
-      }))
-      if (viewedUser.username == viewerUsername) {
-        setViewedUser((prev) => ({
-          ...prev,
-          followingCount: prev.followingCount - 1,
-        }))
-      }
     } else {
       followUser(viewedUser.username)
-      setViewedUser((prev) => ({
-        ...prev,
-        followersCount: prev.followersCount + 1,
-      }))
-      if (viewedUser.username == viewerUsername) {
-        setViewedUser((prev) => ({
-          ...prev,
-          followingCount: prev.followingCount + 1,
-        }))
-      }
     }
-
     setRefreshKey((i) => i + 1)
   }
 

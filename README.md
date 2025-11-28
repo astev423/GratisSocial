@@ -43,8 +43,6 @@ CLERK_SECRET_KEY=your_private_key_here
 
 Social interaction:
 
--Allow users to filter posts by following or all public posts (private posts only see via follow)
-
 -Add search bar to find other users
 
 -Add comments to post
@@ -52,9 +50,11 @@ Social interaction:
 
 Later:
 
--Allow user to change user username when they change their username in clerk, make sure no duplicates
+-Add server actions
 
 -Use react dev tools to test performance
+
+-Allow user to change user username when they change their username in clerk, make sure no duplicates
 
 -Add dm mechanic
 
