@@ -43,8 +43,6 @@ CLERK_SECRET_KEY=your_private_key_here
 
 Social interaction:
 
--Add search bar to find other users
-
 -Add comments to post
 
 
