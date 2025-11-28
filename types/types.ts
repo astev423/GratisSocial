@@ -5,8 +5,10 @@ export type Post = {
   title: string
   content: string
   createdAt: string
-  likes: number
-  comments: number
+  likeCount: number
+  likerIds: string[]
+  commentCount: number
+  commentsIds: string[]
 }
 
 export type User = {

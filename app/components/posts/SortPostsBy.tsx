@@ -8,7 +8,7 @@ type SortPostProps = {
 export default function SortPostsBy({ setPostsToSee, postsToSee }: SortPostProps) {
   const [dropdownActive, setDropdownActive] = useState(false)
   const viewOption =
-    "border-4 border-s-slate-950 hover:bg-gray-600 w-[10vw] rounded-2xl hover:cursor-pointer p-2 "
+    "border-4 border-s-slate-950 hover:bg-gray-600 bg-gray-400 w-[10vw] rounded-2xl hover:cursor-pointer p-2 "
 
   return (
     <div className="relative h-25 flex justify-between items-center text-xl bg-white p-5 font-bold">
@@ -16,8 +16,8 @@ export default function SortPostsBy({ setPostsToSee, postsToSee }: SortPostProps
 
       {/* Absolute dropdown right here which depends on the relative parent */}
       <div
-        className={`absolute left-[25vw] flex flex-col rounded-2xl bg-gray-400 h-20 p-4 text-center gap-5
-          text-2xl ${dropdownActive ? "h-40" : "h-10"}`}
+        className={`absolute left-[25vw] flex flex-col rounded-2xl text-center gap-5
+          text-2xl ${dropdownActive ? "border-3 bg-gray-500 p-2" : "bg-gray-400 "}`}
       >
         <button
           onClick={() => {

@@ -45,8 +45,10 @@ Social interaction:
 
 -Add comments to post
 
-
 Later:
+
+-Add likes to posts, this will require a new table in the DB which stores users and their likes
+so we can check if user already liked a post
 
 -Add server actions
 

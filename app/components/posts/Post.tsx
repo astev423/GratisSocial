@@ -54,9 +54,8 @@ export default function Post({ post, refetch }: PostProps) {
       <div>Posted on: {formatDate(post.createdAt)}</div>
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>
-      <div>Likes: {post.likes}</div>
-      <div>comments: {post.comments}</div>
-      <CommentFeed></CommentFeed>
+      <div>Likes: {post.likeCount}</div>
+      <CommentFeed commentIds={["none"]} commentCount={0}></CommentFeed>
     </div>
   )
 }

@@ -1,5 +1,3 @@
-const Comment = () => {
-  return <div>I agree!</div>
+export default function Comment({ commentId }: { commentId: string }) {
+  return <div>{commentId}</div>
 }
-
-export default Comment

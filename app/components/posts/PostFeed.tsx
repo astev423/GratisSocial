@@ -18,7 +18,7 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
   const [loading, setLoading] = useState(true)
   const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
 
-  async function fetchPosts(): Promise<void> {
+  async function fetchPosts() {
     const url = username
       ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
       : `/api/posts?type=${postsToSee}`

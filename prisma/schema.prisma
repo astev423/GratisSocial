@@ -25,23 +25,27 @@ model User {
   postsById       Post[] @relation("authorId")
   postsByUsername Post[] @relation("authorUsername")
 
-  followers      Follow[] @relation("followedBy")
-  following      Follow[] @relation("following")
-  followersCount Int      @default(0)
-  followingCount Int      @default(0)
+  followers      Follow[]  @relation("followedBy")
+  following      Follow[]  @relation("following")
+  followersCount Int       @default(0)
+  followingCount Int       @default(0)
+  comments       Comment[] @relation("authorId")
+  likes          Like[]    @relation("likerId")
 }
 
 model Post {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   title          String
   content        String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
   userId         String
-  authorId       User     @relation("authorId", fields: [userId], references: [id], onDelete: Cascade)
-  authorUsername User     @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
+  authorId       User      @relation("authorId", fields: [userId], references: [id], onDelete: Cascade)
+  authorUsername User      @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
   posterUsername String
-  likes          Int
-  comments       Int
+  commentCount   Int       @default(0)
+  comments       Comment[] @relation("postId")
+  likeCount      Int       @default(0)
+  likes          Like[]    @relation("postId")
 }
 
 model Follow {
@@ -50,4 +54,22 @@ model Follow {
   followerId       String
   personFollowed   User   @relation("following", fields: [personFollowedId], references: [id], onDelete: Cascade)
   personFollowedId String
+}
+
+model Comment {
+  id          String @id @default(uuid())
+  content     String
+  commenterId String
+  authorId    User   @relation("authorId", fields: [commenterId], references: [id], onDelete: Cascade)
+  postId      String
+  postIdRel   Post   @relation("postId", fields: [postId], references: [id])
+}
+
+model Like {
+  id         String  @id @default(uuid())
+  liked      Boolean
+  likerId    String
+  likerIdRel User    @relation("likerId", fields: [likerId], references: [id], onDelete: Cascade)
+  postId     String
+  postIdRel  Post    @relation("postId", fields: [postId], references: [id])
 }

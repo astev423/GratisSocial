@@ -1,15 +1,17 @@
 import Comment from "./Comment"
 
-// Get all comments for particular post from prisma, then display Comments (length of)
-// json?. then map through that and pass parameters to Comment so it can html it
-const CommentFeed = () => {
+type CommentFeedProps = {
+  commentCount: number
+  commentIds: string[]
+}
+
+export default function CommentFeed({ commentCount, commentIds }: CommentFeedProps) {
   return (
     <div>
-      Comments:
-      <Comment></Comment>
-      <Comment></Comment>
+      <div>{commentCount} comments:</div>
+      {commentIds.map((id) => (
+        <Comment key={id} commentId={id} />
+      ))}
     </div>
   )
 }
-
-export default CommentFeed
