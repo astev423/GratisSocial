@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server"
-import { auth } from "@clerk/nextjs/server"
 import { prisma } from "@/prisma/prisma"
+import { auth } from "@clerk/nextjs/server"
+import { NextResponse } from "next/server"
 
 // Delete post by id if userId matches poster
 export async function POST(req: Request) {
@@ -12,16 +12,13 @@ export async function POST(req: Request) {
 
   const postToDelete = await prisma.post.delete({
     where: {
-      userId: userId,
+      authorId: userId,
       id: postId,
     },
   })
 
   if (!postToDelete) {
-    return NextResponse.json(
-      { error: "Post id doesn't match user id" },
-      { status: 400 },
-    )
+    return NextResponse.json({ error: "Post id doesn't match user id" }, { status: 400 })
   }
 
   return NextResponse.json({ status: 200 })

@@ -25,6 +25,13 @@ export type FollowInfo = {
 export type Comment = {
   id: string
   content: string
-  commenterId: string
+  commenterUsername: string
+  postId: string
+}
+
+export type Like = {
+  id: string
+  liked: boolean
+  likerId: string
   postId: string
 }

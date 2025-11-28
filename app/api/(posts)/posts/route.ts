@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
     const allPosts = await prisma.post.findMany({
       where: {
-        userId: {
+        authorId: {
           in: followedUserIds,
         },
       },
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
   } else if (type === "myPosts") {
     const userPosts = await prisma.post.findMany({
       where: {
-        userId: userId,
+        authorId: userId,
       },
     })
 

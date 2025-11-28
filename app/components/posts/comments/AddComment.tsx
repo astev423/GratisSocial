@@ -11,16 +11,21 @@ type AddCommentProps = {
 export default function AddComment({ postId, setRefresh }: AddCommentProps) {
   const [inputText, setInputText] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    createComment(inputText, postId)
+    const res = await createComment(inputText, postId)
+    if (!res) {
+      console.error("Failed to make comment!")
+      return
+    }
+
     setInputText("")
     setRefresh((i) => i + 1)
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <input
           className="border-2 rounded-xl p-1 w-[10vw]"
           type="text"

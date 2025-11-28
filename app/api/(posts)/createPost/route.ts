@@ -20,10 +20,7 @@ export async function POST(request: Request) {
   // Now that user is verified get title and post content info and upload it to DB
   const { title, content } = await request.json()
   if (!title || !content) {
-    return NextResponse.json(
-      { message: "Title and content are required." },
-      { status: 400 },
-    )
+    return NextResponse.json({ message: "Title and content are required." }, { status: 400 })
   }
 
   try {
@@ -31,11 +28,9 @@ export async function POST(request: Request) {
       data: {
         title,
         content,
-        authorId: {
+        author: {
           connect: { id: userId },
         },
-        likes: 0,
-        comments: 0,
         authorUsername: {
           connect: { username: username },
         },
@@ -44,9 +39,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newPost, { status: 201 })
   } catch (error) {
-    return NextResponse.json(
-      { message: `Error creating post. ${error}` },
-      { status: 500 },
-    )
+    return NextResponse.json({ message: `Error creating post. ${error}` }, { status: 500 })
   }
 }

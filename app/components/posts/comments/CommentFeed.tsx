@@ -1,4 +1,4 @@
-import { Comment as CommentType } from "@/types/types"
+import type { Comment as CommentType } from "@/types/types"
 import { useEffect, useState } from "react"
 import AddComment from "./AddComment"
 import Comment from "./Comment"
@@ -30,9 +30,11 @@ export default function CommentFeed({ commentCount, postId }: CommentFeedProps) 
     <div className="flex flex-col gap-3">
       <div>{commentCount} comments:</div>
       <AddComment setRefresh={setRefresh} postId={postId} />
+
+      {/* Get all comments for current post if they exist */}
       {comments != null &&
         comments.map((comment) => (
-          <Comment key={comment.id} commenterId={comment.commenterId} content={comment.content} />
+          <Comment key={comment.id} commenterUsername={comment.commenterUsername} content={comment.content} />
         ))}
     </div>
   )
