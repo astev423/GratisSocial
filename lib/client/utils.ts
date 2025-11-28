@@ -80,11 +80,24 @@ export async function followUser(username: string) {
   return true
 }
 
-export async function unfollowUser(username: string) {
+export async function unfollowUser(username: string): Promise<boolean> {
   const res = await fetch("/api/unfollowUser", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
+  })
+  if (!res.ok) {
+    return false
+  }
+
+  return true
+}
+
+export async function createComment(content: string, postId: string): Promise<boolean> {
+  const res = await fetch("/api/createComment", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content, postId }),
   })
   if (!res.ok) {
     return false

@@ -6,9 +6,7 @@ export type Post = {
   content: string
   createdAt: string
   likeCount: number
-  likerIds: string[]
   commentCount: number
-  commentsIds: string[]
 }
 
 export type User = {
@@ -22,4 +20,11 @@ export type User = {
 export type FollowInfo = {
   followers: number
   following: number
+}
+
+export type Comment = {
+  id: string
+  content: string
+  commenterId: string
+  postId: string
 }

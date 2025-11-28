@@ -55,7 +55,7 @@ export default function Post({ post, refetch }: PostProps) {
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>
       <div>Likes: {post.likeCount}</div>
-      <CommentFeed commentIds={["none"]} commentCount={0}></CommentFeed>
+      <CommentFeed commentCount={0} postId={post.id} />
     </div>
   )
 }
