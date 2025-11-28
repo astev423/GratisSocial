@@ -38,26 +38,25 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
 
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center gap-5">
-        <div className="text-3xl mb-20 bg-white p-5 w-150 text-center font-bold">Posts</div>
+      <div className="flex flex-col justify-center w-[40vw] items-center gap-5">
+        <div className="text-3xl mb-20 bg-white p-5 text-center font-bold">Posts</div>
         <SpinningIcon size={200} />
-        <div className="flex flex-col gap-5 min-w-150 min-h-150"></div>
+        <div className="flex flex-col gap-5 min-h-150"></div>
       </div>
     )
   }
 
-  // If no posts then notify user of problem, otherwise map through all posts and make cards for each
   if (posts.length == 0) {
     return (
-      <div className="flex flex-col justify-center items-center gap-5">
-        <div className="text-3xl bg-white p-5 w-150 text-center font-bold">No posts found</div>
+      <div className="flex flex-col justify-center w-[40vw] items-center gap-5">
+        <div className="text-3xl bg-white p-5 text-center font-bold">No posts found</div>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col justify-center items-center gap-5">
-      <div className="text-3xl bg-white p-5 w-150 text-center font-bold">Posts</div>
+    <div className="justify-center items-center w-[40vw]  gap-5">
+      <div className="text-3xl bg-white mb-5 p-5 text-center font-bold">Posts</div>
       <div className="flex flex-col gap-5">
         {posts.map((post) => (
           // Props get passed in as an object even if just one, key gets stripped out of obj

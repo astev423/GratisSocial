@@ -41,18 +41,23 @@ CLERK_SECRET_KEY=your_private_key_here
 
 ## TODO:
 
-UI: Make UI work on smaller screens as well
-
 Social interaction:
-
--Add comments to post
 
 -Allow users to filter posts by following or all public posts (private posts only see via follow)
 
--Add dm mechanic
+-Add search bar to find other users
 
-Other:
+-Add comments to post
+
+
+Later:
 
 -Allow user to change user username when they change their username in clerk, make sure no duplicates
 
 -Use react dev tools to test performance
+
+-Add dm mechanic
+
+-Allow users to post images
+
+-Allow accounts to be private and add follow requests

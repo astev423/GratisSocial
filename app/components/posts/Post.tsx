@@ -22,7 +22,7 @@ export default function Post({ post, refetch }: PostProps) {
   }
 
   return (
-    <div className="bg-white p-5 flex flex-col gap-4 w-150">
+    <div className="bg-white p-5 flex flex-col gap-4 ">
       <div className="flex justify-between ">
         <div className="text-4xl font-bold">{post.title}</div>
 
