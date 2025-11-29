@@ -3,8 +3,8 @@ import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
 type Names = {
-  requestedFirstName: string
-  requestedLastName: string
+  editableFirstName: string
+  editableLastName: string
 }
 
 // Update first and last name
@@ -15,8 +15,8 @@ export async function PUT(request: Request) {
   }
 
   const body = (await request.json()) as Names
-  const { requestedFirstName, requestedLastName } = body
-  if (requestedFirstName.length > 20 || requestedLastName.length > 20) {
+  const { editableFirstName, editableLastName } = body
+  if (editableFirstName.length > 20 || editableLastName.length > 20) {
     return NextResponse.json({ error: "Names too big!" }, { status: 404 })
   }
 
@@ -25,8 +25,8 @@ export async function PUT(request: Request) {
       id: userId,
     },
     data: {
-      firstName: requestedFirstName,
-      lastName: requestedLastName,
+      firstName: editableFirstName,
+      lastName: editableFirstName,
     },
   })
 

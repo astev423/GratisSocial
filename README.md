@@ -46,6 +46,10 @@ CLERK_SECRET_KEY=your_private_key_here
 -Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
 to comments
 
+-Optimize DB queries, findMany looks through entire DB, don't use it if we only want 1 thing
+
+-Reuse backend queries functions instead of manually writing them in API routes
+
 -Add server actions
 
 -Use react dev tools to test performance
