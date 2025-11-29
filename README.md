@@ -43,6 +43,9 @@ CLERK_SECRET_KEY=your_private_key_here
 
 -Refactor comments and then likes, they need refactor badly
 
+-Add a way to refetch info but only for a specific post so we don't requery all posts everytime
+like or comment happens
+
 -Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
 to comments
 

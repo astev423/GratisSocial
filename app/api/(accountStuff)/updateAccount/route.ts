@@ -26,7 +26,7 @@ export async function PUT(request: Request) {
     },
     data: {
       firstName: editableFirstName,
-      lastName: editableFirstName,
+      lastName: editableLastName,
     },
   })
 

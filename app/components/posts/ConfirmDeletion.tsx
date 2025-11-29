@@ -38,7 +38,10 @@ export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
           <h2 className="text-lg font-semibold">Are you sure?</h2>
           <p className="mt-2 text-sm text-gray-600">This action cannot be undone.</p>
           <div className="mt-4 flex justify-end gap-2">
-            <button onClick={() => setShowConfirmation(false)} className="rounded border px-3 py-2 text-sm">
+            <button
+              onClick={() => setShowConfirmation(false)}
+              className="rounded border px-3 py-2 text-sm hover:scale-110 hover:bg-gray-400 hover:cursor-pointer "
+            >
               Cancel
             </button>
             <button
@@ -46,7 +49,7 @@ export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
                 deletePost()
                 setShowConfirmation(false)
               }}
-              className="rounded bg-red-600 px-3 py-2 text-sm text-white"
+              className="rounded bg-red-600 px-3 py-2 text-sm text-white hover:scale-110 hover:cursor-pointer hover:bg-red-900"
             >
               Confirm
             </button>
