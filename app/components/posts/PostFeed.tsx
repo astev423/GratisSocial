@@ -14,6 +14,7 @@ type PostFeedProps = {
 
 export default function PostFeed({ postsToSee: seePosts, username = undefined }: PostFeedProps) {
   const [postsToSee, setpostsToSee] = useState(seePosts)
+  const [reloadPosts, setReloadPosts] = useState(0)
   const [posts, setPosts] = useState<PostType[]>([])
   const [loading, setLoading] = useState(true)
   const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
@@ -37,7 +38,7 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
   // Fetch all posts depending on which posts selected in props
   useEffect(() => {
     fetchPosts()
-  }, [postsToSee])
+  }, [postsToSee, reloadPosts])
 
   if (loading) {
     return (
@@ -68,7 +69,7 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
         <div className="flex flex-col gap-5">
           {posts.map((post) => (
             // Props get passed in as an object even if just one, key gets stripped out of obj
-            <Post refetch={fetchPosts} post={post} key={post.id} />
+            <Post refetch={setReloadPosts} post={post} key={post.id} />
           ))}
         </div>
       )}

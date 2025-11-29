@@ -6,7 +6,7 @@ type ConfirmProps = {
   confirmObject: {
     setShowConfirmation: Dispatch<SetStateAction<boolean>>
     postId: string
-    refetch: () => void
+    refetch: Dispatch<SetStateAction<number>>
   }
 }
 
@@ -26,7 +26,7 @@ export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
 
     // If post actually deleted we need to reload posts to get rid of deleted one
     if (response.status == 200) {
-      refetch()
+      refetch((i) => i + 1)
     }
   }
 

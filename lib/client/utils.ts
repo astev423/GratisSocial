@@ -105,3 +105,21 @@ export async function createComment(content: string, postId: string): Promise<bo
 
   return true
 }
+
+type interactionProps = {
+  postId: string
+  interaction: "like" | "dislike" | "removeLike" | "removeDislike"
+}
+
+export async function likeOrDislikeInteraction({ postId, interaction }: interactionProps) {
+  const res = await fetch("/api/likeOrDislikeInteraction", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ postId, interaction }),
+  })
+  if (!res.ok) {
+    return false
+  }
+
+  return true
+}

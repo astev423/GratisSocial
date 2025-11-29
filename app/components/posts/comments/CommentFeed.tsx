@@ -1,12 +1,12 @@
 import type { Comment as CommentType } from "@/types/types"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import AddComment from "./AddComment"
 import Comment from "./Comment"
 
 type CommentFeedProps = {
   commentCount: number
   postId: string
-  refetch: () => void
+  refetch: Dispatch<SetStateAction<number>>
 }
 
 export default function CommentFeed({ commentCount, refetch, postId }: CommentFeedProps) {

@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 
 type AddCommentProps = {
   postId: string
-  refetch: () => void
+  refetch: Dispatch<SetStateAction<number>>
   setRefresh: Dispatch<SetStateAction<number>>
 }
 
@@ -25,7 +25,7 @@ export default function AddComment({ postId, refetch, setRefresh }: AddCommentPr
     }
 
     setInputText("")
-    refetch()
+    refetch((i) => i + 1)
     setRefresh((i) => i + 1)
   }
 

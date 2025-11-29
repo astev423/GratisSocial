@@ -44,6 +44,8 @@ CLERK_SECRET_KEY=your_private_key_here
 -Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
 to comments
 
+-Refactor comments as well, particularly fetching info on posting comment
+
 -Add server actions
 
 -Use react dev tools to test performance
