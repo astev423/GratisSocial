@@ -62,7 +62,7 @@ model Comment {
   commenterUsername String
   commenter         User   @relation("commenter", fields: [commenterUsername], references: [username], onDelete: Cascade)
   postId            String
-  post              Post   @relation("post", fields: [postId], references: [id])
+  post              Post   @relation("post", fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Like {
@@ -71,5 +71,5 @@ model Like {
   likerId String
   liker   User    @relation("liker", fields: [likerId], references: [id], onDelete: Cascade)
   postId  String
-  post    Post    @relation("post", fields: [postId], references: [id])
+  post    Post    @relation("post", fields: [postId], references: [id], onDelete: Cascade)
 }

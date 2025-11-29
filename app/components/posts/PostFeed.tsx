@@ -49,16 +49,8 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
     )
   }
 
-  if (posts.length == 0) {
-    return (
-      <div className="w-[40vw] gap-5">
-        <div className={`${whiteBoxWithBoldText}`}>No posts found</div>
-      </div>
-    )
-  }
-
   return (
-    <div className="w-[40vw] gap-5">
+    <div className="w-[40vw] gap-5 mb-100">
       <div className={`mb-5 ${whiteBoxWithBoldText}`}>Posts</div>
 
       {/* Let user change which posts to see if they are on homepage */}
@@ -68,12 +60,18 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
         </div>
       )}
 
-      <div className="flex flex-col gap-5">
-        {posts.map((post) => (
-          // Props get passed in as an object even if just one, key gets stripped out of obj
-          <Post refetch={fetchPosts} post={post} key={post.id} />
-        ))}
-      </div>
+      {posts.length == 0 ? (
+        <div className="w-[40vw] gap-5">
+          <div className={`${whiteBoxWithBoldText}`}>No posts found</div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-5">
+          {posts.map((post) => (
+            // Props get passed in as an object even if just one, key gets stripped out of obj
+            <Post refetch={fetchPosts} post={post} key={post.id} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

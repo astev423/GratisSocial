@@ -11,6 +11,17 @@ export async function POST(req: NextRequest) {
   }
 
   // Get username and email from ClerkJS and make account in DB with that info
+  await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      commentCount: {
+        increment: 1,
+      },
+    },
+  })
+
   await prisma.comment.create({
     data: {
       postId: postId,

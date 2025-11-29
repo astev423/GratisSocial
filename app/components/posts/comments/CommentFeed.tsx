@@ -6,9 +6,10 @@ import Comment from "./Comment"
 type CommentFeedProps = {
   commentCount: number
   postId: string
+  refetch: () => void
 }
 
-export default function CommentFeed({ commentCount, postId }: CommentFeedProps) {
+export default function CommentFeed({ commentCount, refetch, postId }: CommentFeedProps) {
   const [comments, setComments] = useState<CommentType[] | null>(null)
   const [refresh, setRefresh] = useState(0)
 
@@ -29,7 +30,7 @@ export default function CommentFeed({ commentCount, postId }: CommentFeedProps) 
   return (
     <div className="flex flex-col gap-3">
       <div>{commentCount} comments:</div>
-      <AddComment setRefresh={setRefresh} postId={postId} />
+      <AddComment refetch={refetch} setRefresh={setRefresh} postId={postId} />
 
       {/* Get all comments for current post if they exist */}
       {comments != null &&

@@ -44,9 +44,6 @@ CLERK_SECRET_KEY=your_private_key_here
 -Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
 to comments
 
--Add likes to posts, this will require a new table in the DB which stores users and their likes
-so we can check if user already liked a post
-
 -Add server actions
 
 -Use react dev tools to test performance

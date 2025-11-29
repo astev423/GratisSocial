@@ -5,14 +5,19 @@ import { Dispatch, SetStateAction, useState } from "react"
 
 type AddCommentProps = {
   postId: string
+  refetch: () => void
   setRefresh: Dispatch<SetStateAction<number>>
 }
 
-export default function AddComment({ postId, setRefresh }: AddCommentProps) {
+export default function AddComment({ postId, refetch, setRefresh }: AddCommentProps) {
   const [inputText, setInputText] = useState("")
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (inputText == "") {
+      console.error("You can't comment nothing")
+      return
+    }
     const res = await createComment(inputText, postId)
     if (!res) {
       console.error("Failed to make comment!")
@@ -20,6 +25,7 @@ export default function AddComment({ postId, setRefresh }: AddCommentProps) {
     }
 
     setInputText("")
+    refetch()
     setRefresh((i) => i + 1)
   }
 

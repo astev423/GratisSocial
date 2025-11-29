@@ -27,7 +27,7 @@ export default function Post({ post, refetch }: PostProps) {
         <div className="text-4xl font-bold">{post.title}</div>
 
         {/* This part shows red X on post if post creator matches user*/}
-        {post.userId == userId && (
+        {post.authorId == userId && (
           <div
             onClick={() => setShowConfirmation(true)}
             className="self-start text-3xl hover:brightness-50 hover:scale-140 duration-300
@@ -55,7 +55,7 @@ export default function Post({ post, refetch }: PostProps) {
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>
       <div>Likes: {post.likeCount}</div>
-      <CommentFeed commentCount={0} postId={post.id} />
+      <CommentFeed refetch={refetch} commentCount={post.commentCount} postId={post.id} />
     </div>
   )
 }

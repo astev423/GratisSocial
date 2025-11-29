@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     })
     const followedUserIds = follows.map((f) => f.personFollowedId)
 
-    const allPosts = await prisma.post.findMany({
+    const followedPosts = await prisma.post.findMany({
       where: {
         authorId: {
           in: followedUserIds,
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       },
     })
 
-    return NextResponse.json(allPosts, { status: 200 })
+    return NextResponse.json(followedPosts, { status: 200 })
   } else if (type === "All") {
     const allPosts = await prisma.post.findMany()
 
