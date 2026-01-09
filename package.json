@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.35.5",
-    "@prisma/adapter-pg": "^7.0.1",
-    "@prisma/client": "^7.0.1",
+    "@clerk/nextjs": "^6.36.0",
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
     "dotenv": "^17.2.3",
-    "next": "^16.0.5",
+    "next": "^16.0.7",
     "npm-check-updates": "^19.1.2",
     "pg": "^8.16.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,17 +26,17 @@
     "@types/pg": "^8.15.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@typescript-eslint/eslint-plugin": "^8.48.0",
-    "@typescript-eslint/parser": "^8.48.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "autoprefixer": "^10.4.22",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.5",
+    "eslint-config-next": "16.0.7",
     "eslint-plugin-unused-imports": "^4.3.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.7.2",
+    "prettier": "^3.7.4",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prisma": "^7.0.1",
+    "prisma": "^7.1.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5"
   }

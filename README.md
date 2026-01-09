@@ -49,6 +49,9 @@ like or comment happens
 -Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
 to comments
 
+-Have one "authenticator" backend function that authenticates and returns user id so I dont have to manually
+type it out every time
+
 -Optimize DB queries, findMany looks through entire DB, don't use it if we only want 1 thing
 
 -Reuse backend queries functions instead of manually writing them in API routes
