@@ -38,32 +38,3 @@ Make a clerk account and get your API keys and then put it in the .env file like
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_public_key_here
 CLERK_SECRET_KEY=your_private_key_here
 ```
-
-## TODO:
-
--Refactor comments and then likes, they need refactor badly
-
--Add a way to refetch info but only for a specific post so we don't requery all posts everytime
-like or comment happens
-
--Only fetch 3 comments, allow users to see more comments if they click a dropdown, also add delete
-to comments
-
--Have one "authenticator" backend function that authenticates and returns user id so I dont have to manually
-type it out every time
-
--Optimize DB queries, findMany looks through entire DB, don't use it if we only want 1 thing
-
--Reuse backend queries functions instead of manually writing them in API routes
-
--Add server actions
-
--Use react dev tools to test performance
-
--Allow user to change user username when they change their username in clerk, make sure no duplicates
-
--Add dm mechanic
-
--Allow users to post images
-
--Allow accounts to be private and add follow requests

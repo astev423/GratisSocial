@@ -2,6 +2,9 @@ import { auth, currentUser } from "@clerk/nextjs/server"
 import "server-only"
 import { prisma } from "../../prisma/prisma"
 
+// For a lot of these functions we don't need to do ID auth check because clerk proxy.ts blocks
+// all non signed in users from accessing all pages, besides the home page
+
 export async function addClerkUserToDb() {
   const { userId } = await auth()
   if (!userId) {
@@ -15,25 +18,25 @@ export async function addClerkUserToDb() {
   }
 }
 
-export async function fetchUser(username?: string) {
-  if (username == undefined) {
-    const { userId } = await auth()
-    if (!userId) {
-      return
-    }
-
-    return prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        username: true,
-        firstName: true,
-        lastName: true,
-        followingCount: true,
-        followersCount: true,
-      },
-    })
+export async function fetchUserById() {
+  const { userId } = await auth()
+  if (!userId) {
+    return
   }
 
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      username: true,
+      firstName: true,
+      lastName: true,
+      followingCount: true,
+      followersCount: true,
+    },
+  })
+}
+
+export async function fetchUserByUsername(username: string) {
   return prisma.user.findUnique({
     where: { username: username },
     select: {

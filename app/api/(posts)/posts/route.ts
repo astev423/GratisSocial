@@ -1,14 +1,13 @@
+import { reqWithAuthWrapper } from "@/lib/server/api"
 import { prisma } from "@/prisma/prisma"
-import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
 // Get specified posts
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
+export const GET = reqWithAuthWrapper(async (req, userId) => {
+  const { searchParams } = new URL(req.url)
   const type = searchParams.get("type")
   const username = searchParams.get("username")
 
-  const { userId } = await auth()
   if (!userId || !type) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
@@ -61,4 +60,4 @@ export async function GET(request: Request) {
 
   // If no if statements activated then request failed
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-}
+})

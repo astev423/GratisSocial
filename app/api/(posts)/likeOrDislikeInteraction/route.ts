@@ -1,14 +1,8 @@
+import { reqWithAuthWrapper } from "@/lib/server/api"
 import { prisma } from "@/prisma/prisma"
-import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
-export async function POST(req: Request) {
-  const { userId } = await auth()
-
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
-
+export const POST = reqWithAuthWrapper(async (req, userId) => {
   const { postId, interaction } = await req.json()
 
   // 1. Read current reaction from this user on this post
@@ -79,4 +73,4 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json({ status: 200 })
-}
+})
