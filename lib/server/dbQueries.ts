@@ -7,7 +7,7 @@ import { prisma } from "../../prisma/prisma"
 
 export async function addClerkUserToDb() {
   const { userId } = await auth()
-  if (!userId) {
+  if (userId == null) {
     return
   }
 
@@ -20,7 +20,7 @@ export async function addClerkUserToDb() {
 
 export async function fetchUserById() {
   const { userId } = await auth()
-  if (!userId) {
+  if (userId == null) {
     return
   }
 
@@ -49,7 +49,7 @@ export async function fetchUserByUsername(username: string) {
   })
 }
 
-export async function fetchFollowInfo(username: string) {
+export async function fetchFollowInfoOfUser(username: string) {
   const user = await prisma.user.findFirst({
     where: {
       username: username,
@@ -59,17 +59,14 @@ export async function fetchFollowInfo(username: string) {
     return null
   }
 
-  const { id: userId } = user
-
-  // Use id to get follower infomation
   const followersCount = await prisma.follow.count({
     where: {
-      personFollowedId: userId,
+      personFollowedId: user.id,
     },
   })
   const followingCount = await prisma.follow.count({
     where: {
-      followerId: userId,
+      followerId: user.id,
     },
   })
 
