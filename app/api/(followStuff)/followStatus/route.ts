@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Can't find users in DB" }, { status: 400 })
   }
 
-  if (!isUserFollowing(viewingUser.id, cardUser.id)) {
-    return NextResponse.json({ followStatus: "Not Following" }, { status: 200 })
+  if (await isUserFollowing(viewingUser.id, cardUser.id)) {
+    return NextResponse.json({ followStatus: "Following" }, { status: 200 })
   }
 
-  return NextResponse.json({ followStatus: "Following" }, { status: 200 })
+  return NextResponse.json({ followStatus: "Not Following" }, { status: 200 })
 }

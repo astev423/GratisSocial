@@ -10,10 +10,8 @@ export async function POST(request: Request) {
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 400 })
   }
-  const { id: userId } = user
-
   // Use id to get follower infomation
-  const { followersCount, followingCount } = await fetchFollowInfoFromGivenId(userId)
+  const { followersCount, followingCount } = await fetchFollowInfoFromGivenId(user.id)
 
   return NextResponse.json({ following: followingCount, followers: followersCount }, { status: 200 })
 }

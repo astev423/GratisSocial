@@ -71,13 +71,13 @@ function tryFetchUser(where: Prisma.UserWhereUniqueInput) {
   })
 }
 
-export const tryFetchUserByGivenId = (userId: string) => tryFetchUser({ id: userId })
-
-export const tryFetchUserByUsername = (username: string) => tryFetchUser({ username: username })
-
 export const tryFetchUserByTheirId = getUserIdOrReturnWrapper((userId: string) =>
   tryFetchUser({ id: userId }),
 )
+
+export const tryFetchUserByGivenId = (userId: string) => tryFetchUser({ id: userId })
+
+export const tryFetchUserByUsername = (username: string) => tryFetchUser({ username: username })
 
 export async function updateUserById<T extends object>(userId: string, data: T) {
   return prisma.user.update({
@@ -197,30 +197,6 @@ export async function fetchFollowInfoFromGivenId(userId: string) {
   return { followersCount, followingCount }
 }
 
-export async function tryFetchFollowInfoOfUser(username: string) {
-  const user = await prisma.user.findFirst({
-    where: {
-      username: username,
-    },
-  })
-  if (!user) {
-    return null
-  }
-
-  const followersCount = await prisma.follow.count({
-    where: {
-      personFollowedId: user.id,
-    },
-  })
-  const followingCount = await prisma.follow.count({
-    where: {
-      followerId: user.id,
-    },
-  })
-
-  return { followersCount, followingCount }
-}
-
 export async function isUserFollowing(userId: string, viewedUserId: string) {
   const result = await prisma.follow.findFirst({
     where: {
@@ -228,11 +204,9 @@ export async function isUserFollowing(userId: string, viewedUserId: string) {
       followerId: userId,
     },
   })
-  if (result == null) {
-    return false
-  }
 
-  return true
+  console.log(result)
+  return result != null
 }
 
 export async function followUser(userId: string, viewedUserId: string) {

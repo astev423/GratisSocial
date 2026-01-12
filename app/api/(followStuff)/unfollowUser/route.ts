@@ -11,10 +11,13 @@ export const PUT = reqWithAuthWrapper(async (req, userId) => {
   }
 
   const isFollowing = await isUserFollowing(userId, viewedUser.id)
-  if (!isFollowing) {
+  if (isFollowing) {
     await unfollowUser(userId, viewedUser.id)
     return NextResponse.json({ status: 200 })
   }
 
-  return NextResponse.json({ error: "You can unfollow if you aren't following" }, { status: 400 })
+  return NextResponse.json(
+    { error: "You can unfollow a user if you aren't following them in the first place" },
+    { status: 400 },
+  )
 })

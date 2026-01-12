@@ -1,12 +1,14 @@
--Fix followers, its broken
-
 -Find some design pattern to reduce repitition in apis, too many "fetch via x"
+
+-Use where in function clause in db queries to reduce repetition
 
 -Try adding wrapper for getting id to db queries, make sure they return the right info
 
 -Refactor comments and then likes, they need refactor badly
 
--Refactor backend queries functions instead of manually writing them in API routes
+-Add date and clickable link to user profile in comments
+
+-Fix posts going to top if you comment/like on them
 
 -Add a way to refetch info but only for a specific post so we don't requery all posts everytime
 like or comment happens
