@@ -1,17 +1,17 @@
 import { reqWithAuthWrapper } from "@/lib/server/api"
-import { prisma } from "@/prisma/prisma"
+import {
+  createLikeOnPostFromUser,
+  deleteLikesOnPostFromUser,
+  tryFindLikeInfoForUserOnPost,
+  updateLikeCount,
+} from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
 export const POST = reqWithAuthWrapper(async (req, userId) => {
   const { postId, interaction } = await req.json()
 
   // 1. Read current reaction from this user on this post
-  const existing = await prisma.like.findFirst({
-    where: {
-      postId,
-      likerId: userId,
-    },
-  })
+  const existing = await tryFindLikeInfoForUserOnPost(postId, userId)
 
   // oldValue: like = +1, dislike = -1, none = 0
   let oldValue = 0
@@ -41,35 +41,17 @@ export const POST = reqWithAuthWrapper(async (req, userId) => {
   // 4. Update the like/dislike row
   // Remove old one if it exists
   if (existing) {
-    await prisma.like.deleteMany({
-      where: {
-        postId,
-        likerId: userId,
-      },
-    })
+    deleteLikesOnPostFromUser(postId, userId)
   }
 
   // Create new one if needed
   if (newValue !== 0) {
-    await prisma.like.create({
-      data: {
-        postId,
-        likerId: userId,
-        liked: newValue === 1, // true = like, false = dislike
-      },
-    })
+    createLikeOnPostFromUser(postId, userId, newValue)
   }
 
   // 5. Update the post likeCount if needed
   if (changeLikeCountBy !== 0) {
-    await prisma.post.update({
-      where: { id: postId },
-      data: {
-        likeCount: {
-          increment: changeLikeCountBy,
-        },
-      },
-    })
+    updateLikeCount(postId, changeLikeCountBy)
   }
 
   return NextResponse.json({ status: 200 })

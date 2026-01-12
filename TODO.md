@@ -1,4 +1,4 @@
--Routes should use dbqueries api instead of directly working with prisma
+-Find some design pattern to reduce repitition in apis, too many "fetch via x"
 
 -Try adding wrapper for getting id to db queries, make sure they return the right info
 

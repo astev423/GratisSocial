@@ -1,5 +1,10 @@
 import { reqWithAuthWrapper } from "@/lib/server/api"
-import { prisma } from "@/prisma/prisma"
+import {
+  fetchAllPosts,
+  fetchAllPostsByPeopleUserFollows,
+  fetchAllPostsFromUserViaTheirId,
+  fetchAllPostsFromUserViaTheirUsername,
+} from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
 // Get specified posts
@@ -13,32 +18,15 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
   }
 
   if (type === "Following") {
-    const follows = await prisma.follow.findMany({
-      where: {
-        followerId: userId,
-      },
-    })
-    const followedUserIds = follows.map((f) => f.personFollowedId)
-
-    const followedPosts = await prisma.post.findMany({
-      where: {
-        authorId: {
-          in: followedUserIds,
-        },
-      },
-    })
+    const followedPosts = await fetchAllPostsByPeopleUserFollows(userId)
 
     return NextResponse.json(followedPosts, { status: 200 })
   } else if (type === "All") {
-    const allPosts = await prisma.post.findMany()
+    const allPosts = await fetchAllPosts()
 
     return NextResponse.json(allPosts, { status: 200 })
   } else if (type === "myPosts") {
-    const userPosts = await prisma.post.findMany({
-      where: {
-        authorId: userId,
-      },
-    })
+    const userPosts = fetchAllPostsFromUserViaTheirId(userId)
 
     return NextResponse.json(userPosts, { status: 200 })
   } else if (type == "specificUser") {
@@ -48,12 +36,7 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
         { status: 401 },
       )
     }
-
-    const userPosts = await prisma.post.findMany({
-      where: {
-        posterUsername: username,
-      },
-    })
+    const userPosts = fetchAllPostsFromUserViaTheirUsername(username)
 
     return NextResponse.json(userPosts, { status: 200 })
   }

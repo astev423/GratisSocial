@@ -141,7 +141,7 @@ export async function createPost(postContent: PostContent) {
 
 // Get userId to make sure user can only delete posts made by them
 export async function deletePost(postId: string, userId: string) {
-  await prisma.post.delete({
+  return await prisma.post.delete({
     where: {
       authorId: userId,
       id: postId,
@@ -164,6 +164,43 @@ export async function updatePost<T extends object>(postId: string, data: T) {
       id: postId,
     },
     data: data,
+  })
+}
+
+export async function fetchAllPosts() {
+  return await prisma.post.findMany()
+}
+
+export async function fetchAllPostsByPeopleUserFollows(userId: string) {
+  const follows = await prisma.follow.findMany({
+    where: {
+      followerId: userId,
+    },
+  })
+  const followedUserIds = follows.map((f) => f.personFollowedId)
+
+  return await prisma.post.findMany({
+    where: {
+      authorId: {
+        in: followedUserIds,
+      },
+    },
+  })
+}
+
+export async function fetchAllPostsFromUserViaTheirId(userId: string) {
+  return await prisma.post.findMany({
+    where: {
+      authorId: userId,
+    },
+  })
+}
+
+export async function fetchAllPostsFromUserViaTheirUsername(username: string) {
+  return await prisma.post.findMany({
+    where: {
+      posterUsername: username,
+    },
   })
 }
 
@@ -302,4 +339,46 @@ export async function createCommentOnPost(postId: string, commentContent: string
 
 export async function getCommentsOnPost(postId: string) {
   return await prisma.comment.findMany({ where: { postId: postId } })
+}
+
+/*
+ COMMENT STUFF
+*/
+export async function tryFindLikeInfoForUserOnPost(postId: string, userId: string) {
+  return await prisma.like.findFirst({
+    where: {
+      postId: postId,
+      likerId: userId,
+    },
+  })
+}
+
+export async function deleteLikesOnPostFromUser(postId: string, userId: string) {
+  return await prisma.like.deleteMany({
+    where: {
+      postId: postId,
+      likerId: userId,
+    },
+  })
+}
+
+export async function createLikeOnPostFromUser(postId: string, userId: string, newValue: number) {
+  return await prisma.like.create({
+    data: {
+      postId: postId,
+      likerId: userId,
+      liked: newValue === 1, // true = like, false = dislike
+    },
+  })
+}
+
+export async function updateLikeCount(postId: string, changeLikeCountBy: number) {
+  await prisma.post.update({
+    where: { id: postId },
+    data: {
+      likeCount: {
+        increment: changeLikeCountBy,
+      },
+    },
+  })
 }
