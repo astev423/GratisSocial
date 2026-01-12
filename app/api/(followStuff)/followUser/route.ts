@@ -15,6 +15,16 @@ export const PUT = reqWithAuthWrapper(async (req, userId) => {
     return NextResponse.json({ error: "You are already following" }, { status: 400 })
   }
 
-  await followUser(userId, viewedUser.id)
+  // We use try catch even though function is void because Promise<void> can still be rejected if one of
+  // the promises we wait for fails, in that case catch runs
+  try {
+    await followUser(userId, viewedUser.id)
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to follow user, perhaps something in the transaction failed" },
+      { status: 400 },
+    )
+  }
+
   return NextResponse.json({ status: 200 })
 })

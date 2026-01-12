@@ -41,17 +41,17 @@ export const POST = reqWithAuthWrapper(async (req, userId) => {
   // 4. Update the like/dislike row
   // Remove old one if it exists
   if (existing) {
-    deleteLikesOnPostFromUser(postId, userId)
+    await deleteLikesOnPostFromUser(postId, userId)
   }
 
   // Create new one if needed
   if (newValue !== 0) {
-    createLikeOnPostFromUser(postId, userId, newValue)
+    await createLikeOnPostFromUser(postId, userId, newValue)
   }
 
   // 5. Update the post likeCount if needed
   if (changeLikeCountBy !== 0) {
-    updateLikeCount(postId, changeLikeCountBy)
+    await updateLikeCount(postId, changeLikeCountBy)
   }
 
   return NextResponse.json({ status: 200 })
