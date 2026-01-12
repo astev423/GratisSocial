@@ -26,7 +26,7 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
 
     return NextResponse.json(allPosts, { status: 200 })
   } else if (type === "myPosts") {
-    const userPosts = fetchAllPostsFromUserViaTheirId(userId)
+    const userPosts = await fetchAllPostsFromUserViaTheirId(userId)
 
     return NextResponse.json(userPosts, { status: 200 })
   } else if (type == "specificUser") {
@@ -36,7 +36,7 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
         { status: 401 },
       )
     }
-    const userPosts = fetchAllPostsFromUserViaTheirUsername(username)
+    const userPosts = await fetchAllPostsFromUserViaTheirUsername(username)
 
     return NextResponse.json(userPosts, { status: 200 })
   }

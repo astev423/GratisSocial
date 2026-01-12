@@ -1,4 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs/server"
+import { Prisma } from "@prisma/client"
 import "server-only"
 import { prisma } from "../../prisma/prisma"
 
@@ -9,25 +10,30 @@ import { prisma } from "../../prisma/prisma"
  USER STUFF
 */
 
-export async function tryAddClerkUserToDb() {
-  const { userId } = await auth()
-  if (userId == null) {
-    return
-  }
+function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
+  // Need this awaited return type so we can get right return type for things that call this
+  return async (): Promise<Awaited<ReturnType<F>> | void> => {
+    const { userId } = await auth()
+    if (userId == null) {
+      return
+    }
 
-  // If user signed in then check DB if they exist, if not then make account for them
-  const user = await prisma.user.findUnique({ where: { id: userId } })
-  if (user == null) {
-    tryCreateUser()
+    return fn(userId)
   }
 }
 
-export async function tryCreateUser() {
-  const { userId } = await auth()
-  if (userId == null) {
-    return false
+export const tryAddClerkUserToDb = getUserIdOrReturnWrapper(async (userId) => {
+  // If user signed in then check DB if they exist, if not then make account for them
+  const user = await prisma.user.findUnique({ where: { id: userId } })
+  if (user == null) {
+    await tryCreateUser(userId)
+    return true
   }
 
+  return false
+})
+
+async function tryCreateUser(userId: string) {
   // Get username and email from ClerkJS and make account in DB with that info
   const user = await currentUser()
   if (user == null || user.primaryEmailAddress == null || user.username == null) {
@@ -51,35 +57,9 @@ export async function tryCreateUser() {
   return true
 }
 
-export async function tryGetUser(username: string) {
-  return await prisma.user.findUnique({
-    where: {
-      username: username,
-    },
-  })
-}
-
-export async function tryFetchUserByGivenId(userId: string) {
+function tryFetchUser(where: Prisma.UserWhereUniqueInput) {
   return prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      username: true,
-      firstName: true,
-      lastName: true,
-      followingCount: true,
-      followersCount: true,
-    },
-  })
-}
-
-export async function tryFetchUserByTheirId() {
-  const { userId } = await auth()
-  if (userId == null) {
-    return
-  }
-
-  return prisma.user.findUnique({
-    where: { id: userId },
+    where,
     select: {
       id: true,
       username: true,
@@ -91,22 +71,16 @@ export async function tryFetchUserByTheirId() {
   })
 }
 
-export async function tryFetchUserByUsername(username: string) {
-  return prisma.user.findUnique({
-    where: { username: username },
-    select: {
-      id: true,
-      username: true,
-      firstName: true,
-      lastName: true,
-      followingCount: true,
-      followersCount: true,
-    },
-  })
-}
+export const tryFetchUserByGivenId = (userId: string) => tryFetchUser({ id: userId })
+
+export const tryFetchUserByUsername = (username: string) => tryFetchUser({ username: username })
+
+export const tryFetchUserByTheirId = getUserIdOrReturnWrapper((userId: string) =>
+  tryFetchUser({ id: userId }),
+)
 
 export async function updateUserById<T extends object>(userId: string, data: T) {
-  return await prisma.user.update({
+  return prisma.user.update({
     where: {
       id: userId,
     },
@@ -125,7 +99,7 @@ type PostContent = {
   authorUsername: string
 }
 export async function createPost(postContent: PostContent) {
-  return await prisma.post.create({
+  return prisma.post.create({
     data: {
       title: postContent.title,
       content: postContent.content,
@@ -141,7 +115,7 @@ export async function createPost(postContent: PostContent) {
 
 // Get userId to make sure user can only delete posts made by them
 export async function deletePost(postId: string, userId: string) {
-  return await prisma.post.delete({
+  return prisma.post.delete({
     where: {
       authorId: userId,
       id: postId,
@@ -150,7 +124,7 @@ export async function deletePost(postId: string, userId: string) {
 }
 
 export async function getUserLikeStatusOfPost(postId: string, userId: string) {
-  return await prisma.like.findFirst({
+  return prisma.like.findFirst({
     where: {
       postId: postId,
       likerId: userId,
@@ -159,7 +133,7 @@ export async function getUserLikeStatusOfPost(postId: string, userId: string) {
 }
 
 export async function updatePost<T extends object>(postId: string, data: T) {
-  return await prisma.post.update({
+  return prisma.post.update({
     where: {
       id: postId,
     },
@@ -168,7 +142,7 @@ export async function updatePost<T extends object>(postId: string, data: T) {
 }
 
 export async function fetchAllPosts() {
-  return await prisma.post.findMany()
+  return prisma.post.findMany()
 }
 
 export async function fetchAllPostsByPeopleUserFollows(userId: string) {
@@ -179,7 +153,7 @@ export async function fetchAllPostsByPeopleUserFollows(userId: string) {
   })
   const followedUserIds = follows.map((f) => f.personFollowedId)
 
-  return await prisma.post.findMany({
+  return prisma.post.findMany({
     where: {
       authorId: {
         in: followedUserIds,
@@ -189,7 +163,7 @@ export async function fetchAllPostsByPeopleUserFollows(userId: string) {
 }
 
 export async function fetchAllPostsFromUserViaTheirId(userId: string) {
-  return await prisma.post.findMany({
+  return prisma.post.findMany({
     where: {
       authorId: userId,
     },
@@ -197,7 +171,7 @@ export async function fetchAllPostsFromUserViaTheirId(userId: string) {
 }
 
 export async function fetchAllPostsFromUserViaTheirUsername(username: string) {
-  return await prisma.post.findMany({
+  return prisma.post.findMany({
     where: {
       posterUsername: username,
     },
@@ -328,24 +302,24 @@ export async function unfollowUser(userId: string, viewedUserId: string) {
 */
 
 export async function createCommentOnPost(postId: string, commentContent: string, commenterUsername: string) {
-  return await prisma.comment.create({
+  return prisma.comment.create({
     data: {
       postId: postId,
-      commenterUsername: commenterUsername,
       content: commentContent,
+      commenterUsername: commenterUsername,
     },
   })
 }
 
 export async function getCommentsOnPost(postId: string) {
-  return await prisma.comment.findMany({ where: { postId: postId } })
+  return prisma.comment.findMany({ where: { postId: postId } })
 }
 
 /*
  COMMENT STUFF
 */
 export async function tryFindLikeInfoForUserOnPost(postId: string, userId: string) {
-  return await prisma.like.findFirst({
+  return prisma.like.findFirst({
     where: {
       postId: postId,
       likerId: userId,
@@ -354,7 +328,7 @@ export async function tryFindLikeInfoForUserOnPost(postId: string, userId: strin
 }
 
 export async function deleteLikesOnPostFromUser(postId: string, userId: string) {
-  return await prisma.like.deleteMany({
+  return prisma.like.deleteMany({
     where: {
       postId: postId,
       likerId: userId,
@@ -363,7 +337,7 @@ export async function deleteLikesOnPostFromUser(postId: string, userId: string) 
 }
 
 export async function createLikeOnPostFromUser(postId: string, userId: string, newValue: number) {
-  return await prisma.like.create({
+  return prisma.like.create({
     data: {
       postId: postId,
       likerId: userId,
