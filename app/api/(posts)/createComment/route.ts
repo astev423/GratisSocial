@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/prisma"
+import { createCommentOnPost, updatePost } from "@/lib/server/dbQueries"
 import { currentUser } from "@clerk/nextjs/server"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -11,24 +11,10 @@ export async function POST(req: NextRequest) {
   }
 
   // Get username and email from ClerkJS and make account in DB with that info
-  await prisma.post.update({
-    where: {
-      id: postId,
-    },
-    data: {
-      commentCount: {
-        increment: 1,
-      },
-    },
-  })
 
-  await prisma.comment.create({
-    data: {
-      postId: postId,
-      commenterUsername: user.username,
-      content: content,
-    },
-  })
+  await updatePost(postId, { commentCount: { increment: 1 } })
+
+  await createCommentOnPost(postId, user.username, content)
 
   return NextResponse.json({ status: 200 })
 }

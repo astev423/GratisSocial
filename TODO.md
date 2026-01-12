@@ -1,3 +1,7 @@
+-Routes should use dbqueries api instead of directly working with prisma
+
+-Try adding wrapper for getting id to db queries, make sure they return the right info
+
 -Refactor comments and then likes, they need refactor badly
 
 -Refactor backend queries functions instead of manually writing them in API routes

@@ -1,5 +1,5 @@
 import { reqWithAuthWrapper } from "@/lib/server/api"
-import { prisma } from "@/prisma/prisma"
+import { updateUserById } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
 type Names = {
@@ -15,15 +15,8 @@ export const PUT = reqWithAuthWrapper(async (req, userId) => {
     return NextResponse.json({ error: "Names too big!" }, { status: 404 })
   }
 
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      firstName: editableFirstName,
-      lastName: editableLastName,
-    },
-  })
+  const dataToUpdate = { firstName: body.editableFirstName, lastName: body.editableLastName }
+  await updateUserById(userId, dataToUpdate)
 
   return NextResponse.json({ status: 200 })
 })

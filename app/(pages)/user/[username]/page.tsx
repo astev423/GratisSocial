@@ -3,7 +3,7 @@ import ProfileInfo from "@/app/components/ProfileInfo"
 
 import FollowCard from "@/app/components/follow/FollowCard"
 import { ViewedUserProvider } from "@/app/context/ViewedUserContext"
-import { fetchUserByUsername } from "../../../../lib/server/dbQueries"
+import { tryFetchUserByUsername } from "@/lib/server/dbQueries"
 import PostFeed from "../../../components/posts/PostFeed"
 
 type PageProps = {
@@ -12,7 +12,7 @@ type PageProps = {
 
 export default async function UserPage({ params }: PageProps) {
   const { username: paramsUsername } = await params
-  const accountPageUser = await fetchUserByUsername(paramsUsername)
+  const accountPageUser = await tryFetchUserByUsername(paramsUsername)
   if (accountPageUser == null) {
     return <FailedToFindUser />
   }

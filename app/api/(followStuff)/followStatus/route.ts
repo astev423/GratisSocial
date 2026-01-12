@@ -1,25 +1,18 @@
-import { reqWithAuthWrapper } from "@/lib/server/api"
-import { prisma } from "@/prisma/prisma"
-import { NextResponse } from "next/server"
+import { isUserFollowing, tryFetchUserByTheirId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
+import { NextRequest, NextResponse } from "next/server"
 
-export const POST = reqWithAuthWrapper(async (req, userId) => {
+export async function POST(req: NextRequest) {
   // Find the users to check if viewer if following that user
   const { username: cardUsername } = await req.json()
-  const cardUser = await prisma.user.findUnique({
-    where: { username: cardUsername },
-  })
-  const viewingUser = await prisma.user.findUnique({ where: { id: userId } })
+  const cardUser = await tryFetchUserByUsername(cardUsername)
+  const viewingUser = await tryFetchUserByTheirId()
   if (!cardUser || !viewingUser) {
     return NextResponse.json({ error: "Can't find users in DB" }, { status: 400 })
   }
 
-  const viewerFollowsCardUser = await prisma.follow.findFirst({
-    where: { personFollowedId: cardUser.id, followerId: viewingUser.id },
-  })
-
-  if (!viewerFollowsCardUser) {
+  if (!isUserFollowing(viewingUser.id, cardUser.id)) {
     return NextResponse.json({ followStatus: "Not Following" }, { status: 200 })
   }
 
   return NextResponse.json({ followStatus: "Following" }, { status: 200 })
-})
+}

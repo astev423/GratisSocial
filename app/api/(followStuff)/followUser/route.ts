@@ -1,11 +1,11 @@
 import { reqWithAuthWrapper } from "@/lib/server/api"
-import { followUser, getUser, isUserFollowing } from "@/lib/server/dbQueries"
+import { followUser, isUserFollowing, tryGetUser } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
 // Follow user if user exists and we are not following user yet
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const { username } = await req.json()
-  const viewedUser = await getUser(username)
+  const viewedUser = await tryGetUser(username)
   if (viewedUser == null) {
     return NextResponse.json({ error: "User doesn't exist" }, { status: 400 })
   }
@@ -15,6 +15,6 @@ export const PUT = reqWithAuthWrapper(async (req, userId) => {
     return NextResponse.json({ error: "You are already following" }, { status: 400 })
   }
 
-  followUser(userId, viewedUser.id)
+  await followUser(userId, viewedUser.id)
   return NextResponse.json({ status: 200 })
 })

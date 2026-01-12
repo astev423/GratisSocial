@@ -1,14 +1,9 @@
-import { reqWithAuthWrapper } from "@/lib/server/api"
-import { prisma } from "@/prisma/prisma"
+import { tryFetchUserByTheirId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
 // Get user from their ID
-export const POST = reqWithAuthWrapper(async (_req, userId) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  })
+export async function POST() {
+  const user = await tryFetchUserByTheirId()
   if (!user) {
     return NextResponse.json({ error: "User not found in database" }, { status: 400 })
   }
@@ -16,7 +11,7 @@ export const POST = reqWithAuthWrapper(async (_req, userId) => {
   const { username, firstName, lastName } = user
   const userObjectWithoutSensitiveInfo = { username, firstName, lastName }
   return NextResponse.json(userObjectWithoutSensitiveInfo, { status: 200 })
-})
+}
 
 // Get user from URL username parameters
 export async function GET(request: Request) {
@@ -26,11 +21,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Couldn't find username in serach params" }, { status: 400 })
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      username: usernameFromParams,
-    },
-  })
+  const user = await tryFetchUserByUsername(usernameFromParams)
   if (!user) {
     return NextResponse.json({ error: "Username not found in DB" }, { status: 400 })
   }
