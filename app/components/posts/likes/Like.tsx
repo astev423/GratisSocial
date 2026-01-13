@@ -35,28 +35,26 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
     postId: string
     interaction: "like" | "dislike" | "removeLike" | "removeDislike"
   }
-  let likeButtonImagePath: string
-  let dislikeButtonImagePath: string
-  let likeButtonOnClickData: LikeInteractionData
-  let dislikeButtonOnClickData: LikeInteractionData
-  if (likeInfo?.status == "liked") {
-    likeButtonImagePath = "/icons/clicked-thumbs-up.svg"
-    dislikeButtonImagePath = "/icons/unclicked-thumbs-down.svg"
-    likeButtonOnClickData = { postId, interaction: "removeLike" }
-  } else {
-    likeButtonImagePath = "/icons/unclicked-thumbs-up.svg"
-    likeButtonOnClickData = { postId, interaction: "like" }
-    if (likeInfo?.status == "disliked") {
-      dislikeButtonImagePath = "/icons/clicked-thumbs-down.svg"
-      dislikeButtonOnClickData = { postId, interaction: "removeDislike" }
-    } else {
-      dislikeButtonImagePath = "/icons/unclicked-thumbs-down.svg"
-      dislikeButtonOnClickData = { postId, interaction: "dislike" }
-    }
+
+  const likeButtonImagePath =
+    likeInfo?.status == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
+  const dislikeButtonImagePath =
+    likeInfo?.status == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
+  const likeButtonOnClickData: LikeInteractionData = {
+    postId,
+    interaction: likeInfo?.status == "liked" ? "removeLike" : "like",
+  }
+  const dislikeButtonOnClickData: LikeInteractionData = {
+    postId,
+    interaction: likeInfo?.status == "disliked" ? "removeDislike" : "dislike",
   }
 
-  async function submitLikeInteraction() {
-    await likeOrDislikeInteraction(likeButtonOnClickData)
+  async function submitLikeInteraction(buttonPressed: "like" | "dislike") {
+    if (buttonPressed == "like") {
+      await likeOrDislikeInteraction(likeButtonOnClickData)
+    } else {
+      await likeOrDislikeInteraction(dislikeButtonOnClickData)
+    }
     refetch((i) => i + 1)
     setRefresh((i) => i + 1)
   }
@@ -68,12 +66,12 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
         alt="Like Button"
         width={25}
         height={25}
-        onClick={submitLikeInteraction}
+        onClick={() => submitLikeInteraction("like")}
       />
       <Image
         src={dislikeButtonImagePath}
         alt="Dislike Button"
-        onClick={submitLikeInteraction}
+        onClick={() => submitLikeInteraction("dislike")}
         width={25}
         height={25}
       />
