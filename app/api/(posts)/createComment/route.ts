@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  // Get username and email from ClerkJS and make account in DB with that info
   await createCommentOnPost(postId, content, user.username)
   await updatePost(postId, { commentCount: { increment: 1 } })
 

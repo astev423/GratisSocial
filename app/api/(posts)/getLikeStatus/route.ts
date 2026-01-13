@@ -10,9 +10,9 @@ export const POST = reqWithAuthWrapper(async (req, userId) => {
   const likeStatus = likeInfo?.liked
   if (likeStatus) {
     return NextResponse.json({ status: "liked" }, { status: 200 })
-  } else if (likeStatus == undefined) {
-    return NextResponse.json({ status: "neither" }, { status: 200 })
-  } else {
+  } else if (likeStatus === false) {
     return NextResponse.json({ status: "disliked" }, { status: 200 })
   }
+
+  return NextResponse.json({ status: "neither" }, { status: 200 })
 })

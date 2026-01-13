@@ -1,10 +1,7 @@
--Find some design pattern to reduce repitition in apis, too many "fetch via x"
-
--Use where in function clause in db queries to reduce repetition
-
--Try adding wrapper for getting id to db queries, make sure they return the right info
-
 -Refactor comments and then likes, they need refactor badly
+
+-Instead of having seperate comments and likes fetch, which spams API, just retrieve comments and likes
+on post when getting posts and pass that as props to children
 
 -Add date and clickable link to user profile in comments
 
