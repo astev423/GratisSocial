@@ -15,7 +15,7 @@ export default function AddComment({ postId, refetch, setRefresh }: AddCommentPr
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (inputText == "") {
-      console.error("You can't comment nothing")
+      console.error("Comments can't be empty")
       return
     }
     const res = await createComment(inputText, postId)

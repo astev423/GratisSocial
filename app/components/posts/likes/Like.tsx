@@ -2,7 +2,6 @@ import { likeOrDislikeInteraction, useFetch } from "@/lib/client/utils"
 import { Post } from "@/types/types"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
-import SpinningIcon from "../../SpinningIcon"
 
 type LikeProps = {
   post: Post
@@ -22,13 +21,8 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
     postId,
     refresh,
   })
-
-  if (loading) {
-    return (
-      <div className="h-6 overflow-hidden flex items-center">
-        <SpinningIcon size={20}></SpinningIcon>
-      </div>
-    )
+  if (likeInfo == null) {
+    return
   }
 
   type LikeInteractionData = {
@@ -37,16 +31,16 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
   }
 
   const likeButtonImagePath =
-    likeInfo?.status == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
+    likeInfo.status == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
   const dislikeButtonImagePath =
-    likeInfo?.status == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
+    likeInfo.status == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
   const likeButtonOnClickData: LikeInteractionData = {
     postId,
-    interaction: likeInfo?.status == "liked" ? "removeLike" : "like",
+    interaction: likeInfo.status == "liked" ? "removeLike" : "like",
   }
   const dislikeButtonOnClickData: LikeInteractionData = {
     postId,
-    interaction: likeInfo?.status == "disliked" ? "removeDislike" : "dislike",
+    interaction: likeInfo.status == "disliked" ? "removeDislike" : "dislike",
   }
 
   async function submitLikeInteraction(buttonPressed: "like" | "dislike") {
@@ -70,10 +64,10 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
       />
       <Image
         src={dislikeButtonImagePath}
-        alt="Dislike Button"
         onClick={() => submitLikeInteraction("dislike")}
         width={25}
         height={25}
+        alt="Dislike Button"
       />
     </div>
   )

@@ -1,6 +1,5 @@
 "use client"
 
-import { FollowInfo } from "@/types/types"
 import { useEffect, useState } from "react"
 
 type FetchState<T> = {
@@ -54,56 +53,28 @@ export function useFetch<T = unknown>(route: string, body?: unknown): FetchState
   return { data, loading, error }
 }
 
-export async function fetchFollowCount(username: string) {
-  const res = await fetch("/api/fetchFollowCount", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username }),
-  })
-  if (!res.ok) {
-    return null
-  }
-
-  return res.json() as Promise<FollowInfo>
-}
-
 export async function followUser(username: string) {
-  const res = await fetch("/api/followUser", {
+  return await fetch("/api/followUser", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
   })
-  if (!res.ok) {
-    return false
-  }
-
-  return true
 }
 
-export async function unfollowUser(username: string): Promise<boolean> {
-  const res = await fetch("/api/unfollowUser", {
+export async function unfollowUser(username: string) {
+  return await fetch("/api/unfollowUser", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
   })
-  if (!res.ok) {
-    return false
-  }
-
-  return true
 }
 
-export async function createComment(content: string, postId: string): Promise<boolean> {
-  const res = await fetch("/api/createComment", {
+export async function createComment(content: string, postId: string) {
+  return await fetch("/api/createComment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content, postId }),
   })
-  if (!res.ok) {
-    return false
-  }
-
-  return true
 }
 
 type interactionProps = {
@@ -112,14 +83,9 @@ type interactionProps = {
 }
 
 export async function likeOrDislikeInteraction({ postId, interaction }: interactionProps) {
-  const res = await fetch("/api/likeOrDislikeInteraction", {
+  return await fetch("/api/likeOrDislikeInteraction", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ postId, interaction }),
   })
-  if (!res.ok) {
-    return false
-  }
-
-  return true
 }

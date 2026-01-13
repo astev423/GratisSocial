@@ -7,5 +7,5 @@ export async function POST(req: NextRequest) {
   const { postId } = await req.json()
   const comments = await getCommentsOnPost(postId)
 
-  return NextResponse.json({ comments }, { status: 200 })
+  return NextResponse.json(comments, { status: 200 })
 }

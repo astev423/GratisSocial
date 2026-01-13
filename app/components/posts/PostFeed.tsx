@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import type { Post as PostType } from "../../../types/types"
+import { useFetch } from "@/lib/client/utils"
+import { Post as PostType } from "@/types/types"
+import { useState } from "react"
 import SpinningIcon from "../SpinningIcon"
 import Post from "./Post"
 import SortPostsBy from "./SortPostsBy"
@@ -15,30 +16,11 @@ type PostFeedProps = {
 export default function PostFeed({ postsToSee: seePosts, username = undefined }: PostFeedProps) {
   const [postsToSee, setpostsToSee] = useState(seePosts)
   const [reloadPosts, setReloadPosts] = useState(0)
-  const [posts, setPosts] = useState<PostType[]>([])
-  const [loading, setLoading] = useState(true)
   const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
-
-  async function fetchPosts() {
-    const url = username
-      ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
-      : `/api/posts?type=${postsToSee}`
-
-    const response = await fetch(url)
-    if (!response.ok) {
-      console.error("Failed to fetch posts in PostFeed")
-      return
-    }
-
-    const data: PostType[] = await response.json()
-    setPosts(data.reverse())
-    setLoading(false)
-  }
-
-  // Fetch all posts depending on which posts selected in props
-  useEffect(() => {
-    fetchPosts()
-  }, [postsToSee, reloadPosts])
+  const url = username
+    ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
+    : `/api/posts?type=${postsToSee}`
+  const { data: posts, loading, error } = useFetch<PostType[]>(url)
 
   if (loading) {
     return (
@@ -48,6 +30,8 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
         <div className="flex flex-col gap-5 min-h-150"></div>
       </div>
     )
+  } else if (posts == null) {
+    return
   }
 
   return (

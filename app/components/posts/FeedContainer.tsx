@@ -12,7 +12,6 @@ export default function FeedContainer() {
   return (
     <div className="center-menu flex flex-col items-center justify-center gap-15 mt-20">
       <CreatePost setRefreshKey={setRefreshKey} />
-      {/* Need refresh key prop to dismount and mount again so useEffect fetch can rerun */}
       <PostFeed key={refreshKey} postsToSee="All" />
     </div>
   )

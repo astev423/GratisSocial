@@ -168,8 +168,8 @@ function findAllPostsWhere(whereClause: Prisma.PostWhereInput) {
 */
 
 export async function fetchFollowInfoFromGivenId(userId: string) {
-  const followersCount = fetchFollowCountWhere({ personFollowedId: userId })
-  const followingCount = fetchFollowCountWhere({ followerId: userId })
+  const followersCount = await fetchFollowCountWhere({ personFollowedId: userId })
+  const followingCount = await fetchFollowCountWhere({ followerId: userId })
 
   return { followersCount, followingCount }
 }

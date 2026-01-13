@@ -1,11 +1,11 @@
--Refactor comments and then likes, they need refactor badly
-
 -Instead of having seperate comments and likes fetch, which spams API, just retrieve comments and likes
 on post when getting posts and pass that as props to children
 
 -Add date and clickable link to user profile in comments
 
 -Fix posts going to top if you comment/like on them
+
+-Keep posts the same size unless user clicks to show more comments, make post with no comments and post with comments same size unless click more basically, AVOID CLS
 
 -Add a way to refetch info but only for a specific post so we don't requery all posts everytime
 like or comment happens
