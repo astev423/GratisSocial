@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server"
 
 import NotSignedInError from "../../components/errors/NotSignedInError"
-import FeedContainer from "../../components/posts/FeedContainer"
+import HomepagePostStuff from "../../components/posts/HomepagePostStuff"
 
 export default async function Home() {
   const { userId } = await auth()
@@ -10,5 +10,9 @@ export default async function Home() {
     return <NotSignedInError />
   }
 
-  return <FeedContainer />
+  return (
+    <div className="flex justify-center">
+      <HomepagePostStuff />
+    </div>
+  )
 }

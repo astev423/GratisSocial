@@ -8,7 +8,7 @@ import FollowButton from "./FollowButton"
 import FollowCount from "./FollowCount"
 
 type FollowStatus = {
-  followStatus: "Following" | "Not Following"
+  followStatus: "following" | "notFollowing"
 }
 
 // This uses a refresh key to update refetch in follow count when button is pressed
@@ -29,7 +29,7 @@ export default function FollowInfo() {
     )
   }
 
-  const isUserFollowing = data?.followStatus == "Following"
+  const isUserFollowing = data?.followStatus == "following"
 
   return (
     <>

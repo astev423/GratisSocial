@@ -36,7 +36,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
   }
 
   return (
-    <form onSubmit={submitPost} className="bg-white flex flex-col gap-5 p-10 w-150">
+    <form onSubmit={submitPost} className="bg-white flex flex-col gap-5 p-10 ">
       <div className="font-bold text-2xl">Create a new post!</div>
       <textarea
         value={title}

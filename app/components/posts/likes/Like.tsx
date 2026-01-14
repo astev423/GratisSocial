@@ -49,6 +49,7 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
     } else {
       await likeOrDislikeInteraction(dislikeButtonOnClickData)
     }
+    console.log("refetching!")
     refetch((i) => i + 1)
     setRefresh((i) => i + 1)
   }

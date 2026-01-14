@@ -1,30 +1,28 @@
 "use client"
 
 import { useFetch } from "@/lib/client/utils"
-import { Post as PostType } from "@/types/types"
+import { Post as PostType, TypeOfPostToView } from "@/types/types"
 import { useState } from "react"
 import SpinningIcon from "../SpinningIcon"
 import Post from "./Post"
-import SortPostsBy from "./SortPostsBy"
 
 // Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
-  postsToSee: "Following" | "All" | "myPosts" | "specificUser"
+  postsToSee: TypeOfPostToView
   username?: string | undefined
 }
 
-export default function PostFeed({ postsToSee: seePosts, username = undefined }: PostFeedProps) {
-  const [postsToSee, setpostsToSee] = useState(seePosts)
+export default function PostFeed({ postsToSee, username = undefined }: PostFeedProps) {
   const [reloadPosts, setReloadPosts] = useState(0)
   const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
   const url = username
     ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
     : `/api/posts?type=${postsToSee}`
-  const { data: posts, loading, error } = useFetch<PostType[]>(url)
+  const { data: posts, loading, error } = useFetch<PostType[]>(url, "GET", { reloadPosts })
 
   if (loading) {
     return (
-      <div className="flex flex-col justify-center w-[40vw] items-center gap-5">
+      <div className="flex flex-col justify-center items-center gap-5">
         <div className={`mb-20 w-full ${whiteBoxWithBoldText}`}>Posts</div>
         <SpinningIcon size={200} />
         <div className="flex flex-col gap-5 min-h-150"></div>
@@ -35,18 +33,11 @@ export default function PostFeed({ postsToSee: seePosts, username = undefined }:
   }
 
   return (
-    <div className="w-[40vw] gap-5 mb-100">
+    <div className="gap-5 mb-100 ">
       <div className={`mb-5 ${whiteBoxWithBoldText}`}>Posts</div>
 
-      {/* Let user change which posts to see if they are on homepage */}
-      {(postsToSee == "Following" || postsToSee == "All") && (
-        <div className={`mb-5 `}>
-          <SortPostsBy postsToSee={postsToSee} setPostsToSee={setpostsToSee}></SortPostsBy>
-        </div>
-      )}
-
       {posts.length == 0 ? (
-        <div className="w-[40vw] gap-5">
+        <div className="gap-5">
           <div className={`${whiteBoxWithBoldText}`}>No posts found</div>
         </div>
       ) : (

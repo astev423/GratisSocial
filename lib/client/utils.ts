@@ -11,7 +11,11 @@ type FetchState<T> = {
 // Hooks are scoped to their function instance, so we can reuse this without worrying about interference
 // This component returns null initially but then re-renders with updated values so const {}
 // properties will be updated
-export function useFetch<T = unknown>(route: string, body?: unknown): FetchState<T> {
+export function useFetch<T = unknown>(
+  route: string,
+  method: "POST" | "GET" = "POST",
+  body?: {},
+): FetchState<T> {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
@@ -22,14 +26,11 @@ export function useFetch<T = unknown>(route: string, body?: unknown): FetchState
 
     async function fetchData() {
       try {
-        const options =
-          body !== undefined
-            ? {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-              }
-            : undefined
+        const options = {
+          method: method,
+          headers: { "Content-Type": "application/json" },
+          body: body && JSON.stringify(body),
+        }
 
         const res = await fetch(route, options)
 

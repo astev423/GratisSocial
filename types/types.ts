@@ -35,3 +35,5 @@ export type Like = {
   likerId: string
   postId: string
 }
+
+export type TypeOfPostToView = "following" | "all" | "myPosts" | "specificUser"

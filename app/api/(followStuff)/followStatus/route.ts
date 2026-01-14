@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
   }
 
   if (await isUserFollowing(viewingUser.id, cardUser.id)) {
-    return NextResponse.json({ followStatus: "Following" }, { status: 200 })
+    return NextResponse.json({ followStatus: "following" }, { status: 200 })
   }
 
-  return NextResponse.json({ followStatus: "Not Following" }, { status: 200 })
+  return NextResponse.json({ followStatus: "notFollowing" }, { status: 200 })
 }

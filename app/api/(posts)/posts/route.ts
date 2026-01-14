@@ -17,11 +17,11 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  if (type === "Following") {
+  if (type === "following") {
     const followedPosts = await fetchAllPostsByPeopleUserFollows(userId)
 
     return NextResponse.json(followedPosts, { status: 200 })
-  } else if (type === "All") {
+  } else if (type === "all") {
     const allPosts = await fetchAllPosts()
 
     return NextResponse.json(allPosts, { status: 200 })
