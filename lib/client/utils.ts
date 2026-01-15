@@ -24,6 +24,12 @@ export function useFetch<T = unknown>(
   useEffect(() => {
     setLoading(true)
     setError(null)
+    // Abort controller is important here, it cancels the request if something gets unmounted, as
+    // useEffect return runs whenever dependancy array changes, OR IF COMPONENT DISMOUNTS
+    // so if we dismount, we don't want the request response, we just want to cancel it, since
+    // were no longer on the component which needs the data
+    const controller = new AbortController()
+    const { signal } = controller
 
     async function fetchData() {
       try {
@@ -33,8 +39,9 @@ export function useFetch<T = unknown>(
                 method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
+                signal,
               }
-            : {}
+            : { signal }
 
         const res = await fetch(route, req)
 
@@ -45,14 +52,24 @@ export function useFetch<T = unknown>(
         const json = (await res.json()) as T
         setData(json)
       } catch (err: any) {
+        // If aborted then don't treat as normal error, just return
+        if (err?.name === "AbortError") {
+          return
+        }
+
         setError(err instanceof Error ? err : new Error(String(err)))
         setData(null)
       } finally {
-        setLoading(false)
+        if (!signal.aborted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchData()
+    return () => {
+      controller.abort()
+    }
   }, [refetchKey])
 
   return { data, loading, error }
