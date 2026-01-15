@@ -16,7 +16,7 @@ export default function CommentFeed({ commentCount, refetch, postId }: CommentFe
     data: comments,
     loading,
     error,
-  } = useFetch<CommentType[]>("/api/fetchComments", { postId, refresh })
+  } = useFetch<CommentType[]>("/api/fetchComments", "POST", refresh, { postId })
 
   return (
     <div className="flex flex-col gap-3">

@@ -10,7 +10,7 @@ export default function FollowCount() {
     data: followInfo,
     loading,
     error,
-  } = useFetch<FollowInfo>("/api/fetchFollowCount", { username: viewedUser.username })
+  } = useFetch<FollowInfo>("/api/fetchFollowCount", "POST", 0, { username: viewedUser.username })
 
   if (!followInfo) {
     return

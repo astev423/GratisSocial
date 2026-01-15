@@ -262,6 +262,16 @@ export function getCommentsOnPost(postId: string) {
 /*
  LIKE STUFF
 */
+export async function fetchLikeCountOfPost(postId: string) {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  })
+
+  return post?.likeCount
+}
+
 export function tryFindLikeInfoForUserOnPost(postId: string, userId: string) {
   return prisma.like.findFirst({
     where: {

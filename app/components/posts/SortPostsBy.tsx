@@ -2,10 +2,11 @@ import { Dispatch, SetStateAction, useState } from "react"
 
 type SortPostProps = {
   setPostsToSee: Dispatch<SetStateAction<"all" | "following" | "myPosts" | "specificUser">>
+  setRefreshKey: Dispatch<SetStateAction<number>>
   postsToSee: string
 }
 
-export default function SortPostsBy({ setPostsToSee, postsToSee }: SortPostProps) {
+export default function SortPostsBy({ setPostsToSee, setRefreshKey, postsToSee }: SortPostProps) {
   const [dropdownActive, setDropdownActive] = useState(false)
   const viewOption =
     "border-4 border-s-slate-950 hover:bg-gray-600 bg-gray-400 w-[10vw] rounded-2xl hover:cursor-pointer p-2 "
@@ -30,6 +31,7 @@ export default function SortPostsBy({ setPostsToSee, postsToSee }: SortPostProps
           <button
             onClick={() => {
               postsToSee == "all" ? setPostsToSee("following") : setPostsToSee("all")
+              setRefreshKey((i) => i + 1)
               setDropdownActive(!dropdownActive)
             }}
             className={`${viewOption}`}

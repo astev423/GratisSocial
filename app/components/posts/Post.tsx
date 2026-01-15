@@ -56,8 +56,7 @@ export default function Post({ post, refetch }: PostProps) {
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>
       <div>
-        Likes: {post.likeCount}
-        <Like post={post} refetch={refetch} />
+        <Like postId={post.id} />
       </div>
       <CommentFeed refetch={refetch} commentCount={post.commentCount} postId={post.id} />
     </div>

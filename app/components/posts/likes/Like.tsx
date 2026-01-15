@@ -1,35 +1,28 @@
 import { likeOrDislikeInteraction, useFetch } from "@/lib/client/utils"
-import { Post } from "@/types/types"
 import Image from "next/image"
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
 
-type LikeProps = {
-  post: Post
-  refetch: Dispatch<SetStateAction<number>>
-}
-type LikeStatus = {
+type LikeInfo = {
   status: "liked" | "disliked" | "neither"
+  numLikes: number
+}
+type LikeInteractionData = {
+  postId: string
+  interaction: "like" | "dislike" | "removeLike" | "removeDislike"
 }
 
-export default function Like({ post: { id: postId }, refetch }: LikeProps) {
+export default function Like({ postId }: { postId: string }) {
   const [refresh, setRefresh] = useState(0)
   const {
     data: likeInfo,
     loading,
     error,
-  } = useFetch<LikeStatus>("/api/getLikeStatus", {
+  } = useFetch<LikeInfo>("/api/getLikeInfo", "POST", refresh, {
     postId,
-    refresh,
   })
   if (likeInfo == null) {
     return
   }
-
-  type LikeInteractionData = {
-    postId: string
-    interaction: "like" | "dislike" | "removeLike" | "removeDislike"
-  }
-
   const likeButtonImagePath =
     likeInfo.status == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
   const dislikeButtonImagePath =
@@ -49,27 +42,28 @@ export default function Like({ post: { id: postId }, refetch }: LikeProps) {
     } else {
       await likeOrDislikeInteraction(dislikeButtonOnClickData)
     }
-    console.log("refetching!")
-    refetch((i) => i + 1)
     setRefresh((i) => i + 1)
   }
 
   return (
-    <div className="flex gap-2 h-6">
-      <Image
-        src={likeButtonImagePath}
-        alt="Like Button"
-        width={25}
-        height={25}
-        onClick={() => submitLikeInteraction("like")}
-      />
-      <Image
-        src={dislikeButtonImagePath}
-        onClick={() => submitLikeInteraction("dislike")}
-        width={25}
-        height={25}
-        alt="Dislike Button"
-      />
+    <div>
+      <div>Likes: {likeInfo.numLikes}</div>
+      <div className="flex gap-2 h-6">
+        <Image
+          src={likeButtonImagePath}
+          alt="Like Button"
+          width={25}
+          height={25}
+          onClick={() => submitLikeInteraction("like")}
+        />
+        <Image
+          src={dislikeButtonImagePath}
+          onClick={() => submitLikeInteraction("dislike")}
+          width={25}
+          height={25}
+          alt="Dislike Button"
+        />
+      </div>
     </div>
   )
 }

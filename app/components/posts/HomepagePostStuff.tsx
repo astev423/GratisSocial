@@ -15,8 +15,12 @@ export default function HomepagePostStuff() {
   return (
     <div className="flex flex-col w-[40vw] gap-15 mt-20">
       <CreatePost setRefreshKey={setRefreshKey} />
-      <SortPostsBy postsToSee={postsToSee} setPostsToSee={setpostsToSee}></SortPostsBy>
-      <PostFeed key={refreshKey} postsToSee="all" />
+      <SortPostsBy
+        setRefreshKey={setRefreshKey}
+        postsToSee={postsToSee}
+        setPostsToSee={setpostsToSee}
+      ></SortPostsBy>
+      <PostFeed key={refreshKey} postsToSee={postsToSee} />
     </div>
   )
 }

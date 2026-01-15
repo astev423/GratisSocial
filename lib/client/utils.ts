@@ -13,7 +13,8 @@ type FetchState<T> = {
 // properties will be updated
 export function useFetch<T = unknown>(
   route: string,
-  method: "POST" | "GET" = "POST",
+  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  refetchKey: number = 0,
   body?: {},
 ): FetchState<T> {
   const [data, setData] = useState<T | null>(null)
@@ -26,13 +27,16 @@ export function useFetch<T = unknown>(
 
     async function fetchData() {
       try {
-        const options = {
-          method: method,
-          headers: { "Content-Type": "application/json" },
-          body: body && JSON.stringify(body),
-        }
+        const req: RequestInit =
+          method != "GET"
+            ? {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              }
+            : {}
 
-        const res = await fetch(route, options)
+        const res = await fetch(route, req)
 
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`)
@@ -49,7 +53,7 @@ export function useFetch<T = unknown>(
     }
 
     fetchData()
-  }, [route, JSON.stringify(body)])
+  }, [refetchKey])
 
   return { data, loading, error }
 }

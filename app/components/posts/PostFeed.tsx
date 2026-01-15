@@ -6,7 +6,6 @@ import { useState } from "react"
 import SpinningIcon from "../SpinningIcon"
 import Post from "./Post"
 
-// Union for enum like safety, prevent mispellings, question mark makes username optional
 type PostFeedProps = {
   postsToSee: TypeOfPostToView
   username?: string | undefined
@@ -18,7 +17,7 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
   const url = username
     ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
     : `/api/posts?type=${postsToSee}`
-  const { data: posts, loading, error } = useFetch<PostType[]>(url, "GET", { reloadPosts })
+  const { data: posts, loading, error } = useFetch<PostType[]>(url, "GET", reloadPosts)
 
   if (loading) {
     return (
@@ -43,7 +42,6 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
       ) : (
         <div className="flex flex-col gap-5">
           {posts.map((post) => (
-            // Props get passed in as an object even if just one, key gets stripped out of obj
             <Post refetch={setReloadPosts} post={post} key={post.id} />
           ))}
         </div>
