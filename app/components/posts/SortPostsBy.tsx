@@ -1,7 +1,8 @@
+import { TypeOfPostToView } from "@/types/types"
 import { Dispatch, SetStateAction, useState } from "react"
 
 type SortPostProps = {
-  setPostsToSee: Dispatch<SetStateAction<"all" | "following" | "myPosts" | "specificUser">>
+  setPostsToSee: Dispatch<SetStateAction<TypeOfPostToView>>
   setRefreshKey: Dispatch<SetStateAction<number>>
   postsToSee: string
 }

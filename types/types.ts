@@ -36,4 +36,9 @@ export type Like = {
   postId: string
 }
 
+export type LikeInfo = {
+  status: "liked" | "disliked" | "neither"
+  numLikes: number
+}
+
 export type TypeOfPostToView = "following" | "all" | "myPosts" | "specificUser"

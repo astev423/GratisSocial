@@ -1,5 +1,6 @@
 "use client"
 
+import { createPost } from "@/lib/client/utils"
 import { useState, type Dispatch, type SetStateAction } from "react"
 
 type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> }
@@ -17,19 +18,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
       return
     }
 
-    const response = await fetch("/api/createPost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, content }),
-    })
-
-    if (!response.ok) {
-      console.error("CreatePost API call had error")
-      return
-    }
-
+    createPost({ title, content })
     setTitle("")
     setContent("")
     setRefreshKey((refreshKey) => refreshKey + 1)

@@ -1,6 +1,5 @@
 -Instead of having seperate comments and likes fetch, which spams API, just retrieve comments and likes
-on post when getting posts and pass that as props to children, find way to update posts specifically
-rather than all posts, like broken because of that, this needs a big refactor
+on post when getting posts and pass that as props to children
 
 -Add date and clickable link to user profile in comments
 

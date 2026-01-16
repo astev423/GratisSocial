@@ -1,5 +1,6 @@
 "use client"
 
+import { updateAccount } from "@/lib/client/utils"
 import { useState } from "react"
 import { useViewedUser } from "../context/ViewedUserContext"
 
@@ -59,13 +60,7 @@ export default function EditableNameInfo() {
       {/* Button for submitting PUT request to update names */}
       <button
         onClick={async () => {
-          await fetch("/api/updateAccount", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ editableFirstName, editableLastName }),
-          })
+          await updateAccount({ editableFirstName, editableLastName })
         }}
         className="group grey-button"
       >

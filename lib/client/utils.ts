@@ -111,3 +111,31 @@ export async function likeOrDislikeInteraction({ postId, interaction }: interact
     body: JSON.stringify({ postId, interaction }),
   })
 }
+
+export async function updateAccount<T extends object>(newInfo: T) {
+  return fetch("/api/updateAccount", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newInfo),
+  })
+}
+
+export async function deletePost(postId: string) {
+  return fetch("/api/deletePost", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ postId }),
+  })
+}
+
+export async function createPost<T extends object>(postContents: T) {
+  return fetch("/api/createPost", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postContents),
+  })
+}

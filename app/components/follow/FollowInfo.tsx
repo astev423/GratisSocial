@@ -7,7 +7,7 @@ import SpinningIcon from "../SpinningIcon"
 import FollowButton from "./FollowButton"
 import FollowCount from "./FollowCount"
 
-type FollowStatus = {
+type FollowInfo = {
   followStatus: "following" | "notFollowing"
 }
 
@@ -17,7 +17,7 @@ export default function FollowInfo() {
     viewedUser: { username },
   } = useViewedUser()
   const [refreshKey, setRefreshKey] = useState(0)
-  const { data, loading, error } = useFetch<FollowStatus>("/api/followStatus", "POST", refreshKey, {
+  const { data, loading, error } = useFetch<FollowInfo>("/api/followStatus", "POST", refreshKey, {
     username,
   })
 

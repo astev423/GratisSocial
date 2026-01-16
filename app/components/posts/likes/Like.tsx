@@ -1,11 +1,8 @@
 import { likeOrDislikeInteraction, useFetch } from "@/lib/client/utils"
+import { LikeInfo } from "@/types/types"
 import Image from "next/image"
 import { useState } from "react"
 
-type LikeInfo = {
-  status: "liked" | "disliked" | "neither"
-  numLikes: number
-}
 type LikeInteractionData = {
   postId: string
   interaction: "like" | "dislike" | "removeLike" | "removeDislike"

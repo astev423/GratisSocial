@@ -1,5 +1,6 @@
 "use client"
 
+import { deletePost } from "@/lib/client/utils"
 import { Dispatch, SetStateAction } from "react"
 
 type ConfirmProps = {
@@ -13,20 +14,13 @@ type ConfirmProps = {
 export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
   const { postId, refetch, setShowConfirmation } = confirmObject
 
-  async function deletePost(): Promise<void> {
-    const response = await fetch("/api/deletePost", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId }),
-    })
-    if (!response.ok) {
-      console.error("Error while trying to delete post")
-      return
-    }
-
-    // If post actually deleted we need to reload posts to get rid of deleted one
-    if (response.status == 200) {
+  async function tryDeletePost() {
+    try {
+      await deletePost(postId)
       refetch((i) => i + 1)
+      setShowConfirmation(false)
+    } catch {
+      alert("Error while deleting post")
     }
   }
 
@@ -45,10 +39,7 @@ export default function ConfirmDeletion({ confirmObject }: ConfirmProps) {
               Cancel
             </button>
             <button
-              onClick={() => {
-                deletePost()
-                setShowConfirmation(false)
-              }}
+              onClick={tryDeletePost}
               className="rounded bg-red-600 px-3 py-2 text-sm text-white hover:scale-110 hover:cursor-pointer hover:bg-red-900"
             >
               Confirm
