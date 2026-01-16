@@ -76,7 +76,7 @@ export function useFetch<T = unknown>(
 }
 
 export async function followUser(username: string) {
-  return await fetch("/api/followUser", {
+  return fetch("/api/followUser", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
@@ -84,7 +84,7 @@ export async function followUser(username: string) {
 }
 
 export async function unfollowUser(username: string) {
-  return await fetch("/api/unfollowUser", {
+  return fetch("/api/unfollowUser", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username }),
@@ -92,7 +92,7 @@ export async function unfollowUser(username: string) {
 }
 
 export async function createComment(content: string, postId: string) {
-  return await fetch("/api/createComment", {
+  return fetch("/api/createComment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content, postId }),
@@ -105,7 +105,7 @@ type interactionProps = {
 }
 
 export async function likeOrDislikeInteraction({ postId, interaction }: interactionProps) {
-  return await fetch("/api/likeOrDislikeInteraction", {
+  return fetch("/api/likeOrDislikeInteraction", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ postId, interaction }),
