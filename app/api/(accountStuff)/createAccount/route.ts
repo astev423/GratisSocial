@@ -2,9 +2,8 @@ import { reqWithAuthWrapper } from "@/lib/server/api"
 import { tryAddClerkUserToDb } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
-// This makes a new account entirely from info provided from clerk authentication
+// User signs in with clerk, but we still need to add that clerk account info to our db here
 export const POST = reqWithAuthWrapper(async (_req, userId) => {
-  // Get username and email from ClerkJS and make account in DB with that info
   var success = await tryAddClerkUserToDb()
   if (!success) {
     return NextResponse.json({ status: 400 })

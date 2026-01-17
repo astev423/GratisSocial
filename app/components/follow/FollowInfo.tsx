@@ -11,7 +11,6 @@ type FollowInfo = {
   followStatus: "following" | "notFollowing"
 }
 
-// This uses a refresh key to update refetch in follow count when button is pressed
 export default function FollowInfo() {
   const {
     viewedUser: { username },

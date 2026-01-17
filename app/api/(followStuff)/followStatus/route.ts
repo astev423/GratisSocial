@@ -2,7 +2,6 @@ import { isUserFollowing, tryFetchUserByTheirId, tryFetchUserByUsername } from "
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
-  // Find the users to check if viewer if following that user
   const { username: cardUsername } = await req.json()
   const cardUser = await tryFetchUserByUsername(cardUsername)
   const viewingUser = await tryFetchUserByTheirId()

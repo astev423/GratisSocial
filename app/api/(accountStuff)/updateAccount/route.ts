@@ -7,7 +7,6 @@ type Names = {
   editableLastName: string
 }
 
-// Update first and last name
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const body = (await req.json()) as Names
   const { editableFirstName, editableLastName } = body

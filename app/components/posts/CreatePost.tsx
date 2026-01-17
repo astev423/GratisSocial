@@ -9,7 +9,6 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
 
-  // Submit using form, prevent default to prevent it sending its own api call and reloading
   async function submitPost(e: React.FormEvent) {
     e.preventDefault()
 

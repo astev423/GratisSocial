@@ -2,7 +2,6 @@ import { reqWithAuthWrapper } from "@/lib/server/api"
 import { isUserFollowing, tryFetchUserByUsername, unfollowUser } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
-// Unfollow user if user exists and we are currently following user
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const { username } = await req.json()
   const viewedUser = await tryFetchUserByUsername(username)

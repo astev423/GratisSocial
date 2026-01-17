@@ -15,7 +15,6 @@ export default function FollowButton({ following, setRefreshKey }: FollowButtonP
     return
   }
 
-  // Update counts, user can follow themselves so check for that too
   async function updateFollowCounts() {
     if (following) {
       await unfollowUser(viewedUser.username)

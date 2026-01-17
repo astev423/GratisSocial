@@ -1,7 +1,6 @@
 import { tryFetchUserByTheirId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
-// Get user from their ID
 export async function POST() {
   const user = await tryFetchUserByTheirId()
   if (!user) {
@@ -13,7 +12,6 @@ export async function POST() {
   return NextResponse.json(userObjectWithoutSensitiveInfo, { status: 200 })
 }
 
-// Get user from URL username parameters
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const usernameFromParams = searchParams.get("username")

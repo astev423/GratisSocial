@@ -7,7 +7,6 @@ import {
 } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
-// Get specified posts
 export const GET = reqWithAuthWrapper(async (req, userId) => {
   const { searchParams } = new URL(req.url)
   const type = searchParams.get("type")
@@ -41,6 +40,5 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
     return NextResponse.json(userPosts, { status: 200 })
   }
 
-  // If no if statements activated then request failed
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 })

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 
 import { tryFetchUserByGivenId } from "@/lib/server/dbQueries"
 
-// Get user from their ID in POST request, only call this from SERVER as users can fake their ID
+// Get user from their ID in POST request, only call this from SERVER as users can send anything in POST
 export async function POST(req: Request) {
   const { userId } = await req.json()
   if (userId == null) {

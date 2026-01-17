@@ -3,9 +3,6 @@ import { Prisma } from "@prisma/client"
 import "server-only"
 import { prisma } from "../../prisma/prisma"
 
-// For a lot of these functions we don't need to do ID auth check because clerk proxy.ts blocks
-// all non signed in users from accessing all pages, besides the home page
-
 /*
  USER STUFF
 */
@@ -133,7 +130,9 @@ export function updatePost<T extends object>(postId: string, data: T) {
 }
 
 export function fetchAllPosts() {
-  return prisma.post.findMany()
+  return prisma.post.findMany({
+    orderBy: { createdAt: "desc" },
+  })
 }
 
 export async function fetchAllPostsByPeopleUserFollows(userId: string) {
@@ -160,6 +159,7 @@ export function fetchAllPostsFromUserViaTheirUsername(username: string) {
 function findAllPostsWhere(whereClause: Prisma.PostWhereInput) {
   return prisma.post.findMany({
     where: whereClause,
+    orderBy: { createdAt: "desc" },
   })
 }
 
@@ -295,7 +295,7 @@ export function createLikeOnPostFromUser(postId: string, userId: string, newValu
     data: {
       postId: postId,
       likerId: userId,
-      liked: newValue === 1, // true = like, false = dislike
+      liked: newValue === 1,
     },
   })
 }

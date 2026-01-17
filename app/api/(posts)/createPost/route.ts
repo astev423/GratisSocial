@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "User not found" }, { status: 404 })
   }
 
-  // Now that user is verified get title and post content info and upload it to DB
   const { title, content } = await req.json()
   if (!title || !content) {
     return NextResponse.json({ message: "Title and content are required." }, { status: 400 })
