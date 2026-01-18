@@ -12,7 +12,7 @@ posts: [{ id, …, viewerHasLiked: true/false, likeCount, … }]
 
 This turns 1 + N requests into 1 request, and lets you render immediately.
 
--Make API route names more descriptive and make them only do ONE THING
+-Fix CLS on likes loading on post
 
 -Hide comments initially, instead say like "2 comments" and add dropdown to see them if > 0 comments
 this helps makes post all consistent size initially and avoid CLS

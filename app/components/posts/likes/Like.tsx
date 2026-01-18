@@ -14,7 +14,7 @@ export default function Like({ postId }: { postId: string }) {
     data: likeInfo,
     loading,
     error,
-  } = useFetch<LikeInfo>("/api/getLikeInfo", "POST", refresh, {
+  } = useFetch<LikeInfo>("/api/getPostLikeInfo", "POST", refresh, {
     postId,
   })
   if (likeInfo == null) {
