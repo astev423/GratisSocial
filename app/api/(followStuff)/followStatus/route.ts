@@ -2,7 +2,7 @@ import { isUserFollowing, tryFetchUserByTheirId, tryFetchUserByUsername } from "
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
-  const { username: cardUsername } = await req.json()
+  const { username: cardUsername } = (await req.json()) as { username: string }
   const cardUser = await tryFetchUserByUsername(cardUsername)
   const viewingUser = await tryFetchUserByTheirId()
   if (!cardUser || !viewingUser) {

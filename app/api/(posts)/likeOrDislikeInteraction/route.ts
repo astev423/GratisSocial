@@ -5,10 +5,11 @@ import {
   tryFindLikeInfoForUserOnPost,
   updateLikeCount,
 } from "@/lib/server/dbQueries"
+import { LikeInteraction } from "@/types/types"
 import { NextResponse } from "next/server"
 
 export const POST = reqWithAuthWrapper(async (req, userId) => {
-  const { postId, interaction } = await req.json()
+  const { postId, interaction } = (await req.json()) as { postId: string; interaction: LikeInteraction }
 
   // 1. Read current reaction from this user on this post
   const existing = await tryFindLikeInfoForUserOnPost(postId, userId)
@@ -25,11 +26,11 @@ export const POST = reqWithAuthWrapper(async (req, userId) => {
   //    remove*   -> 0
   let newValue = 0
 
-  if (interaction === "like") {
+  if (interaction === LikeInteraction.Like) {
     newValue = 1
-  } else if (interaction === "dislike") {
+  } else if (interaction === LikeInteraction.Dislike) {
     newValue = -1
-  } else if (interaction === "removeLike" || interaction === "removeDislike") {
+  } else if (interaction === LikeInteraction.RemoveLike || interaction === LikeInteraction.RemoveDislike) {
     newValue = 0
   } else {
     return NextResponse.json({ error: "Invalid interaction" }, { status: 400 })

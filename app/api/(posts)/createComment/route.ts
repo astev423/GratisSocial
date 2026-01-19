@@ -4,12 +4,12 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
   const user = await currentUser()
-  const { content, postId } = await req.json()
-  if (user == null || user.username == null || content == null || postId == null) {
+  const { commentContent, postId } = (await req.json()) as { commentContent: string; postId: string }
+  if (user == null || user.username == null || commentContent == null || postId == null) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  await createCommentOnPost(postId, content, user.username)
+  await createCommentOnPost(postId, commentContent, user.username)
   await updatePost(postId, { commentCount: { increment: 1 } })
 
   return NextResponse.json({ status: 200 })

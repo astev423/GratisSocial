@@ -1,9 +1,8 @@
 import { fetchFollowInfoFromGivenId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 import { NextResponse } from "next/server"
 
-export async function POST(request: Request) {
-  const { username } = await request.json()
-
+export async function POST(req: Request) {
+  const { username } = (await req.json()) as { username: string }
   const user = await tryFetchUserByUsername(username)
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 400 })

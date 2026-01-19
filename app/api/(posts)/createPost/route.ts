@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "User not found" }, { status: 404 })
   }
 
-  const { title, content } = await req.json()
+  const { title, content } = (await req.json()) as { title: string; content: string }
   if (!title || !content) {
     return NextResponse.json({ message: "Title and content are required." }, { status: 400 })
   }

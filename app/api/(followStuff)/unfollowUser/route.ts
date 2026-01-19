@@ -3,7 +3,7 @@ import { isUserFollowing, tryFetchUserByUsername, unfollowUser } from "@/lib/ser
 import { NextResponse } from "next/server"
 
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
-  const { username } = await req.json()
+  const { username } = (await req.json()) as { username: string }
   const viewedUser = await tryFetchUserByUsername(username)
   if (viewedUser == null) {
     return NextResponse.json({ error: "User doesn't exist" }, { status: 400 })

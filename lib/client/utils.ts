@@ -1,5 +1,6 @@
 "use client"
 
+import { LikeInteraction } from "@/types/types"
 import { useEffect, useState } from "react"
 
 type FetchState<T> = {
@@ -44,7 +45,6 @@ export function useFetch<T = unknown>(
             : { signal }
 
         const res = await fetch(route, req)
-
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`)
         }
@@ -99,12 +99,13 @@ export async function createComment(content: string, postId: string) {
   })
 }
 
-type interactionProps = {
+export async function likeOrDislikeInteraction({
+  postId,
+  interaction,
+}: {
   postId: string
-  interaction: "like" | "dislike" | "removeLike" | "removeDislike"
-}
-
-export async function likeOrDislikeInteraction({ postId, interaction }: interactionProps) {
+  interaction: LikeInteraction
+}) {
   return fetch("/api/likeOrDislikeInteraction", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

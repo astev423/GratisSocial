@@ -9,7 +9,7 @@ export type Post = {
   commentCount: number
 }
 
-export type PostWithLikeInfo = Post & { status: "liked" | "disliked" | "neither" }
+export type PostWithLikeInfo = Post & { status: LikeInfo["status"] }
 
 export type User = {
   username: string
@@ -42,5 +42,15 @@ export type LikeInfo = {
   status: "liked" | "disliked" | "neither"
   numLikes: number
 }
+
+// This acts like an enum, const objects with string literals are more JS friendly than TS enums
+export const LikeInteraction = {
+  Like: "like",
+  Dislike: "dislike",
+  RemoveLike: "removeLike",
+  RemoveDislike: "removeDislike",
+} as const
+
+export type LikeInteraction = (typeof LikeInteraction)[keyof typeof LikeInteraction]
 
 export type TypeOfPostToView = "following" | "all" | "myPosts" | "specificUser"

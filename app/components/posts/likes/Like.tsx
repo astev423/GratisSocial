@@ -1,4 +1,5 @@
 import { likeOrDislikeInteraction } from "@/lib/client/utils"
+import { LikeInfo } from "@/types/types"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -47,7 +48,7 @@ export default function Like({
       console.error("Error getting like status")
       return
     }
-    const { numLikes: newNumLikes, status } = await res.json()
+    const { numLikes: newNumLikes, status } = (await res.json()) as LikeInfo
     setNumLikes(newNumLikes)
     setLikeStatus(status)
   }
