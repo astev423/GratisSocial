@@ -1,5 +1,4 @@
-import { likeOrDislikeInteraction, useFetch } from "@/lib/client/utils"
-import { LikeInfo } from "@/types/types"
+import { likeOrDislikeInteraction } from "@/lib/client/utils"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -7,30 +6,30 @@ type LikeInteractionData = {
   postId: string
   interaction: "like" | "dislike" | "removeLike" | "removeDislike"
 }
+type LikeStatus = "liked" | "disliked" | "neither"
 
-export default function Like({ postId }: { postId: string }) {
-  const [refresh, setRefresh] = useState(0)
-  const {
-    data: likeInfo,
-    loading,
-    error,
-  } = useFetch<LikeInfo>("/api/getPostLikeInfo", "POST", refresh, {
-    postId,
-  })
-  if (likeInfo == null) {
-    return
-  }
+export default function Like({
+  postId,
+  initialNumLikes,
+  initialLikeStatus,
+}: {
+  postId: string
+  initialNumLikes: number
+  initialLikeStatus: LikeStatus
+}) {
+  const [numLikes, setNumLikes] = useState(initialNumLikes)
+  const [likeStatus, setLikeStatus] = useState(initialLikeStatus)
   const likeButtonImagePath =
-    likeInfo.status == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
+    likeStatus == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
   const dislikeButtonImagePath =
-    likeInfo.status == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
+    likeStatus == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
   const likeButtonOnClickData: LikeInteractionData = {
     postId,
-    interaction: likeInfo.status == "liked" ? "removeLike" : "like",
+    interaction: likeStatus == "liked" ? "removeLike" : "like",
   }
   const dislikeButtonOnClickData: LikeInteractionData = {
     postId,
-    interaction: likeInfo.status == "disliked" ? "removeDislike" : "dislike",
+    interaction: likeStatus == "disliked" ? "removeDislike" : "dislike",
   }
 
   async function submitLikeInteraction(buttonPressed: "like" | "dislike") {
@@ -39,12 +38,23 @@ export default function Like({ postId }: { postId: string }) {
     } else {
       await likeOrDislikeInteraction(dislikeButtonOnClickData)
     }
-    setRefresh((i) => i + 1)
+    const res = await fetch("/api/getPostLikeInfo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postId }),
+    })
+    if (!res.ok) {
+      console.error("Error getting like status")
+      return
+    }
+    const { numLikes: newNumLikes, status } = await res.json()
+    setNumLikes(newNumLikes)
+    setLikeStatus(status)
   }
 
   return (
     <div>
-      <div>Likes: {likeInfo.numLikes}</div>
+      <div>Likes: {numLikes}</div>
       <div className="flex gap-2 h-6">
         <Image
           src={likeButtonImagePath}

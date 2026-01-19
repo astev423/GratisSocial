@@ -120,6 +120,15 @@ export function getUserLikeStatusOfPost(postId: string, userId: string) {
   })
 }
 
+export function getUserLikeStatusOfPosts(postIds: string[], userId: string) {
+  return prisma.like.findMany({
+    where: {
+      postId: { in: postIds },
+      likerId: userId,
+    },
+  })
+}
+
 export function updatePost<T extends object>(postId: string, data: T) {
   return prisma.post.update({
     where: {

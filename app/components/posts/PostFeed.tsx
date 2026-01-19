@@ -1,7 +1,7 @@
 "use client"
 
 import { useFetch } from "@/lib/client/utils"
-import { Post as PostType, TypeOfPostToView } from "@/types/types"
+import { PostWithLikeInfo, TypeOfPostToView } from "@/types/types"
 import { useState } from "react"
 import SpinningIcon from "../SpinningIcon"
 import Post from "./Post"
@@ -15,9 +15,9 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
   const [reloadPosts, setReloadPosts] = useState(0)
   const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
   const url = username
-    ? `/api/posts?type=${postsToSee}&username=${encodeURIComponent(username)}`
-    : `/api/posts?type=${postsToSee}`
-  const { data: posts, loading, error } = useFetch<PostType[]>(url, "GET", reloadPosts)
+    ? `/api/fetchPostInfo?type=${postsToSee}&username=${encodeURIComponent(username)}`
+    : `/api/fetchPostInfo?type=${postsToSee}`
+  const { data: posts, loading, error } = useFetch<PostWithLikeInfo[]>(url, "GET", reloadPosts)
 
   if (loading) {
     return (

@@ -1,6 +1,3 @@
--Right now fetching too many things for each post, instead fetch both post and likestatus in same
-fetch to avoid n + 1 problem
-
 -Fix CLS on likes loading on post
 
 -Hide comments initially, instead say like "2 comments" and add dropdown to see them if > 0 comments

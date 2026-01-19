@@ -3,13 +3,13 @@ import Link from "next/link"
 import { formatDate } from "@/lib/shared/sharedUtils"
 import { useAuth } from "@clerk/nextjs"
 import { Dispatch, SetStateAction, useState } from "react"
-import type { Post as PostType } from "../../../types/types"
+import type { PostWithLikeInfo } from "../../../types/types"
 import CommentFeed from "./comments/CommentFeed"
 import ConfirmDeletion from "./ConfirmDeletion"
 import Like from "./likes/Like"
 
 type PostProps = Readonly<{
-  post: PostType
+  post: PostWithLikeInfo
   refetch: Dispatch<SetStateAction<number>>
 }>
 
@@ -52,11 +52,11 @@ export default function Post({ post, refetch }: PostProps) {
           {post.posterUsername}
         </Link>
       </div>
-      <div>Posted on: {formatDate(post.createdAt)}</div>
+      <div>Posted on: {formatDate(post.createdAt.toString())}</div>
       <div className="text-3xl font-bold border-b-2 pb-4"></div>
       <div>{post.content}</div>
       <div>
-        <Like postId={post.id} />
+        <Like initialNumLikes={post.likeCount} initialLikeStatus={post.status} postId={post.id} />
       </div>
       <CommentFeed refetch={refetch} commentCount={post.commentCount} postId={post.id} />
     </div>

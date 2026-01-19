@@ -4,10 +4,12 @@ export type Post = {
   posterUsername: string
   title: string
   content: string
-  createdAt: string
+  createdAt: Date
   likeCount: number
   commentCount: number
 }
+
+export type PostWithLikeInfo = Post & { status: "liked" | "disliked" | "neither" }
 
 export type User = {
   username: string
