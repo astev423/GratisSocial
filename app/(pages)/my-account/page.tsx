@@ -14,12 +14,16 @@ export default async function MyAccountPage() {
 
   return (
     <ViewedUserProvider viewedUser={user}>
-      <div className="flex flex-col md:flex-row items-start justify-center p-8 gap-20 ">
-        <EditableNameInfo />
-        <div className="w-[40vw] ">
-          <PostFeed postsToSee="myPosts"></PostFeed>
+      <div className="flex items-start justify-center p-8 gap-20 ">
+        <div className="w-[30vw]">
+          <EditableNameInfo />
         </div>
-        <FollowCard />
+        <div className="w-[40vw]">
+          <PostFeed postsToSee="myPosts" />
+        </div>
+        <div className="w-[25vw]">
+          <FollowCard />
+        </div>
       </div>
     </ViewedUserProvider>
   )

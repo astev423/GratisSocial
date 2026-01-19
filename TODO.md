@@ -1,5 +1,3 @@
--Fix CLS on likes loading on post
-
 -Hide comments initially, instead say like "2 comments" and add dropdown to see them if > 0 comments
 this helps makes post all consistent size initially and avoid CLS
 

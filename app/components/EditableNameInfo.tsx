@@ -11,7 +11,7 @@ export default function EditableNameInfo() {
   const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
 
   return (
-    <div className="flex gap-2 w-[25vw] flex-col p-8 bg-white font-bold">
+    <div className="flex gap-2 flex-col p-8 bg-white font-bold">
       {/* Display account names and unique username */}
       <div className="p-2 gap-2 text-2xl">
         <span>Account information for </span>
@@ -35,7 +35,7 @@ export default function EditableNameInfo() {
             }
           }}
           type="text"
-          className="border-2 min-w-35"
+          className="border-2 "
           placeholder={editableFirstName}
         ></input>
       </div>
@@ -52,7 +52,7 @@ export default function EditableNameInfo() {
             }
           }}
           type="text"
-          className="border-2 min-w-35"
+          className="border-2 "
           placeholder={editableLastName}
         ></input>
       </div>

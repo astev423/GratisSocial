@@ -24,7 +24,6 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
       <div className="flex flex-col justify-center items-center gap-5">
         <div className={`mb-20 w-full ${whiteBoxWithBoldText}`}>Posts</div>
         <SpinningIcon size={200} />
-        <div className="flex flex-col gap-5 min-h-150"></div>
       </div>
     )
   } else if (posts == null) {
@@ -32,11 +31,11 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
   }
 
   return (
-    <div className="gap-5 mb-100 ">
+    <div className="mb-100">
       <div className={`mb-5 ${whiteBoxWithBoldText}`}>Posts</div>
 
       {posts.length == 0 ? (
-        <div className="gap-5">
+        <div>
           <div className={`${whiteBoxWithBoldText}`}>No posts found</div>
         </div>
       ) : (
