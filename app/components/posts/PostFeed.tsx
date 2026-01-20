@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { useFetch } from "@/lib/client/utils"
-import { PostWithLikeInfo, TypeOfPostToView } from "@/types/types"
-import { useState } from "react"
-import SpinningIcon from "../SpinningIcon"
-import Post from "./Post"
+import { useFetch } from "@/lib/client/utils";
+import { PostWithLikeInfo, TypeOfPostToView } from "@/types/types";
+import { useState } from "react";
+import SpinningIcon from "../SpinningIcon";
+import Post from "./Post";
 
 type PostFeedProps = {
-  postsToSee: TypeOfPostToView
-  username?: string | undefined
-}
+  postsToSee: TypeOfPostToView;
+  username?: string | undefined;
+};
 
 export default function PostFeed({ postsToSee, username = undefined }: PostFeedProps) {
-  const [reloadPosts, setReloadPosts] = useState(0)
-  const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold"
+  const [reloadPosts, setReloadPosts] = useState(0);
+  const whiteBoxWithBoldText = "text-3xl bg-white p-5 text-center font-bold";
   const url = username
     ? `/api/fetchPostInfo?type=${postsToSee}&username=${encodeURIComponent(username)}`
-    : `/api/fetchPostInfo?type=${postsToSee}`
-  const { data: posts, loading, error } = useFetch<PostWithLikeInfo[]>(url, "GET", reloadPosts)
+    : `/api/fetchPostInfo?type=${postsToSee}`;
+  const { data: posts, loading, error } = useFetch<PostWithLikeInfo[]>(url, "GET", reloadPosts);
 
   if (loading) {
     return (
@@ -25,9 +25,9 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
         <div className={`mb-20 w-full ${whiteBoxWithBoldText}`}>Posts</div>
         <SpinningIcon size={200} />
       </div>
-    )
+    );
   } else if (posts == null) {
-    return
+    return;
   }
 
   return (
@@ -46,5 +46,5 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
         </div>
       )}
     </div>
-  )
+  );
 }

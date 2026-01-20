@@ -1,7 +1,7 @@
-import { tryAddClerkUserToDb } from "@/lib/server/dbQueries"
+import { tryAddClerkUserToDb } from "@/lib/server/dbQueries";
 
 export default async function AccountCreatedPage() {
-  tryAddClerkUserToDb()
+  tryAddClerkUserToDb();
 
   return (
     <div className="flex mt-20 justify-center">
@@ -12,5 +12,5 @@ export default async function AccountCreatedPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

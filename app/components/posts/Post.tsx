@@ -1,26 +1,26 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { formatDate } from "@/lib/shared/sharedUtils"
-import { useAuth } from "@clerk/nextjs"
-import { Dispatch, SetStateAction, useState } from "react"
-import type { PostWithLikeInfo } from "../../../types/types"
-import CommentFeed from "./comments/CommentFeed"
-import ConfirmDeletion from "./ConfirmDeletion"
-import Like from "./likes/Like"
+import { formatDate } from "@/lib/shared/sharedUtils";
+import { useAuth } from "@clerk/nextjs";
+import { Dispatch, SetStateAction, useState } from "react";
+import type { PostWithLikeInfo } from "../../../types/types";
+import CommentFeed from "./comments/CommentFeed";
+import ConfirmDeletion from "./ConfirmDeletion";
+import Like from "./likes/Like";
 
 type PostProps = Readonly<{
-  post: PostWithLikeInfo
-  refetch: Dispatch<SetStateAction<number>>
-}>
+  post: PostWithLikeInfo;
+  refetch: Dispatch<SetStateAction<number>>;
+}>;
 
 export default function Post({ post, refetch }: PostProps) {
-  const { userId } = useAuth()
-  const [showConfirmation, setShowConfirmation] = useState(false)
+  const { userId } = useAuth();
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const confirmProps = {
     postId: post.id,
     setShowConfirmation: setShowConfirmation,
     refetch: refetch,
-  }
+  };
 
   return (
     <div className="bg-white p-5 flex flex-col gap-4 ">
@@ -60,5 +60,5 @@ export default function Post({ post, refetch }: PostProps) {
       </div>
       <CommentFeed refetch={refetch} commentCount={post.commentCount} postId={post.id} />
     </div>
-  )
+  );
 }

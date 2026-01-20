@@ -1,8 +1,8 @@
-import { Post } from "@/types/types"
-import { auth, currentUser } from "@clerk/nextjs/server"
-import { Prisma } from "@prisma/client"
-import "server-only"
-import { prisma } from "../../prisma/prisma"
+import { Post } from "@/types/types";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { Prisma } from "@prisma/client";
+import "server-only";
+import { prisma } from "../../prisma/prisma";
 
 /*
  USER STUFF
@@ -11,35 +11,35 @@ import { prisma } from "../../prisma/prisma"
 function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
   // Need this awaited return type so we can get right return type for things that call this
   return async (): Promise<Awaited<ReturnType<F>> | void> => {
-    const { userId } = await auth()
+    const { userId } = await auth();
     if (userId == null) {
-      return
+      return;
     }
 
-    return fn(userId)
-  }
+    return fn(userId);
+  };
 }
 
 export const tryAddClerkUserToDb = getUserIdOrReturnWrapper(async (userId) => {
-  const user = await prisma.user.findUnique({ where: { id: userId } })
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (user != null) {
-    console.log("User already in database")
-    return false
+    console.log("User already in database");
+    return false;
   }
 
-  await tryCreateUser(userId)
-  return true
-})
+  await tryCreateUser(userId);
+  return true;
+});
 
 async function tryCreateUser(userId: string) {
-  const user = await currentUser()
+  const user = await currentUser();
   if (user == null || user.primaryEmailAddress == null || user.username == null) {
-    console.error("User has no primary email or user doesn't exist")
-    return false
+    console.error("User has no primary email or user doesn't exist");
+    return false;
   }
 
-  const primaryEmail = user.primaryEmailAddress.emailAddress
-  const uniqueUsername = user.username
+  const primaryEmail = user.primaryEmailAddress.emailAddress;
+  const uniqueUsername = user.username;
   const bob = await prisma.user.create({
     data: {
       id: userId,
@@ -48,25 +48,25 @@ async function tryCreateUser(userId: string) {
       lastName: "placeholder",
       username: uniqueUsername,
     },
-  })
-  console.log(`User ${bob} created`)
+  });
+  console.log(`User ${bob} created`);
 
-  return true
+  return true;
 }
 
 function tryFetchUser(whereClause: Prisma.UserWhereUniqueInput) {
   return prisma.user.findUnique({
     where: whereClause,
-  })
+  });
 }
 
 export const tryFetchUserByTheirId = getUserIdOrReturnWrapper((userId: string) =>
   tryFetchUser({ id: userId }),
-)
+);
 
-export const tryFetchUserByGivenId = (userId: string) => tryFetchUser({ id: userId })
+export const tryFetchUserByGivenId = (userId: string) => tryFetchUser({ id: userId });
 
-export const tryFetchUserByUsername = (username: string) => tryFetchUser({ username: username })
+export const tryFetchUserByUsername = (username: string) => tryFetchUser({ username: username });
 
 export function updateUserById<T extends object>(userId: string, data: T) {
   return prisma.user.update({
@@ -74,7 +74,7 @@ export function updateUserById<T extends object>(userId: string, data: T) {
       id: userId,
     },
     data: data,
-  })
+  });
 }
 
 /*
@@ -93,7 +93,7 @@ export function createPost(postContent: Pick<Post, "title" | "content" | "author
         connect: { username: postContent.posterUsername },
       },
     },
-  })
+  });
 }
 
 // Get userId to make sure user can only delete posts made by them
@@ -103,7 +103,7 @@ export function deletePost(postId: string, userId: string) {
       authorId: userId,
       id: postId,
     },
-  })
+  });
 }
 
 export function getUserLikeStatusOfPost(postId: string, userId: string) {
@@ -112,7 +112,7 @@ export function getUserLikeStatusOfPost(postId: string, userId: string) {
       postId: postId,
       likerId: userId,
     },
-  })
+  });
 }
 
 export function getUserLikeStatusOfPosts(postIds: string[], userId: string) {
@@ -121,7 +121,7 @@ export function getUserLikeStatusOfPosts(postIds: string[], userId: string) {
       postId: { in: postIds },
       likerId: userId,
     },
-  })
+  });
 }
 
 export function updatePost<T extends object>(postId: string, data: T) {
@@ -130,13 +130,13 @@ export function updatePost<T extends object>(postId: string, data: T) {
       id: postId,
     },
     data: data,
-  })
+  });
 }
 
 export function fetchAllPosts() {
   return prisma.post.findMany({
     orderBy: { createdAt: "desc" },
-  })
+  });
 }
 
 export async function fetchAllPostsByPeopleUserFollows(userId: string) {
@@ -144,27 +144,27 @@ export async function fetchAllPostsByPeopleUserFollows(userId: string) {
     where: {
       followerId: userId,
     },
-  })
-  const followedUserIds = follows.map((f) => f.personFollowedId)
+  });
+  const followedUserIds = follows.map((f) => f.personFollowedId);
 
   return findAllPostsWhere({
     authorId: { in: followedUserIds },
-  })
+  });
 }
 
 export function fetchAllPostsFromUserViaTheirId(userId: string) {
-  return findAllPostsWhere({ authorId: userId })
+  return findAllPostsWhere({ authorId: userId });
 }
 
 export function fetchAllPostsFromUserViaTheirUsername(username: string) {
-  return findAllPostsWhere({ posterUsername: username })
+  return findAllPostsWhere({ posterUsername: username });
 }
 
 function findAllPostsWhere(whereClause: Prisma.PostWhereInput) {
   return prisma.post.findMany({
     where: whereClause,
     orderBy: { createdAt: "desc" },
-  })
+  });
 }
 
 /*
@@ -172,16 +172,16 @@ function findAllPostsWhere(whereClause: Prisma.PostWhereInput) {
 */
 
 export async function fetchFollowInfoFromGivenId(userId: string) {
-  const followersCount = await fetchFollowCountWhere({ personFollowedId: userId })
-  const followingCount = await fetchFollowCountWhere({ followerId: userId })
+  const followersCount = await fetchFollowCountWhere({ personFollowedId: userId });
+  const followingCount = await fetchFollowCountWhere({ followerId: userId });
 
-  return { followersCount, followingCount }
+  return { followersCount, followingCount };
 }
 
 function fetchFollowCountWhere(whereClause: Prisma.FollowWhereInput) {
   return prisma.follow.count({
     where: whereClause,
-  })
+  });
 }
 
 export async function isUserFollowing(userId: string, viewedUserId: string) {
@@ -190,9 +190,9 @@ export async function isUserFollowing(userId: string, viewedUserId: string) {
       personFollowedId: viewedUserId,
       followerId: userId,
     },
-  })
+  });
 
-  return result != null
+  return result != null;
 }
 
 export async function followUser(userId: string, viewedUserId: string) {
@@ -202,7 +202,7 @@ export async function followUser(userId: string, viewedUserId: string) {
     createNewFollowRow(userId, viewedUserId),
     updateFollowCountForUser(userId, "increment"),
     updateFollowCountForUser(viewedUserId, "increment"),
-  ])
+  ]);
 }
 
 export async function unfollowUser(userId: string, viewedUserId: string) {
@@ -210,7 +210,7 @@ export async function unfollowUser(userId: string, viewedUserId: string) {
     deleteFollowRow(userId, viewedUserId),
     updateFollowCountForUser(userId, "decrement"),
     updateFollowCountForUser(viewedUserId, "decrement"),
-  ])
+  ]);
 }
 
 function createNewFollowRow(userId: string, viewedUserId: string) {
@@ -219,7 +219,7 @@ function createNewFollowRow(userId: string, viewedUserId: string) {
       followerId: userId,
       personFollowedId: viewedUserId,
     },
-  })
+  });
 }
 
 function deleteFollowRow(userId: string, viewedUserId: string) {
@@ -228,12 +228,12 @@ function deleteFollowRow(userId: string, viewedUserId: string) {
       followerId: userId,
       personFollowedId: viewedUserId,
     },
-  })
+  });
 }
 
 function updateFollowCountForUser(userId: string, updateBy: "increment" | "decrement") {
   const changeCountBy: { increment: number } | { decrement: number } =
-    updateBy == "increment" ? { increment: 1 } : { decrement: 1 }
+    updateBy == "increment" ? { increment: 1 } : { decrement: 1 };
 
   return prisma.user.update({
     where: {
@@ -242,7 +242,7 @@ function updateFollowCountForUser(userId: string, updateBy: "increment" | "decre
     data: {
       followingCount: changeCountBy,
     },
-  })
+  });
 }
 
 /*
@@ -256,11 +256,11 @@ export function createCommentOnPost(postId: string, commentContent: string, comm
       content: commentContent,
       commenterUsername: commenterUsername,
     },
-  })
+  });
 }
 
 export function getCommentsOnPost(postId: string) {
-  return prisma.comment.findMany({ where: { postId: postId } })
+  return prisma.comment.findMany({ where: { postId: postId } });
 }
 
 /*
@@ -271,9 +271,9 @@ export async function fetchLikeCountOfPost(postId: string) {
     where: {
       id: postId,
     },
-  })
+  });
 
-  return post?.likeCount
+  return post?.likeCount;
 }
 
 export function tryFindLikeInfoForUserOnPost(postId: string, userId: string) {
@@ -282,7 +282,7 @@ export function tryFindLikeInfoForUserOnPost(postId: string, userId: string) {
       postId: postId,
       likerId: userId,
     },
-  })
+  });
 }
 
 export function deleteLikesOnPostFromUser(postId: string, userId: string) {
@@ -291,7 +291,7 @@ export function deleteLikesOnPostFromUser(postId: string, userId: string) {
       postId: postId,
       likerId: userId,
     },
-  })
+  });
 }
 
 export function createLikeOnPostFromUser(postId: string, userId: string, newValue: number) {
@@ -301,7 +301,7 @@ export function createLikeOnPostFromUser(postId: string, userId: string, newValu
       likerId: userId,
       liked: newValue === 1,
     },
-  })
+  });
 }
 
 export async function updateLikeCount(postId: string, changeLikeCountBy: number) {
@@ -312,5 +312,5 @@ export async function updateLikeCount(postId: string, changeLikeCountBy: number)
         increment: changeLikeCountBy,
       },
     },
-  })
+  });
 }

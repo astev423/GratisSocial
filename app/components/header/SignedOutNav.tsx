@@ -1,4 +1,4 @@
-import { SignInButton, SignUpButton } from "@clerk/nextjs"
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export default function SignedOutNav() {
   return (
@@ -10,5 +10,5 @@ export default function SignedOutNav() {
         <div className="clickable-scale-animation">Sign up</div>
       </SignUpButton>
     </div>
-  )
+  );
 }

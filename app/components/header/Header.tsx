@@ -1,5 +1,5 @@
-import HeaderNav from "./HeaderNav"
-import SiteLogo from "./SiteLogo"
+import HeaderNav from "./HeaderNav";
+import SiteLogo from "./SiteLogo";
 
 export default async function Header() {
   return (
@@ -7,5 +7,5 @@ export default async function Header() {
       <SiteLogo />
       <HeaderNav />
     </div>
-  )
+  );
 }

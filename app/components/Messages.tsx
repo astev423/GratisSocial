@@ -1,5 +1,5 @@
 const Messages = () => {
-  return <>Messages</>
-}
+  return <>Messages</>;
+};
 
-export default Messages
+export default Messages;

@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { updateAccount } from "@/lib/client/utils"
-import { useState } from "react"
-import { useViewedUser } from "../context/ViewedUserContext"
+import { updateAccount } from "@/lib/client/utils";
+import { useState } from "react";
+import { useViewedUser } from "../context/ViewedUserContext";
 
 export default function EditableNameInfo() {
-  const { viewedUser } = useViewedUser()
-  const [editableFirstName, setEditableFirstName] = useState(viewedUser.firstName)
-  const [editableLastName, setEditableLastName] = useState(viewedUser.lastName)
-  const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
+  const { viewedUser } = useViewedUser();
+  const [editableFirstName, setEditableFirstName] = useState(viewedUser.firstName);
+  const [editableLastName, setEditableLastName] = useState(viewedUser.lastName);
+  const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters";
 
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">
@@ -29,9 +29,9 @@ export default function EditableNameInfo() {
           value={editableFirstName}
           onChange={(e) => {
             if (editableFirstName.length < 21) {
-              setEditableFirstName(e.target.value)
+              setEditableFirstName(e.target.value);
             } else {
-              alert(nameTooLongMessage)
+              alert(nameTooLongMessage);
             }
           }}
           type="text"
@@ -46,9 +46,9 @@ export default function EditableNameInfo() {
           value={editableLastName}
           onChange={(e) => {
             if (editableLastName.length < 21) {
-              setEditableLastName(e.target.value)
+              setEditableLastName(e.target.value);
             } else {
-              alert(nameTooLongMessage)
+              alert(nameTooLongMessage);
             }
           }}
           type="text"
@@ -60,12 +60,12 @@ export default function EditableNameInfo() {
       {/* Button for submitting PUT request to update names */}
       <button
         onClick={async () => {
-          await updateAccount({ editableFirstName, editableLastName })
+          await updateAccount({ editableFirstName, editableLastName });
         }}
         className="group grey-button"
       >
         <span className="grey-button-text">Click here to submit changes!</span>
       </button>
     </div>
-  )
+  );
 }

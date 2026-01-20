@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { createComment } from "@/lib/client/utils"
-import { Dispatch, SetStateAction, useState } from "react"
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { createComment } from "@/lib/client/utils";
 
 type AddCommentProps = {
-  postId: string
-  refetch: Dispatch<SetStateAction<number>>
-  setRefresh: Dispatch<SetStateAction<number>>
-}
+  postId: string;
+  refetch: Dispatch<SetStateAction<number>>;
+  setRefresh: Dispatch<SetStateAction<number>>;
+};
 
 export default function AddComment({ postId, refetch, setRefresh }: AddCommentProps) {
-  const [inputText, setInputText] = useState("")
+  const [inputText, setInputText] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
+    e.preventDefault();
     if (inputText == "") {
-      console.error("Comments can't be empty")
-      return
+      console.error("Comments can't be empty");
+      return;
     }
-    const res = await createComment(inputText, postId)
+    const res = await createComment(inputText, postId);
     if (!res) {
-      console.error("Failed to make comment!")
-      return
+      console.error("Failed to make comment!");
+      return;
     }
 
-    setInputText("")
-    refetch((i) => i + 1)
-    setRefresh((i) => i + 1)
+    setInputText("");
+    refetch((i) => i + 1);
+    setRefresh((i) => i + 1);
   }
 
   return (
@@ -38,10 +38,10 @@ export default function AddComment({ postId, refetch, setRefresh }: AddCommentPr
           placeholder="Add comment"
           value={inputText}
           onChange={(e) => {
-            setInputText(e.target.value)
+            setInputText(e.target.value);
           }}
         ></input>
       </form>
     </div>
-  )
+  );
 }

@@ -1,56 +1,56 @@
-import { likeOrDislikeInteraction } from "@/lib/client/utils"
-import { LikeInfo } from "@/types/types"
-import Image from "next/image"
-import { useState } from "react"
+import { likeOrDislikeInteraction } from "@/lib/client/utils";
+import { LikeInfo } from "@/types/types";
+import Image from "next/image";
+import { useState } from "react";
 
 type LikeInteractionData = {
-  postId: string
-  interaction: "like" | "dislike" | "removeLike" | "removeDislike"
-}
-type LikeStatus = "liked" | "disliked" | "neither"
+  postId: string;
+  interaction: "like" | "dislike" | "removeLike" | "removeDislike";
+};
+type LikeStatus = "liked" | "disliked" | "neither";
 
 export default function Like({
   postId,
   initialNumLikes,
   initialLikeStatus,
 }: {
-  postId: string
-  initialNumLikes: number
-  initialLikeStatus: LikeStatus
+  postId: string;
+  initialNumLikes: number;
+  initialLikeStatus: LikeStatus;
 }) {
-  const [numLikes, setNumLikes] = useState(initialNumLikes)
-  const [likeStatus, setLikeStatus] = useState(initialLikeStatus)
+  const [numLikes, setNumLikes] = useState(initialNumLikes);
+  const [likeStatus, setLikeStatus] = useState(initialLikeStatus);
   const likeButtonImagePath =
-    likeStatus == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg"
+    likeStatus == "liked" ? "/icons/clicked-thumbs-up.svg" : "/icons/unclicked-thumbs-up.svg";
   const dislikeButtonImagePath =
-    likeStatus == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg"
+    likeStatus == "disliked" ? "/icons/clicked-thumbs-down.svg" : "/icons/unclicked-thumbs-down.svg";
   const likeButtonOnClickData: LikeInteractionData = {
     postId,
     interaction: likeStatus == "liked" ? "removeLike" : "like",
-  }
+  };
   const dislikeButtonOnClickData: LikeInteractionData = {
     postId,
     interaction: likeStatus == "disliked" ? "removeDislike" : "dislike",
-  }
+  };
 
   async function submitLikeInteraction(buttonPressed: "like" | "dislike") {
     if (buttonPressed == "like") {
-      await likeOrDislikeInteraction(likeButtonOnClickData)
+      await likeOrDislikeInteraction(likeButtonOnClickData);
     } else {
-      await likeOrDislikeInteraction(dislikeButtonOnClickData)
+      await likeOrDislikeInteraction(dislikeButtonOnClickData);
     }
     const res = await fetch("/api/getPostLikeInfo", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ postId }),
-    })
+    });
     if (!res.ok) {
-      console.error("Error getting like status")
-      return
+      console.error("Error getting like status");
+      return;
     }
-    const { numLikes: newNumLikes, status } = (await res.json()) as LikeInfo
-    setNumLikes(newNumLikes)
-    setLikeStatus(status)
+    const { numLikes: newNumLikes, status } = (await res.json()) as LikeInfo;
+    setNumLikes(newNumLikes);
+    setLikeStatus(status);
   }
 
   return (
@@ -73,5 +73,5 @@ export default function Like({
         />
       </div>
     </div>
-  )
+  );
 }
