@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 export async function POST(req: NextRequest) {
   const user = await currentUser()
   const { commentContent, postId } = (await req.json()) as { commentContent: string; postId: string }
+  console.log(commentContent, postId)
   if (user == null || user.username == null || commentContent == null || postId == null) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }

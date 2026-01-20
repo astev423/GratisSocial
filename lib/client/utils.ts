@@ -1,6 +1,6 @@
 "use client"
 
-import { LikeInteraction } from "@/types/types"
+import { Comment, LikeInteraction } from "@/types/types"
 import { useEffect, useState } from "react"
 
 type FetchState<T> = {
@@ -91,12 +91,22 @@ export async function unfollowUser(username: string) {
   })
 }
 
-export async function createComment(content: string, postId: string) {
+export async function createComment(commentContent: string, postId: string) {
   return fetch("/api/createComment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content, postId }),
+    body: JSON.stringify({ commentContent, postId }),
   })
+}
+
+export async function fetchComments(postId: string) {
+  const res = await fetch("/api/fetchComments", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ postId }),
+  })
+
+  return res.json() as Promise<Comment[]>
 }
 
 export async function likeOrDislikeInteraction({

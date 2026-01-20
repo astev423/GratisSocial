@@ -1,3 +1,4 @@
+import { Post } from "@/types/types"
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { Prisma } from "@prisma/client"
 import "server-only"
@@ -80,13 +81,7 @@ export function updateUserById<T extends object>(userId: string, data: T) {
  POST STUFF
 */
 
-type PostContent = {
-  title: string
-  content: string
-  authorId: string
-  authorUsername: string
-}
-export function createPost(postContent: PostContent) {
+export function createPost(postContent: Pick<Post, "title" | "content" | "authorId" | "posterUsername">) {
   return prisma.post.create({
     data: {
       title: postContent.title,
@@ -95,7 +90,7 @@ export function createPost(postContent: PostContent) {
         connect: { id: postContent.authorId },
       },
       authorUsername: {
-        connect: { username: postContent.authorUsername },
+        connect: { username: postContent.posterUsername },
       },
     },
   })

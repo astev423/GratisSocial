@@ -51,6 +51,9 @@ export const LikeInteraction = {
   RemoveDislike: "removeDislike",
 } as const
 
+//typeof LikeInteraction → the object type
+//keyof typeof LikeInteraction → all keys of that object
+//ObjectType[AllKeys] → the union of the types of all property values
 export type LikeInteraction = (typeof LikeInteraction)[keyof typeof LikeInteraction]
 
 export type TypeOfPostToView = "following" | "all" | "myPosts" | "specificUser"
