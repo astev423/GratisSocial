@@ -1,26 +1,24 @@
-"use client";
+import { type Dispatch, type SetStateAction, useState } from "react"
+import { createPost } from "@/lib/client/utils"
 
-import { createPost } from "@/lib/client/utils";
-import { useState, type Dispatch, type SetStateAction } from "react";
-
-type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> };
+type CreatePostProps = { setRefreshKey: Dispatch<SetStateAction<number>> }
 
 export default function CreatePost({ setRefreshKey }: CreatePostProps) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
 
   async function submitPost(e: React.FormEvent) {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!title || !content) {
-      alert("You must provide both content and a title");
-      return;
+      alert("You must provide both content and a title")
+      return
     }
 
-    createPost({ title, content });
-    setTitle("");
-    setContent("");
-    setRefreshKey((refreshKey) => refreshKey + 1);
+    createPost({ title, content })
+    setTitle("")
+    setContent("")
+    setRefreshKey((refreshKey) => refreshKey + 1)
   }
 
   return (
@@ -38,9 +36,9 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
         placeholder="Post content"
         className="bg-gray-100 p-4 h-50"
       ></textarea>
-      <button className="group grey-button">
+      <button type="button" className="group grey-button">
         <span className="grey-button-text">Submit Post</span>
       </button>
     </form>
-  );
+  )
 }

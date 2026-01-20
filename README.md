@@ -2,7 +2,7 @@
 
 Open social media platform, we don't sell your data, in fact we can't, since there are no ads! Just a
 nice, simple, intuitive platform anyone can use.
-Built using NextJS, typescript, Prisma ORM, and Clerk
+Built using NextJS, typescript, Prisma ORM, and Clerk. Formatting and linting done with Biome
 
 ## HOW TO SET UP GRATIS
 

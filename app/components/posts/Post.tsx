@@ -1,26 +1,25 @@
-import Link from "next/link";
-
-import { formatDate } from "@/lib/shared/sharedUtils";
-import { useAuth } from "@clerk/nextjs";
-import { Dispatch, SetStateAction, useState } from "react";
-import type { PostWithLikeInfo } from "../../../types/types";
-import CommentFeed from "./comments/CommentFeed";
-import ConfirmDeletion from "./ConfirmDeletion";
-import Like from "./likes/Like";
+import { useAuth } from "@clerk/nextjs"
+import Link from "next/link"
+import { type Dispatch, type SetStateAction, useState } from "react"
+import { formatDate } from "@/lib/shared/sharedUtils"
+import type { PostWithLikeInfo } from "../../../types/types"
+import ConfirmDeletion from "./ConfirmDeletion"
+import CommentFeed from "./comments/CommentFeed"
+import Like from "./likes/Like"
 
 type PostProps = Readonly<{
-  post: PostWithLikeInfo;
-  refetch: Dispatch<SetStateAction<number>>;
-}>;
+  post: PostWithLikeInfo
+  refetch: Dispatch<SetStateAction<number>>
+}>
 
 export default function Post({ post, refetch }: PostProps) {
-  const { userId } = useAuth();
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { userId } = useAuth()
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const confirmProps = {
     postId: post.id,
     setShowConfirmation: setShowConfirmation,
     refetch: refetch,
-  };
+  }
 
   return (
     <div className="bg-white p-5 flex flex-col gap-4 ">
@@ -28,14 +27,15 @@ export default function Post({ post, refetch }: PostProps) {
         <div className="text-4xl font-bold">{post.title}</div>
 
         {/* This part shows red X on post if post creator matches user*/}
-        {post.authorId == userId && (
-          <div
+        {post.authorId === userId && (
+          <button
+            type="button"
             onClick={() => setShowConfirmation(true)}
             className="self-start text-3xl hover:brightness-50 hover:scale-140 duration-300
                       hover:cursor-pointer"
           >
             ❌
-          </div>
+          </button>
         )}
       </div>
 
@@ -58,7 +58,7 @@ export default function Post({ post, refetch }: PostProps) {
       <div>
         <Like initialNumLikes={post.likeCount} initialLikeStatus={post.status} postId={post.id} />
       </div>
-      <CommentFeed refetch={refetch} commentCount={post.commentCount} postId={post.id} />
+      <CommentFeed commentCount={post.commentCount} postId={post.id} />
     </div>
-  );
+  )
 }

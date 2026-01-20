@@ -4,74 +4,74 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
-    provider      = "prisma-client-js"
-    engineType    = "library" // Node-API engines reduce OpenSSL mismatches
-    binaryTargets = ["native"]
+  provider      = "prisma-client-js"
+  engineType    = "library" // Node-API engines reduce OpenSSL mismatches
+  binaryTargets = ["native"]
 }
 
 datasource db {
-    provider = "postgresql"
+  provider = "postgresql"
 }
 
 model User {
-    id        String   @id @default(uuid())
-    email     String   @unique
-    username  String   @unique
-    firstName String
-    lastName  String
-    createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  firstName String
+  lastName  String
+  createdAt DateTime @default(now())
 
-    // Updated relations matching the two on Post
-    postsById       Post[] @relation("author")
-    postsByUsername Post[] @relation("authorUsername")
+  // Updated relations matching the two on Post
+  postsById       Post[] @relation("author")
+  postsByUsername Post[] @relation("authorUsername")
 
-    followers      Follow[]  @relation("followedBy")
-    following      Follow[]  @relation("following")
-    followersCount Int       @default(0)
-    followingCount Int       @default(0)
-    comments       Comment[] @relation("commenter")
-    likes          Like[]    @relation("liker")
+  followers      Follow[]  @relation("followedBy")
+  following      Follow[]  @relation("following")
+  followersCount Int       @default(0)
+  followingCount Int       @default(0)
+  comments       Comment[] @relation("commenter")
+  likes          Like[]    @relation("liker")
 }
 
 model Post {
-    id             String    @id @default(uuid())
-    title          String
-    content        String
-    createdAt      DateTime  @default(now())
-    authorId       String
-    author         User      @relation("author", fields: [authorId], references: [id], onDelete: Cascade)
-    authorUsername User      @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
-    posterUsername String
-    commentCount   Int       @default(0)
-    comments       Comment[] @relation("post")
-    likeCount      Int       @default(0)
-    likes          Like[]    @relation("post")
+  id             String    @id @default(uuid())
+  title          String
+  content        String
+  createdAt      DateTime  @default(now())
+  authorId       String
+  author         User      @relation("author", fields: [authorId], references: [id], onDelete: Cascade)
+  authorUsername User      @relation("authorUsername", fields: [posterUsername], references: [username], onDelete: Cascade)
+  posterUsername String
+  commentCount   Int       @default(0)
+  comments       Comment[] @relation("post")
+  likeCount      Int       @default(0)
+  likes          Like[]    @relation("post")
 }
 
 model Follow {
-    id               String @id @default(uuid())
-    follower         User   @relation("followedBy", fields: [followerId], references: [id], onDelete: Cascade)
-    followerId       String
-    personFollowed   User   @relation("following", fields: [personFollowedId], references: [id], onDelete: Cascade)
-    personFollowedId String
+  id               String @id @default(uuid())
+  follower         User   @relation("followedBy", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId       String
+  personFollowed   User   @relation("following", fields: [personFollowedId], references: [id], onDelete: Cascade)
+  personFollowedId String
 
-    @@unique([followerId, personFollowedId])
+  @@unique([followerId, personFollowedId])
 }
 
 model Comment {
-    id                String @id @default(uuid())
-    content           String
-    commenterUsername String
-    commenter         User   @relation("commenter", fields: [commenterUsername], references: [username], onDelete: Cascade)
-    postId            String
-    post              Post   @relation("post", fields: [postId], references: [id], onDelete: Cascade)
+  id                String @id @default(uuid())
+  content           String
+  commenterUsername String
+  commenter         User   @relation("commenter", fields: [commenterUsername], references: [username], onDelete: Cascade)
+  postId            String
+  post              Post   @relation("post", fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Like {
-    id      String  @id @default(uuid())
-    liked   Boolean
-    likerId String
-    liker   User    @relation("liker", fields: [likerId], references: [id], onDelete: Cascade)
-    postId  String
-    post    Post    @relation("post", fields: [postId], references: [id], onDelete: Cascade)
+  id      String  @id @default(uuid())
+  liked   Boolean
+  likerId String
+  liker   User    @relation("liker", fields: [likerId], references: [id], onDelete: Cascade)
+  postId  String
+  post    Post    @relation("post", fields: [postId], references: [id], onDelete: Cascade)
 }

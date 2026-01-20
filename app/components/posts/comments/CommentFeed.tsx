@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react"
+import { useState } from "react"
 import { fetchComments } from "@/lib/client/utils"
 import type { Comment as CommentType } from "@/types/types"
 import AddComment from "./AddComment"
@@ -7,34 +7,31 @@ import Comment from "./Comment"
 type CommentFeedProps = {
   commentCount: number
   postId: string
-  refetch: Dispatch<SetStateAction<number>>
 }
 
-export default function CommentFeed({ commentCount, refetch, postId }: CommentFeedProps) {
-  const [refresh, setRefresh] = useState(0)
+export default function CommentFeed({ commentCount, postId }: CommentFeedProps) {
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState<CommentType[]>([])
 
-  useEffect(() => {
-    ;(async () => {
-      const commentsOnThisPost = await fetchComments(postId)
-      setComments(commentsOnThisPost)
-    })()
-  }, [refresh])
+  async function reloadComments() {
+    const commentsOnThisPost = await fetchComments(postId)
+    setComments(commentsOnThisPost)
+  }
 
   return (
     <div className="flex flex-col gap-3">
-      <div
+      <button
+        type="button"
         onClick={async () => {
           if (!showComments) {
-            setRefresh((refresh) => refresh + 1)
+            reloadComments()
           }
           setShowComments((showComments) => !showComments)
         }}
       >
         {commentCount} comments, click here to view them:
-      </div>
-      <AddComment refetch={refetch} setRefresh={setRefresh} postId={postId} />
+      </button>
+      <AddComment reloadComments={reloadComments} postId={postId} />
       {showComments &&
         comments &&
         comments.map((comment) => (

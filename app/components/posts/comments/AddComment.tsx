@@ -1,32 +1,28 @@
-"use client";
-
-import { type Dispatch, type SetStateAction, useState } from "react";
-import { createComment } from "@/lib/client/utils";
+import { useState } from "react"
+import { createComment } from "@/lib/client/utils"
 
 type AddCommentProps = {
-  postId: string;
-  refetch: Dispatch<SetStateAction<number>>;
-  setRefresh: Dispatch<SetStateAction<number>>;
-};
+  postId: string
+  reloadComments: () => void
+}
 
-export default function AddComment({ postId, refetch, setRefresh }: AddCommentProps) {
-  const [inputText, setInputText] = useState("");
+export default function AddComment({ postId, reloadComments }: AddCommentProps) {
+  const [inputText, setInputText] = useState("")
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (inputText == "") {
-      console.error("Comments can't be empty");
-      return;
+    e.preventDefault()
+    if (inputText === "") {
+      console.error("Comments can't be empty")
+      return
     }
-    const res = await createComment(inputText, postId);
+    const res = await createComment(inputText, postId)
     if (!res) {
-      console.error("Failed to make comment!");
-      return;
+      console.error("Failed to make comment!")
+      return
     }
 
-    setInputText("");
-    refetch((i) => i + 1);
-    setRefresh((i) => i + 1);
+    setInputText("")
+    reloadComments()
   }
 
   return (
@@ -38,10 +34,10 @@ export default function AddComment({ postId, refetch, setRefresh }: AddCommentPr
           placeholder="Add comment"
           value={inputText}
           onChange={(e) => {
-            setInputText(e.target.value);
+            setInputText(e.target.value)
           }}
         ></input>
       </form>
     </div>
-  );
+  )
 }

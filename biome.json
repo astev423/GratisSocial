@@ -10,7 +10,6 @@
   },
   "formatter": {
     "enabled": true,
-    "indentWidth": 2,
     "indentStyle": "space",
     "lineWidth": 110
   },
@@ -22,7 +21,6 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
       "semicolons": "asNeeded"
     }
   },
@@ -32,6 +30,11 @@
       "source": {
         "organizeImports": "on"
       }
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

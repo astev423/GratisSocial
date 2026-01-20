@@ -1,9 +1,8 @@
-import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs"
+import Link from "next/link"
 
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-
-import SignedInNav from "./SignedInNav";
-import SignedOutNav from "./SignedOutNav";
+import SignedInNav from "./SignedInNav"
+import SignedOutNav from "./SignedOutNav"
 
 export default function HeaderNav() {
   return (
@@ -23,5 +22,5 @@ export default function HeaderNav() {
         </SignedOut>
       </div>
     </nav>
-  );
+  )
 }

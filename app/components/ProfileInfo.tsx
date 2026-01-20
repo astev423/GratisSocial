@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useViewedUser } from "../context/ViewedUserContext";
+import { useViewedUser } from "../context/ViewedUserContext"
 
 export default function ProfileInfo() {
-  const { viewedUser } = useViewedUser();
+  const { viewedUser } = useViewedUser()
 
   return (
     <div className="flex w-90 gap-2 flex-col p-8 bg-white font-bold">
@@ -17,5 +17,5 @@ export default function ProfileInfo() {
         <div className="font-normal text-xl text-gray-700">{viewedUser.username}</div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 type CommentProps = {
-  content: string;
-  commenterUsername: string;
-};
+  content: string
+  commenterUsername: string
+}
 
 export default function Comment({ content, commenterUsername }: CommentProps) {
   return (
@@ -9,5 +9,5 @@ export default function Comment({ content, commenterUsername }: CommentProps) {
       <div>{commenterUsername} says: </div>
       <div>{content}</div>
     </div>
-  );
+  )
 }
