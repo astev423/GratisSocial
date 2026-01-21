@@ -16,7 +16,7 @@ export function useFetch<T = unknown>(
   route: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   refetchKey: number = 0,
-  body?: {},
+  body?: Record<string, unknown>,
 ): FetchState<T> {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -25,17 +25,46 @@ export function useFetch<T = unknown>(
   useEffect(() => {
     setLoading(true)
     setError(null)
+    ;async () => {
+      try {
+        const fetchedData = (await fetchData(route, method, body)) as T
+        setData(fetchedData)
+      } catch (err: unknown) {
+        // If aborted then don't treat as normal error, just return
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return
+        }
+
+        setError(err instanceof Error ? err : new Error(String(err)))
+        setData(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }, [refetchKey])
+
+  return { data, loading, error }
+}
+
+async function fetchData(
+  route: string,
+  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  body?: Record<string, unknown>,
+) {
+  let fetchedData: object
+
+  useEffect(() => {
     // Abort controller is important here, it cancels the request if something gets unmounted, as
     // useEffect return runs whenever dependancy array changes, OR IF COMPONENT DISMOUNTS
     // so if we dismount, we don't want the request response, we just want to cancel it, since
     // were no longer on the component which needs the data
     const controller = new AbortController()
-    const { signal } = controller
+    const signal = controller.signal
 
-    async function fetchData() {
+    ;(async () => {
       try {
-        const req: RequestInit =
-          method != "GET"
+        const req =
+          method !== "GET"
             ? {
                 method: method,
                 headers: { "Content-Type": "application/json" },
@@ -49,30 +78,17 @@ export function useFetch<T = unknown>(
           throw new Error(`Request failed with status ${res.status}`)
         }
 
-        const json = (await res.json()) as T
-        setData(json)
-      } catch (err: any) {
-        // If aborted then don't treat as normal error, just return
-        if (err?.name === "AbortError") {
-          return
-        }
-
-        setError(err instanceof Error ? err : new Error(String(err)))
-        setData(null)
-      } finally {
-        if (!signal.aborted) {
-          setLoading(false)
-        }
+        fetchedData = res.json()
+      } catch (err: unknown) {
+        if (controller.signal.aborted) return
+        throw err
       }
-    }
+    })()
 
-    fetchData()
-    return () => {
-      controller.abort()
-    }
-  }, [refetchKey])
+    return () => controller.abort()
+  }, [route])
 
-  return { data, loading, error }
+  return fetchedData
 }
 
 export async function followUser(username: string) {

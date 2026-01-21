@@ -22,7 +22,7 @@ function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
 
 export const tryAddClerkUserToDb = getUserIdOrReturnWrapper(async (userId) => {
   const user = await prisma.user.findUnique({ where: { id: userId } })
-  if (user != null) {
+  if (user !== null) {
     console.log("User already in database")
     return false
   }
@@ -192,7 +192,7 @@ export async function isUserFollowing(userId: string, viewedUserId: string) {
     },
   })
 
-  return result != null
+  return result !== null
 }
 
 export async function followUser(userId: string, viewedUserId: string) {
