@@ -1,3 +1,6 @@
+-Fix utils, add api request function with abort controller for cancelling, then useFetch can call that
+which allows us to make api requests even if we don't need to fetch data
+
 -Hide comments initially, instead say like "2 comments" and add dropdown to see them if > 0 comments
 this helps makes post all consistent size initially and avoid CLS
 
