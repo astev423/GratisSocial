@@ -21,6 +21,7 @@ export default function FollowButton({ following, setRefreshKey }: FollowButtonP
     } else {
       await followUser(viewedUser.username)
     }
+
     setRefreshKey((i) => i + 1)
   }
 
