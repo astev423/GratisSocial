@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { username } = (await req.json()) as { username: string }
   const user = await tryFetchUserByUsername(username)
   if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 400 })
+    return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
   const { followersCount, followingCount } = await fetchFollowInfoFromGivenId(user.id)
 

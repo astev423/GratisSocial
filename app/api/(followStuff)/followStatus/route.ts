@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const cardUser = await tryFetchUserByUsername(cardUsername)
   const viewingUser = await tryFetchUserByTheirId()
   if (!cardUser || !viewingUser) {
-    return NextResponse.json({ error: "Can't find users in DB" }, { status: 400 })
+    return NextResponse.json({ error: "Can't find users in DB" }, { status: 404 })
   }
 
   if (await isUserFollowing(viewingUser.id, cardUser.id)) {
