@@ -1,11 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
   provider      = "prisma-client-js"
-  engineType    = "library" // Node-API engines reduce OpenSSL mismatches
+  engineType    = "library"
   binaryTargets = ["native"]
 }
 
@@ -14,23 +9,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String   @unique
-  firstName String
-  lastName  String
-  createdAt DateTime @default(now())
-
-  // Updated relations matching the two on Post
-  postsById       Post[] @relation("author")
-  postsByUsername Post[] @relation("authorUsername")
-
-  followers      Follow[]  @relation("followedBy")
-  following      Follow[]  @relation("following")
-  followersCount Int       @default(0)
-  followingCount Int       @default(0)
-  comments       Comment[] @relation("commenter")
-  likes          Like[]    @relation("liker")
+  id              String    @id @default(uuid())
+  email           String    @unique
+  username        String    @unique
+  firstName       String
+  lastName        String
+  createdAt       DateTime  @default(now())
+  postsById       Post[]    @relation("author")
+  postsByUsername Post[]    @relation("authorUsername")
+  followers       Follow[]  @relation("followedBy")
+  following       Follow[]  @relation("following")
+  followersCount  Int       @default(0)
+  followingCount  Int       @default(0)
+  comments        Comment[] @relation("commenter")
+  likes           Like[]    @relation("liker")
 }
 
 model Post {
