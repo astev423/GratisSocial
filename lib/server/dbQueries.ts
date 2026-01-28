@@ -10,10 +10,10 @@ import { prisma } from "../../prisma/prisma"
 
 function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
   // Need this awaited return type so we can get right return type for things that call this
-  return async (): Promise<Awaited<ReturnType<F>> | void> => {
+  return async (): Promise<Awaited<ReturnType<F>> | null> => {
     const { userId } = await auth()
     if (userId === null) {
-      return
+      return null
     }
 
     return fn(userId)

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     title: title,
     content: content,
     authorId: user.id,
-    authorUsername: user.username,
+    posterUsername: user.username,
   })
 
   return NextResponse.json(newPost, { status: 201 })
