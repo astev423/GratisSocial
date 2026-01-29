@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { fetchFollowInfoFromGivenId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 
+// TODO: This should be GET
 export async function POST(req: Request) {
   const { username } = (await req.json()) as { username: string }
   const user = await tryFetchUserByUsername(username)

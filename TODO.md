@@ -8,6 +8,8 @@ this helps makes post all consistent size initially and avoid CLS
 
 -Fix linting errors and warnings
 
+-Fix API route names and return codes. Make sure POST is only used to create data or submit data
+
 -Lots of repitition in client utils.ts. make one central fetcher with abort controller. or maybe
 find way to combine useFetch and fetch methods below
 
