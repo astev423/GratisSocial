@@ -57,3 +57,5 @@ export const LikeInteraction = {
 export type LikeInteraction = (typeof LikeInteraction)[keyof typeof LikeInteraction]
 
 export type TypeOfPostToView = "following" | "all" | "myPosts" | "specificUser"
+
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"

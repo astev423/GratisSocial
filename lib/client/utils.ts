@@ -1,20 +1,40 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { Comment, LikeInteraction } from "@/types/types"
+import type { Comment, HttpMethod, LikeInteraction } from "@/types/types"
+
+export async function sendFetchReq(
+  route: string,
+  method: HttpMethod = "GET",
+  body?: Record<string, unknown>,
+  signal?: AbortSignal,
+) {
+  const req: RequestInit = { method, signal }
+
+  if (method !== "GET" && body !== undefined) {
+    req.headers = { "Content-Type": "application/json" }
+    req.body = JSON.stringify(body)
+  }
+
+  const res = await fetch(route, req)
+  if (!res.ok) {
+    throw new Error(`Request failed with status ${res.status}`)
+  }
+
+  return res
+}
 
 type FetchState<T> = {
   data: T | null
   loading: boolean
   error: Error | null
 }
-
 // Hooks are scoped to their function instance, so we can reuse this without worrying about interference
 // This component returns null initially but then re-renders with updated values so const {}
 // properties will be updated
 export function useFetch<T = unknown>(
   route: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  method: HttpMethod,
   refetchKey: number = 0,
   body?: Record<string, unknown>,
 ): FetchState<T> {
@@ -22,15 +42,17 @@ export function useFetch<T = unknown>(
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: refetchKey is an explicit refetch trigger
   useEffect(() => {
+    const controller = new AbortController()
     setLoading(true)
     setError(null)
-    ;async () => {
+    ;(async () => {
       try {
-        const fetchedData = (await fetchData(route, method, body)) as T
-        setData(fetchedData)
+        const res = await sendFetchReq(route, method, body, controller.signal)
+        const json = (await res.json()) as T
+        setData(json)
       } catch (err: unknown) {
-        // If aborted then don't treat as normal error, just return
         if (err instanceof DOMException && err.name === "AbortError") {
           return
         }
@@ -38,57 +60,16 @@ export function useFetch<T = unknown>(
         setError(err instanceof Error ? err : new Error(String(err)))
         setData(null)
       } finally {
-        setLoading(false)
-      }
-    }
-  }, [refetchKey])
-
-  return { data, loading, error }
-}
-
-async function fetchData(
-  route: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
-  body?: Record<string, unknown>,
-) {
-  let fetchedData: object
-
-  useEffect(() => {
-    // Abort controller is important here, it cancels the request if something gets unmounted, as
-    // useEffect return runs whenever dependancy array changes, OR IF COMPONENT DISMOUNTS
-    // so if we dismount, we don't want the request response, we just want to cancel it, since
-    // were no longer on the component which needs the data
-    const controller = new AbortController()
-    const signal = controller.signal
-
-    ;(async () => {
-      try {
-        const req =
-          method !== "GET"
-            ? {
-                method: method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-                signal,
-              }
-            : { signal }
-
-        const res = await fetch(route, req)
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`)
+        if (!controller.signal.aborted) {
+          setLoading(false)
         }
-
-        fetchedData = res.json()
-      } catch (err: unknown) {
-        if (controller.signal.aborted) return
-        throw err
       }
     })()
 
     return () => controller.abort()
-  }, [route])
+  }, [route, method, refetchKey, body])
 
-  return fetchedData
+  return { data, loading, error }
 }
 
 export async function followUser(username: string) {
