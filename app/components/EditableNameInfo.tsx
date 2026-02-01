@@ -10,7 +10,7 @@ export default function EditableNameInfo() {
   const [editableLastName, setEditableLastName] = useState(viewedUser.lastName)
   const nameTooLongMessage = "First/Last names cannot be bigger than 20 characters"
 
-  // TODO: refactor this, make it easier to read
+  // TODO: refactor this, make it easier to read, also reduce repetition logic
   return (
     <div className="flex gap-2 flex-col p-8 bg-white font-bold">
       {/* Display account names and unique username */}
