@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
-import { likeOrDislikeInteraction } from "@/lib/client/utils"
+import { likeOrDislikeInteraction, sendFetchReq } from "@/lib/client/utils"
 import type { LikeInfo } from "@/types/types"
 
 type LikeInteractionData = {
@@ -39,15 +39,7 @@ export default function Like({
     } else {
       await likeOrDislikeInteraction(dislikeButtonOnClickData)
     }
-    const res = await fetch("/api/getPostLikeInfo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postId }),
-    })
-    if (!res.ok) {
-      console.error("Error getting like status")
-      return
-    }
+    const res = await sendFetchReq("/api/getPostLikeInfo", "POST", { postId })
     const { numLikes: newNumLikes, status } = (await res.json()) as LikeInfo
     setNumLikes(newNumLikes)
     setLikeStatus(status)

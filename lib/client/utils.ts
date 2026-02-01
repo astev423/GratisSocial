@@ -73,35 +73,19 @@ export function useFetch<T = unknown>(
 }
 
 export async function followUser(username: string) {
-  return fetch("/api/followUser", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username }),
-  })
+  return sendFetchReq("/api/followUser", "PUT", { username })
 }
 
 export async function unfollowUser(username: string) {
-  return fetch("/api/unfollowUser", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username }),
-  })
+  return sendFetchReq("/api/unfollowUser", "PUT", { username })
 }
 
 export async function createComment(commentContent: string, postId: string) {
-  return fetch("/api/createComment", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ commentContent, postId }),
-  })
+  return sendFetchReq("/api/createComment", "POST", { commentContent, postId })
 }
 
 export async function fetchComments(postId: string) {
-  const res = await fetch("/api/fetchComments", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ postId }),
-  })
+  const res = await sendFetchReq("/api/fetchComments", "POST", { postId })
 
   return res.json() as Promise<Comment[]>
 }
@@ -113,37 +97,17 @@ export async function likeOrDislikeInteraction({
   postId: string
   interaction: LikeInteraction
 }) {
-  return fetch("/api/likeOrDislikeInteraction", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ postId, interaction }),
-  })
+  return sendFetchReq("/api/likeOrDislikeInteraction", "POST", { postId, interaction })
 }
 
-export async function updateAccount<T extends object>(newInfo: T) {
-  return fetch("/api/updateAccount", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newInfo),
-  })
+export async function updateAccount(newInfo: Record<string, unknown>) {
+  return sendFetchReq("/api/updateAccount", "PUT", newInfo)
 }
 
 export async function deletePost(postId: string) {
-  return fetch("/api/deletePost", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ postId }),
-  })
+  return sendFetchReq("/api/deletePost", "POST", { postId })
 }
 
-export async function createPost<T extends object>(postContents: T) {
-  return fetch("/api/createPost", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(postContents),
-  })
+export async function createPost(postContents: Record<string, unknown>) {
+  return sendFetchReq("/api/createPost", "POST", postContents as Record<string, unknown>)
 }
