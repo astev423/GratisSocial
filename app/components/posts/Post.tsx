@@ -58,7 +58,7 @@ export default function Post({ post, refetch }: PostProps) {
       <div>
         <Like initialNumLikes={post.likeCount} initialLikeStatus={post.status} postId={post.id} />
       </div>
-      <CommentFeed commentCount={post.commentCount} postId={post.id} />
+      <CommentFeed initialCommentCount={post.commentCount} postId={post.id} />
     </div>
   )
 }

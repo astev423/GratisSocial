@@ -5,13 +5,14 @@ import AddComment from "./AddComment"
 import Comment from "./Comment"
 
 type CommentFeedProps = {
-  commentCount: number
+  initialCommentCount: number
   postId: string
 }
 
-export default function CommentFeed({ commentCount, postId }: CommentFeedProps) {
+export default function CommentFeed({ initialCommentCount, postId }: CommentFeedProps) {
   const [showComments, setShowComments] = useState(false)
   const [comments, setComments] = useState<CommentType[]>([])
+  const [commentCount, setCommentCount] = useState(initialCommentCount)
 
   async function reloadComments() {
     const commentsOnThisPost = await fetchComments(postId)
@@ -31,7 +32,7 @@ export default function CommentFeed({ commentCount, postId }: CommentFeedProps) 
       >
         {commentCount} comments, click here to view them:
       </button>
-      <AddComment reloadComments={reloadComments} postId={postId} />
+      <AddComment setCommentCount={setCommentCount} reloadComments={reloadComments} postId={postId} />
       {showComments &&
         comments &&
         comments.map((comment) => (

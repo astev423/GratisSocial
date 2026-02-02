@@ -36,7 +36,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
         placeholder="Post content"
         className="bg-gray-100 p-4 h-50"
       ></textarea>
-      <button type="button" className="group grey-button">
+      <button type="submit" className="group grey-button">
         <span className="grey-button-text">Submit Post</span>
       </button>
     </form>
