@@ -1,5 +1,3 @@
--Add min size to username and first/lastname (atleast 1 char)
-
 -New lines don't get preserved when submitting post, make them preserve
 
 -Long titles don't wrap around post, instead going out of bounds, make them wrap

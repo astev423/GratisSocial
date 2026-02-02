@@ -10,15 +10,11 @@ type AddCommentProps = {
 export default function AddComment({ postId, reloadComments, setCommentCount }: AddCommentProps) {
   const [inputText, setInputText] = useState("")
 
-  async function handleSubmitNewComment(e: React.FormEvent) {
+  async function handleSubmitNewComment(e: React.SubmitEvent) {
     e.preventDefault()
-    if (inputText === "") {
-      console.error("Comments can't be empty")
-      return
-    }
     const res = await createComment(inputText, postId)
     if (!res) {
-      console.error("Failed to make comment!")
+      alert("Failed to post comment, likely a server error")
       return
     }
 
@@ -34,7 +30,7 @@ export default function AddComment({ postId, reloadComments, setCommentCount }: 
           <label htmlFor="bodyId">Add Comment</label>
           <input
             id="bodyId"
-            className="border-2 rounded-xl p-1 w-[15vw]"
+            className="border-2 rounded-xl p-1 "
             type="text"
             placeholder="Your comment here"
             value={inputText}
