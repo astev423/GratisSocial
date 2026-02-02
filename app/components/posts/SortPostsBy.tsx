@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction, useState } from "react"
 import type { TypeOfPostToView } from "@/types/types"
 
+// TODO: refactor, should pass refetch function directly
 type SortPostProps = {
   setPostsToSee: Dispatch<SetStateAction<TypeOfPostToView>>
   setRefreshKey: Dispatch<SetStateAction<number>>
