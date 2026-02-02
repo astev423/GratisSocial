@@ -18,7 +18,7 @@ export async function sendFetchReq(
 
   const res = await fetch(route, req)
   if (!res.ok) {
-    throw new Error(`Request failed with status ${res.status}`)
+    throw new Error(`sendFetchReq failed with status ${res.status}`)
   }
 
   return res
@@ -67,7 +67,7 @@ export function useFetch<T = unknown>(
     })()
 
     return () => controller.abort()
-  }, [route, method, refetchKey, body])
+  }, [refetchKey])
 
   return { data, loading, error }
 }
