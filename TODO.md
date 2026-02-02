@@ -1,5 +1,3 @@
--Refresh post feed on new submitted post
-
 -Add min size to username and first/lastname (atleast 1 char)
 
 -Fix comments UI (dropdown to view comments looks bad)

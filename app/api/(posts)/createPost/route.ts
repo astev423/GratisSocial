@@ -8,14 +8,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "User not found" }, { status: 404 })
   }
 
-  const { title, content } = (await req.json()) as { title: string; content: string }
-  if (!title || !content) {
+  const { title, body } = (await req.json()) as { title: string; body: string }
+  if (!title || !body) {
     return NextResponse.json({ message: "Title and content are required." }, { status: 400 })
   }
 
   const newPost = await createPost({
     title: title,
-    content: content,
+    content: body,
     authorId: user.id,
     posterUsername: user.username,
   })
