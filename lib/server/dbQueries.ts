@@ -8,6 +8,7 @@ import { prisma } from "../../prisma/prisma"
  USER STUFF
 */
 
+// biome-ignore lint/suspicious/noExplicitAny: need any here for the return type
 function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
   // Need this awaited return type so we can get right return type for things that call this
   return async (): Promise<Awaited<ReturnType<F>> | null> => {
