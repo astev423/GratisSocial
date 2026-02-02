@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { isUserFollowing, tryFetchUserByTheirId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 
-export async function POST(req: NextRequest) {
-  const { username: cardUsername } = (await req.json()) as { username: string }
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ username: string }> }) {
+  const { username: cardUsername } = await params
   const cardUser = await tryFetchUserByUsername(cardUsername)
   const viewingUser = await tryFetchUserByTheirId()
   if (!cardUser || !viewingUser) {

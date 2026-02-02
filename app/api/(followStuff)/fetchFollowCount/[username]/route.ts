@@ -1,9 +1,8 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { fetchFollowInfoFromGivenId, tryFetchUserByUsername } from "@/lib/server/dbQueries"
 
-// TODO: This should be GET
-export async function POST(req: Request) {
-  const { username } = (await req.json()) as { username: string }
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ username: string }> }) {
+  const { username } = await params
   const user = await tryFetchUserByUsername(username)
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 })

@@ -16,9 +16,7 @@ export default function FollowInfo() {
     viewedUser: { username },
   } = useViewedUser()
   const [refreshKey, setRefreshKey] = useState(0)
-  const { data, loading, error } = useFetch<FollowInfo>("/api/followStatus", "POST", refreshKey, {
-    username,
-  })
+  const { data, loading, error } = useFetch<FollowInfo>(`/api/followStatus/${username}`, "GET", refreshKey)
 
   if (error) {
     return <div className="text-xl">Failed to find follow info</div>

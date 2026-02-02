@@ -4,8 +4,13 @@ import { reqWithAuthWrapper } from "@/lib/server/api"
 import { fetchLikeCountOfPost, getUserLikeStatusOfPost } from "@/lib/server/dbQueries"
 import type { LikeInfo } from "@/types/types"
 
-export const POST = reqWithAuthWrapper(async (req, userId) => {
-  const { postId } = (await req.json()) as { postId: string }
+export const GET = reqWithAuthWrapper(async (req, userId) => {
+  const url = new URL(req.url)
+  const postId = url.searchParams.get("postId")
+  if (!postId) {
+    return NextResponse.json({ error: "Missing postId" }, { status: 400 })
+  }
+
   const likeRow = await getUserLikeStatusOfPost(postId, userId)
   const numLikes = await fetchLikeCountOfPost(postId)
   let likeStatus: LikeInfo["status"]

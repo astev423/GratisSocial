@@ -39,7 +39,7 @@ export default function Like({
     } else {
       await likeOrDislikeInteraction(dislikeButtonOnClickData)
     }
-    const res = await sendFetchReq("/api/getPostLikeInfo", "POST", { postId })
+    const res = await sendFetchReq(`/api/getPostLikeInfo?postId=${encodeURIComponent(postId)}`)
     const { numLikes: newNumLikes, status } = (await res.json()) as LikeInfo
     setNumLikes(newNumLikes)
     setLikeStatus(status)

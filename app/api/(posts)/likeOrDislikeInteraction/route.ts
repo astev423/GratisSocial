@@ -8,7 +8,7 @@ import {
 } from "@/lib/server/dbQueries"
 import { LikeInteraction } from "@/types/types"
 
-export const POST = reqWithAuthWrapper(async (req, userId) => {
+export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const { postId, interaction } = (await req.json()) as { postId: string; interaction: LikeInteraction }
 
   // 1. Read current reaction from this user on this post

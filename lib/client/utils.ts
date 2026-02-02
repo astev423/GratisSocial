@@ -85,7 +85,7 @@ export async function createComment(commentContent: string, postId: string) {
 }
 
 export async function fetchComments(postId: string) {
-  const res = await sendFetchReq("/api/fetchComments", "POST", { postId })
+  const res = await sendFetchReq(`/api/fetchComments/${encodeURIComponent(postId)}`, "GET")
 
   return res.json() as Promise<Comment[]>
 }
@@ -97,7 +97,7 @@ export async function likeOrDislikeInteraction({
   postId: string
   interaction: LikeInteraction
 }) {
-  return sendFetchReq("/api/likeOrDislikeInteraction", "POST", { postId, interaction })
+  return sendFetchReq("/api/likeOrDislikeInteraction", "PUT", { postId, interaction })
 }
 
 export async function updateAccount(newInfo: Record<string, unknown>) {
@@ -105,7 +105,7 @@ export async function updateAccount(newInfo: Record<string, unknown>) {
 }
 
 export async function deletePost(postId: string) {
-  return sendFetchReq("/api/deletePost", "POST", { postId })
+  return sendFetchReq("/api/deletePost", "DELETE", { postId })
 }
 
 export async function createPost(postContents: Record<string, unknown>) {
