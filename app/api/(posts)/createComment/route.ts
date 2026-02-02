@@ -13,5 +13,5 @@ export async function POST(req: NextRequest) {
   await createCommentOnPost(postId, commentContent, user.username)
   await updatePost(postId, { commentCount: { increment: 1 } })
 
-  return NextResponse.json({ status: 200 })
+  return NextResponse.json({ status: 201 })
 }
