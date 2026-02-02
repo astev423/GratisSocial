@@ -31,10 +31,9 @@ npx prisma generate
 
 **3. You will also need to set up Clerk (follow their website tutorial or steps below)**
 
-Make a clerk account and get your API keys and then put it in the .env file like so
+Make a clerk account and get your API keys and then put them in a .env.local file like so
 
 ```
-<other env file above>
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_public_key_here
 CLERK_SECRET_KEY=your_private_key_here
 ```
