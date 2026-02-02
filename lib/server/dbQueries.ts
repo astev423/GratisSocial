@@ -13,7 +13,7 @@ function getUserIdOrReturnWrapper<F extends (userId: string) => any>(fn: F) {
   // Need this awaited return type so we can get right return type for things that call this
   return async (): Promise<Awaited<ReturnType<F>> | null> => {
     const { userId } = await auth()
-    if (userId === null) {
+    if (!userId) {
       return null
     }
 
@@ -34,7 +34,7 @@ export const tryAddClerkUserToDb = getUserIdOrReturnWrapper(async (userId) => {
 
 async function tryCreateUser(userId: string) {
   const user = await currentUser()
-  if (user === null || user.primaryEmailAddress === null || user.username === null) {
+  if (!user || !user.primaryEmailAddress || !user.username) {
     console.error("User has no primary email or user doesn't exist")
     return false
   }

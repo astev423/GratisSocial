@@ -26,7 +26,7 @@ export default function PostFeed({ postsToSee, username = undefined }: PostFeedP
         <SpinningIcon size={200} />
       </div>
     )
-  } else if (posts === null) {
+  } else if (!posts) {
     return
   }
 

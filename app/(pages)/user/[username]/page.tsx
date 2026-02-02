@@ -12,7 +12,7 @@ type PageProps = {
 export default async function UserPage({ params }: PageProps) {
   const { username: paramsUsername } = await params
   const accountPageUser = await tryFetchUserByUsername(paramsUsername)
-  if (accountPageUser === null) {
+  if (!accountPageUser) {
     return <FailedToFindUser />
   }
 

@@ -30,15 +30,20 @@ export default function AddComment({ postId, reloadComments, setCommentCount }: 
   return (
     <div>
       <form onSubmit={(e) => handleSubmitNewComment(e)}>
-        <input
-          className="border-2 rounded-xl p-1 w-[10vw]"
-          type="text"
-          placeholder="Add comment"
-          value={inputText}
-          onChange={(e) => {
-            setInputText(e.target.value)
-          }}
-        ></input>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="bodyId">Add Comment</label>
+          <input
+            id="bodyId"
+            className="border-2 rounded-xl p-1 w-[15vw]"
+            type="text"
+            placeholder="Your comment here"
+            value={inputText}
+            onChange={(e) => {
+              setInputText(e.target.value)
+            }}
+            required
+          />
+        </div>
       </form>
     </div>
   )

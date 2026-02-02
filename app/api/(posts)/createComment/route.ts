@@ -5,8 +5,7 @@ import { createCommentOnPost, updatePost } from "@/lib/server/dbQueries"
 export async function POST(req: NextRequest) {
   const user = await currentUser()
   const { commentContent, postId } = (await req.json()) as { commentContent: string; postId: string }
-  console.log(commentContent, postId)
-  if (user === null || user.username === null || commentContent === null || postId === null) {
+  if (!user || !user.username || !commentContent || !postId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

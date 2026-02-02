@@ -1,5 +1,9 @@
 -Add min size to username and first/lastname (atleast 1 char)
 
+-New lines don't get preserved when submitting post, make them preserve
+
+-Long titles don't wrap around post, instead going out of bounds, make them wrap
+
 -Fix comments UI (dropdown to view comments looks bad)
 
 -Only fetch first 10 posts, then automatically fetch next ten if user scrolls to bottom of the screen, 

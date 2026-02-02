@@ -9,7 +9,12 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
 
   async function submitPost(e: React.SubmitEvent) {
     e.preventDefault()
-    await createPost({ title, body })
+    const res = await createPost({ title, body })
+    if (!res.ok) {
+      alert("Couldn't submit post, likely caused by a server error")
+      return
+    }
+
     setTitle("")
     setBody("")
     setRefreshKey((refreshKey) => refreshKey + 1)
@@ -28,6 +33,7 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
           placeholder="Your title here"
           className="bg-gray-100 p-4"
           name="title"
+          maxLength={120}
           required
         />
       </div>
@@ -39,7 +45,8 @@ export default function CreatePost({ setRefreshKey }: CreatePostProps) {
           id="bodyId"
           onChange={(e) => setBody(e.target.value)}
           placeholder="Your post body here"
-          className="bg-gray-100 p-4 h-50"
+          className="bg-gray-100 p-4"
+          rows={7}
           name="body"
           required
         />

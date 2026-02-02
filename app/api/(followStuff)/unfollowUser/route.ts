@@ -5,7 +5,7 @@ import { isUserFollowing, tryFetchUserByUsername, unfollowUser } from "@/lib/ser
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const { username } = (await req.json()) as { username: string }
   const viewedUser = await tryFetchUserByUsername(username)
-  if (viewedUser === null) {
+  if (!viewedUser) {
     return NextResponse.json({ error: "User doesn't exist" }, { status: 404 })
   }
 

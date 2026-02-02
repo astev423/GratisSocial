@@ -6,7 +6,7 @@ import HomepagePostStuff from "../../components/posts/HomepagePostStuff"
 export default async function Home() {
   const { userId } = await auth()
 
-  if (userId === null) {
+  if (!userId) {
     return <NotSignedInError />
   }
 

@@ -14,7 +14,7 @@ export const GET = reqWithAuthWrapper(async (req, userId) => {
   const likeRow = await getUserLikeStatusOfPost(postId, userId)
   const numLikes = await fetchLikeCountOfPost(postId)
   let likeStatus: LikeInfo["status"]
-  if (likeRow === null) {
+  if (!likeRow) {
     likeStatus = "neither"
   } else if (likeRow.liked) {
     likeStatus = "liked"

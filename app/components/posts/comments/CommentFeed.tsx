@@ -30,6 +30,7 @@ export default function CommentFeed({ initialCommentCount, postId }: CommentFeed
           setShowComments((showComments) => !showComments)
         }}
       >
+        {/* TODO: Make this a dropdown with an arrow */}
         {commentCount} comments, click here to view them:
       </button>
       <AddComment setCommentCount={setCommentCount} reloadComments={reloadComments} postId={postId} />

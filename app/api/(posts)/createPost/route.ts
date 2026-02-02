@@ -4,7 +4,7 @@ import { createPost, tryFetchUserByTheirId } from "@/lib/server/dbQueries"
 
 export async function POST(req: NextRequest) {
   const user = await tryFetchUserByTheirId()
-  if (user === null) {
+  if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 })
   }
 
