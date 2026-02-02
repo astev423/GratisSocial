@@ -9,7 +9,7 @@ Built using NextJS, typescript, Prisma ORM, and Clerk. Formatting and linting do
 **1. You will need to clone the repo, then run**
 
 ```
-npm install
+pnpm install
 ```
 
 **2. Then, make a database and run it in the background (my DB is psql on linux)**

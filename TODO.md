@@ -1,7 +1,6 @@
 -Fix comments UI (dropdown to view comments looks bad)
 
--Lots of repitition in client utils.ts. make one central fetcher with abort controller. or maybe
-find way to combine useFetch and fetch methods below
+-Update comment count display when successful new post is posted
 
 -Only fetch first 10 posts, then automatically fetch next ten if user scrolls to bottom of the screen, 
 use index to avoid constant sorting of posts by date whenever we request new posts
