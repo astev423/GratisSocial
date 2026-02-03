@@ -47,7 +47,9 @@ export default function Like({
 
   return (
     <div>
-      <div>Likes: {numLikes}</div>
+      <h3>
+        Likes: <span>{numLikes}</span>
+      </h3>
       <div className="flex gap-2 h-6">
         <Image
           src={likeButtonImagePath}

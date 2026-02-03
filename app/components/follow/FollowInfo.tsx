@@ -19,10 +19,10 @@ export default function FollowInfo() {
   const { data, loading, error } = useFetch<FollowInfo>(`/api/followStatus/${username}`, "GET", refreshKey)
 
   if (error) {
-    return <div className="text-xl">Failed to find follow info</div>
+    return <p className="font-normal">Failed to find follow info</p>
   } else if (loading) {
     return (
-      <div className="flex mt-5 justify-center items-center gap-2">
+      <div className="mx-auto">
         <SpinningIcon size={100} />
       </div>
     )
@@ -31,9 +31,9 @@ export default function FollowInfo() {
   const isUserFollowing = data?.followStatus === "following"
 
   return (
-    <>
+    <div>
       <FollowCount />
       <FollowButton setRefreshKey={setRefreshKey} following={isUserFollowing} />
-    </>
+    </div>
   )
 }

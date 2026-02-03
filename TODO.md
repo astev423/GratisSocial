@@ -4,6 +4,8 @@
 
 -Fix comments UI (dropdown to view comments looks bad)
 
+-Keep eye out for unneeded css
+
 -Only fetch first 10 posts, then automatically fetch next ten if user scrolls to bottom of the screen, 
 use index to avoid constant sorting of posts by date whenever we request new posts
 

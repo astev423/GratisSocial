@@ -7,7 +7,6 @@ import PostFeed from "../../components/posts/PostFeed"
 
 export default async function MyAccountPage() {
   const user = await tryFetchUserByTheirId()
-  // We enforce user is signed in but TS still thinks username can be null, so check
   if (!user) {
     return <NotSignedInError />
   }

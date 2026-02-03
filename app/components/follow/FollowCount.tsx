@@ -17,9 +17,9 @@ export default function FollowCount() {
   }
 
   return (
-    <>
-      <div className="font-bold text-xl">Followers: {followInfo.followers}</div>
-      <div className="font-bold text-xl">Following: {followInfo.following}</div>
-    </>
+    <div className="text-xl">
+      <p>Followers: {followInfo.followers}</p>
+      <p>Following: {followInfo.following}</p>
+    </div>
   )
 }
