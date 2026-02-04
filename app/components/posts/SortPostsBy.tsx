@@ -12,9 +12,11 @@ export default function SortPostsBy({ setPostsToSee, setRefreshKey, postsToSee }
   const viewOption =
     "border-4 border-s-slate-950 hover:bg-gray-600 bg-gray-400 w-[10vw] rounded-2xl hover:cursor-pointer p-2 "
 
+  // TODO: Cleanup how this works, figure out how to get last div absolutely positioned
   return (
-    <div className="h-25 flex justify-between items-center text-xl bg-white p-5 font-bold">
-      <div>Sort posts by:</div>
+    <div className="flex justify-between items-center bg-white p-5 font-bold">
+      <h2 className="text-xl">Sort posts by:</h2>
+
       <div
         className={`left-[25vw] flex flex-col rounded-2xl text-center gap-5
           text-2xl ${dropdownActive ? "border-3 bg-gray-500 p-2" : "bg-gray-400 "}`}
