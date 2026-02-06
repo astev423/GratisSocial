@@ -53,7 +53,7 @@ export default function Post({ post, refetch }: PostProps) {
         </Link>
       </div>
       <h3>Posted on: {formatDate(post.createdAt.toString())}</h3>
-      <hr className="border"></hr>
+      <hr />
       <p>{post.content}</p>
       <Like initialNumLikes={post.likeCount} initialLikeStatus={post.status} postId={post.id} />
       <CommentFeed initialCommentCount={post.commentCount} postId={post.id} />
