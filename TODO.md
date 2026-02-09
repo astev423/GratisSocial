@@ -11,6 +11,8 @@ use index to avoid constant sorting of posts by date whenever we request new pos
 
 -Add date and clickable link to user profile in comments
 
+-Add ability to like and dislike comments, reusing functionality from posts
+
 -Add server actions
 
 -Allow user to change user username when they change their username in clerk, make sure no duplicates
