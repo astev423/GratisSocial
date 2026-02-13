@@ -15,7 +15,7 @@ use index to avoid constant sorting of posts by date whenever we request new pos
 
 -Add feature to only fetch first 10 comments, then user can click to fetch 10 next ones, etc
 
--Add server actions
+-Add server actions for refetching data like comments, post follow info, etc
 
 -Allow user to change user username when they change their username in clerk, make sure no duplicates
 
