@@ -31,9 +31,9 @@ export default function FollowInfo() {
   const isUserFollowing = data?.followStatus === "following"
 
   return (
-    <div>
+    <>
       <FollowCount />
       <FollowButton setRefreshKey={setRefreshKey} following={isUserFollowing} />
-    </div>
+    </>
   )
 }
