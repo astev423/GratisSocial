@@ -1,3 +1,8 @@
+-Data validation with ZOD is super important, also can just import types from @prisma instead of manually
+typing them, if you want to remove stuff then just make a type of that with Omit<>, also use zod or
+other validation library in all http reqs and responses, using zod's .pick() or .omit() is even better for
+making types
+
 -New lines don't get preserved when submitting post, make them preserve
 
 -Long titles don't wrap around post, instead going out of bounds, make them wrap
