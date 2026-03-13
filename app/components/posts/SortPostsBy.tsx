@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useState } from "react"
-import type { TypeOfPostToView } from "@/types/types"
+import type { TypeOfPostToView } from "@/types/apiTypes"
 
 type SortPostProps = {
   setPostsToSee: Dispatch<SetStateAction<TypeOfPostToView>>

@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState } from "react"
-import type { User } from "@/types/types"
+import type { User } from "@/types/apiTypes"
 
 type ProviderProps = {
   viewedUser: User

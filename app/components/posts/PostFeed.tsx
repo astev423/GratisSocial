@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useFetch } from "@/lib/client/utils"
-import type { PostWithLikeInfo, TypeOfPostToView } from "@/types/types"
+import type { PostWithLikeInfo, TypeOfPostToView } from "@/types/apiTypes"
 import SpinningIcon from "../SpinningIcon"
 import Post from "./Post"
 

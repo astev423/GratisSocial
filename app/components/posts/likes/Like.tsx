@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { likeOrDislikeInteraction, sendFetchReq } from "@/lib/client/utils"
-import type { LikeInfo } from "@/types/types"
+import type { LikeInfo } from "@/types/apiTypes"
 
 type LikeInteractionData = {
   postId: string

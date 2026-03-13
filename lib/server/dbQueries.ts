@@ -1,6 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs/server"
 import type { Prisma } from "@prisma/client"
-import type { Post } from "@/types/types"
+import type { Post } from "@/types/apiTypes"
 import "server-only"
 import { prisma } from "../../prisma/prisma"
 

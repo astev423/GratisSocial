@@ -6,7 +6,7 @@ import {
   tryFindLikeInfoForUserOnPost,
   updateLikeCount,
 } from "@/lib/server/dbQueries"
-import { LikeInteraction } from "@/types/types"
+import { LikeInteraction } from "@/types/apiTypes"
 
 export const PUT = reqWithAuthWrapper(async (req, userId) => {
   const { postId, interaction } = (await req.json()) as { postId: string; interaction: LikeInteraction }

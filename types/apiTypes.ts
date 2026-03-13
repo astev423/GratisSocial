@@ -1,42 +1,24 @@
-export type Post = {
-  id: string
-  authorId: string
-  posterUsername: string
-  title: string
-  content: string
-  createdAt: Date
-  likeCount: number
-  commentCount: number
-}
+import type {
+  Comment as CommentTable,
+  Like as LikeTable,
+  Post as PostTable,
+  User as UserTable,
+} from "@prisma/client"
+
+export type Post = PostTable
 
 export type PostWithLikeInfo = Post & { status: LikeInfo["status"] }
 
-export type User = {
-  username: string
-  firstName: string
-  lastName: string
-  followingCount: number
-  followersCount: number
-}
+export type User = Omit<UserTable, "id" | "email">
 
 export type FollowInfo = {
   followers: number
   following: number
 }
 
-export type Comment = {
-  id: string
-  content: string
-  commenterUsername: string
-  postId: string
-}
+export type Comment = CommentTable
 
-export type Like = {
-  id: string
-  liked: boolean
-  likerId: string
-  postId: string
-}
+export type Like = LikeTable
 
 export type LikeInfo = {
   status: "liked" | "disliked" | "neither"
