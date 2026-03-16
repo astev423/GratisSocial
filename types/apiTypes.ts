@@ -1,15 +1,14 @@
-import type {
-  Comment as CommentTable,
-  Like as LikeTable,
-  Post as PostTable,
-  User as UserTable,
-} from "@prisma/client"
+import type * as z from "zod"
 
-export type Post = PostTable
+import { CommentSchema, FollowSchema, LikeSchema, PostSchema, UserSchema } from "../prisma/generated/schemas"
+
+export const PublicPostSchema = PostSchema.omit({})
+
+export type Post = z.infer<typeof PublicPostSchema>
 
 export type PostWithLikeInfo = Post & { status: LikeInfo["status"] }
 
-export type User = Omit<UserTable, "id" | "email">
+export const User = UserSchema.omit({ id: true, email: true })
 
 export type FollowInfo = {
   followers: number

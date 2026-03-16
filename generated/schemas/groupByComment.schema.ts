@@ -1,0 +1,13 @@
+import type { Prisma } from '@prisma/client';
+import * as z from 'zod';
+import { CommentWhereInputObjectSchema as CommentWhereInputObjectSchema } from './objects/CommentWhereInput.schema';
+import { CommentOrderByWithAggregationInputObjectSchema as CommentOrderByWithAggregationInputObjectSchema } from './objects/CommentOrderByWithAggregationInput.schema';
+import { CommentScalarWhereWithAggregatesInputObjectSchema as CommentScalarWhereWithAggregatesInputObjectSchema } from './objects/CommentScalarWhereWithAggregatesInput.schema';
+import { CommentScalarFieldEnumSchema } from './enums/CommentScalarFieldEnum.schema';
+import { CommentCountAggregateInputObjectSchema as CommentCountAggregateInputObjectSchema } from './objects/CommentCountAggregateInput.schema';
+import { CommentMinAggregateInputObjectSchema as CommentMinAggregateInputObjectSchema } from './objects/CommentMinAggregateInput.schema';
+import { CommentMaxAggregateInputObjectSchema as CommentMaxAggregateInputObjectSchema } from './objects/CommentMaxAggregateInput.schema';
+
+export const CommentGroupBySchema: z.ZodType<Prisma.CommentGroupByArgs> = z.object({ where: CommentWhereInputObjectSchema.optional(), orderBy: z.union([CommentOrderByWithAggregationInputObjectSchema, CommentOrderByWithAggregationInputObjectSchema.array()]).optional(), having: CommentScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(CommentScalarFieldEnumSchema), _count: z.union([ z.literal(true), CommentCountAggregateInputObjectSchema ]).optional(), _min: CommentMinAggregateInputObjectSchema.optional(), _max: CommentMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.CommentGroupByArgs>;
+
+export const CommentGroupByZodSchema = z.object({ where: CommentWhereInputObjectSchema.optional(), orderBy: z.union([CommentOrderByWithAggregationInputObjectSchema, CommentOrderByWithAggregationInputObjectSchema.array()]).optional(), having: CommentScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(CommentScalarFieldEnumSchema), _count: z.union([ z.literal(true), CommentCountAggregateInputObjectSchema ]).optional(), _min: CommentMinAggregateInputObjectSchema.optional(), _max: CommentMaxAggregateInputObjectSchema.optional() }).strict();

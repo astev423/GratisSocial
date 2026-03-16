@@ -4,6 +4,12 @@ generator client {
   binaryTargets = ["native"]
 }
 
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./generated"
+  config   = "./zod-generator.config.json"
+}
+
 datasource db {
   provider = "postgresql"
 }
