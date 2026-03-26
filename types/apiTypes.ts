@@ -6,7 +6,7 @@ export const PublicPostSchema = PostSchema.omit({})
 
 export type Post = z.infer<typeof PublicPostSchema>
 
-export type PostWithLikeInfo = Post & { status: LikeInfo["status"] }
+export type PostWithLikeInfo = Post & LikeInfo["status"]
 
 export const User = UserSchema.omit({ id: true, email: true })
 
