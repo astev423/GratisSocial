@@ -15,9 +15,13 @@ export type FollowInfo = {
   following: number
 }
 
-export type Comment = CommentTable
+export const PublicCommentSchema = CommentSchema.omit({})
 
-export type Like = LikeTable
+export type Comment = z.infer<typeof PublicCommentSchema>
+
+export const PublicLikeSchema = LikeSchema.omit({})
+
+export type Like = z.infer<typeof PublicLikeSchema>
 
 export type LikeInfo = {
   status: "liked" | "disliked" | "neither"
