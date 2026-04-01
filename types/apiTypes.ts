@@ -4,6 +4,8 @@ import { CommentSchema, FollowSchema, LikeSchema, PostSchema, UserSchema } from 
 
 export const PublicPostSchema = PostSchema.omit({})
 
+export const PostContent = PostSchema.pick({ title: true, content: true })
+
 export type Post = z.infer<typeof PublicPostSchema>
 
 export type PostWithLikeInfo = Post & LikeInfo["status"]
