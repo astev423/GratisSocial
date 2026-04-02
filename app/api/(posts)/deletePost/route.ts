@@ -10,9 +10,8 @@ const PostSchema = z
   .strict()
 
 export const DELETE = reqWithAuthWrapper(async (req, userId) => {
-  const { postId } = (await req.json()) as { postId: string }
-  await deletePost(postId, userId)
-  const result = PostSchema.safeParse(await req.json())
+  const body = await req.json()
+  const result = PostSchema.safeParse(body)
 
   if (!result.success) {
     return NextResponse.json(
@@ -23,6 +22,8 @@ export const DELETE = reqWithAuthWrapper(async (req, userId) => {
       { status: 400 },
     )
   }
+
+  await deletePost(result.data.postId, userId)
 
   return NextResponse.json({ status: 200 })
 })
