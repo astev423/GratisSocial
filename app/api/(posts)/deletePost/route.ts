@@ -3,7 +3,7 @@ import z from "zod"
 import { reqWithAuthWrapper } from "@/lib/server/api"
 import { deletePost } from "@/lib/server/dbQueries"
 
-const PostSchema = z
+const PostData = z
   .object({
     postId: z.string().trim().min(1, "PostID is required"),
   })
@@ -11,7 +11,7 @@ const PostSchema = z
 
 export const DELETE = reqWithAuthWrapper(async (req, userId) => {
   const body = await req.json()
-  const result = PostSchema.safeParse(body)
+  const result = PostData.safeParse(body)
 
   if (!result.success) {
     return NextResponse.json(
