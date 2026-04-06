@@ -3,7 +3,7 @@ typing them, if you want to remove stuff then just make a type of that with Omit
 other validation library in all http reqs and responses, using zod's .pick() or .omit() is even better for
 making types
 
--Chore: come up with better names for zod objects and validation
+-Chore: come up with better names for zod objects and validation, watch vids on zod
 
 -Add wrapper for functions that need zod validation to avoid duplicate logic
 
