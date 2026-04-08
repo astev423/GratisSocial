@@ -30,6 +30,8 @@ use index to avoid constant sorting of posts by date whenever we request new pos
 
 -Add dm mechanic
 
+-Add more filters to viewing posts
+
 -Allow users to post images
 
 -Allow accounts to be private and add follow requests
