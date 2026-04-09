@@ -13,6 +13,8 @@ making types
 
 -Fix comments UI (dropdown to view comments looks bad)
 
+-Learn globals.css and tailwind utilities like apply, etc
+
 -Keep eye out for unneeded css
 
 -Only fetch first 10 posts, then automatically fetch next ten if user scrolls to bottom of the screen, 
