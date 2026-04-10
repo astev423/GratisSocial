@@ -32,7 +32,7 @@ use index to avoid constant sorting of posts by date whenever we request new pos
 
 -Add dm mechanic
 
--Add more filters to viewing posts
+-Add more filters to viewing posts, like like count and comment count
 
 -Allow users to post images
 
