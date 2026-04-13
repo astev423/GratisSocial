@@ -17,6 +17,9 @@ making types
 
 -Keep eye out for unneeded css
 
+-If user not signed in and they go to / route then present a nice looking home screen,
+show what app does and encourage them to sign up
+
 -Only fetch first 10 posts, then automatically fetch next ten if user scrolls to bottom of the screen, 
 use index to avoid constant sorting of posts by date whenever we request new posts
 
