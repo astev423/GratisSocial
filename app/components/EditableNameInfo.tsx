@@ -44,6 +44,7 @@ export default function EditableNameInfo() {
           {editableFirstName} {editableLastName}
         </p>
       </div>
+
       <div>
         <h2>Unique username:</h2>
         <p className="font-normal text-gray-700">{viewedUser.username}</p>
@@ -51,11 +52,8 @@ export default function EditableNameInfo() {
 
       <form className="flex flex-col gap-2" onSubmit={handleSubmitNameChange}>
         <h3>You can change your name here</h3>
-
         <NameField label="First name:" value={editableFirstName} onChange={setEditableFirstName} />
-
         <NameField label="Last name:" value={editableLastName} onChange={setEditableLastName} />
-
         <button type="submit" className="group grey-button">
           <span className="grey-button-text">Click here to submit changes!</span>
         </button>
