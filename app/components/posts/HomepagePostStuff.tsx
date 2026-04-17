@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { TypeOfPostToView } from "@/types/apiTypes"
+import type { TypeOfPostToView } from "@/lib/types/apiTypes"
 import CreatePost from "./CreatePost"
 import PostFeed from "./PostFeed"
 import SortPostsBy from "./SortPostsBy"

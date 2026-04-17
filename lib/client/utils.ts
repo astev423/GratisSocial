@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { Comment, HttpMethod, LikeInteraction } from "@/types/apiTypes"
+import type { Comment, HttpMethod, LikeInteraction } from "@/lib/types/apiTypes"
 
 export async function sendFetchReq(
   route: string,

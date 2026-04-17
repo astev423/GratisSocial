@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 
 import { reqWithAuthWrapper } from "@/lib/server/api"
 import { fetchLikeCountOfPost, getUserLikeStatusOfPost } from "@/lib/server/dbQueries"
-import type { LikeInfo } from "@/types/apiTypes"
+import type { LikeInfo } from "@/lib/types/apiTypes"
 
 export const GET = reqWithAuthWrapper(async (req, userId) => {
   const url = new URL(req.url)

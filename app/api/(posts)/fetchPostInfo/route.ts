@@ -7,7 +7,7 @@ import {
   fetchAllPostsFromUserViaTheirUsername,
   getUserLikeStatusOfPosts,
 } from "@/lib/server/dbQueries"
-import type { Post } from "@/types/apiTypes"
+import type { Post } from "@/lib/types/apiTypes"
 
 export const GET = reqWithAuthWrapper(async (req, userId) => {
   const { searchParams } = new URL(req.url)

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { fetchComments } from "@/lib/client/utils"
-import type { Comment as CommentType } from "@/types/apiTypes"
+import type { Comment as CommentType } from "@/lib/types/apiTypes"
 import AddComment from "./AddComment"
 import Comment from "./Comment"
 

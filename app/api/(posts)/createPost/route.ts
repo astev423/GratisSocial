@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import z from "zod"
 import { createPost, tryFetchUserByTheirId } from "@/lib/server/dbQueries"
-import { PostContent } from "@/types/apiTypes"
+import { PostContent } from "@/lib/types/apiTypes"
 
 export async function POST(req: NextRequest) {
   const user = await tryFetchUserByTheirId()

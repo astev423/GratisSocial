@@ -2,7 +2,7 @@
 
 import { useViewedUser } from "@/app/context/ViewedUserContext"
 import { useFetch } from "@/lib/client/utils"
-import type { FollowInfo } from "@/types/apiTypes"
+import type { FollowInfo } from "@/lib/types/apiTypes"
 
 export default function FollowCount() {
   const { viewedUser } = useViewedUser()

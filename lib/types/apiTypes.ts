@@ -1,6 +1,6 @@
 import type * as z from "zod"
 
-import { CommentSchema, FollowSchema, LikeSchema, PostSchema, UserSchema } from "../prisma/generated/schemas"
+import { CommentSchema, FollowSchema, LikeSchema, PostSchema, UserSchema } from "@/prisma/generated/schemas"
 
 export const PublicPostSchema = PostSchema.omit({})
 
