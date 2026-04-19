@@ -44,3 +44,5 @@ use index to avoid constant sorting of posts by date whenever we request new pos
 -Clerk webhooks to add user to db
 
 -Use react dev tools to test performance
+
+-Analyze network request and see if too many api calls being made/what is going on in the packets
